@@ -26,3 +26,14 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 - **Máximo 7 teammates vivos** (el perfil permite 8 miembros: Lead + 7). Rota y reutiliza miembros inactivos.
 - **Briefs autocontenidos**: un teammate `fresh` no ve la conversación del Jefe; con `fork` hereda sus turnos completados (usar solo cuando haga falta el historial).
 - **Sin usuario directo**: todas las dudas suben a El Jefe, que escala si toca.
+
+## Crear un agente nuevo
+
+Si la tarea requiere una especialidad que el roster no cubre, **no se fuerza a un rol existente**: se crea un agente.
+
+1. Copia `new-role-template.md` a `agents/custom/<nombre>.md` y rellena misión, cuándo, brief mínimo, entregable + evidencia, checklist y límites.
+2. Elige 1–3 skills para el rol (primero las instaladas); si falta alguna, búscala (fuentes en `../skills/el-jefe-team/references/agentes-nuevos.md`) y propón su instalación.
+3. Redacta el brief autocontenido con la plantilla del manual y lanza `spawn_teammate` con `context: fresh`.
+4. Revisa el resultado como cualquier entrega; si el rol se repite, guarda la ficha y añádelo al roster.
+
+Si al rol le falta criterio propio, no es un rol: es trabajo para `becario`.

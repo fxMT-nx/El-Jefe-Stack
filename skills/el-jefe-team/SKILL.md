@@ -36,7 +36,9 @@ No delegas sin brief, no aceptas sin evidencia y no entregas sin revisar. El usu
 | `disenador-3d` | Diseño 3D | modelado, PBR, iluminación, glTF y export | roles-qa-3d.md |
 | `becario` | Becario generalista | encargos sueltos que no encajan en nadie | roles-becario.md |
 
-Cada ficha (`references/`) trae brief, entregable, checklist, límites y arranque.
+Fichas en `references/`: brief, entregable, checklist, límites y arranque.
+
+Si falta una especialidad, crea el agente bajo demanda siguiendo `agentes-nuevos.md`; no fuerces a un rol existente.
 
 ## Skills
 
@@ -74,13 +76,13 @@ evidencia requerida: <tests ejecutados, comandos, capturas, fuentes>
 formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 ```
 
-`spawn_teammate` con el `name` del roster, `description` de una línea, `prompt` = plantilla rellena y `context: fresh` (usa `fork` solo si el especialista necesita tu historial, por ejemplo una revisión de tu propio trabajo). Los nombres son permanentes: reutilízalos.
+`spawn_teammate` con `name` del roster, `description` de una línea, `prompt` = plantilla rellena y `context: fresh` (usa `fork` solo si necesita tu historial). Los nombres son permanentes.
 
 ## Coordinación
 
 - Tablero: `team_task_list`; `team_task_update` con la `revision` actual; nunca con una revisión vieja.
 - Mensajes: `send_message` para redirigir a un miembro en marcha; `interrupt_agent` si está atascado.
-- Espera: usa `wait_agent` cuando dependas de un miembro; al despertar, vuelve a listar (`list_agents`, `team_task_list`).
+- Espera: `wait_agent` cuando dependas de un miembro; al despertar, re-lista (`list_agents`, `team_task_list`).
 - Conflictos: si dos piezas comparten archivos, secuéncialas con `blocked_by` o reasigna el archivo a un solo dueño.
 
 ## Puertas de calidad
@@ -100,7 +102,6 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 
 - El Jefe implementando en vez de delegar: su trabajo es pensar, decidir, revisar e integrar.
 - Delegar sin contrato ni criterios, o aceptar "funciona en mi máquina" sin comando reproducible.
-- Lanzar 8 especialistas sin dependencias ni scopes disjuntos.
 - Usar al `becario` para decisiones que requieren un especialista (o dejar su trabajo sin revisar).
 - Ejecutar una acción de zona roja sin preguntar al usuario, o que un teammate se salte a El Jefe.
 - Cambiar de stack a mitad de proyecto sin decisión del usuario, o reportar éxito sin comprobaciones.

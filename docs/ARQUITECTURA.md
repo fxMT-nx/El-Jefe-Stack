@@ -57,6 +57,17 @@ Antes de planificar un trabajo no trivial:
 4. Con `grill-with-docs` + `domain-modeling` deja constancia: `GLOSSARY.md` y ADR en `docs/adr/`.
 5. Solo pasa a `writing-plans` y al protocolo de proyecto cuando hay entendimiento compartido.
 
+## Agentes bajo demanda
+
+El roster cubre lo habitual, no todo. Cuando aparece una especialidad que ningún rol cubre (audio/DSP, contratos, bioinformática, i18n, compliance, hardware…), El Jefe **crea el agente**:
+
+1. Escribe una ficha nueva con el formato de las existentes (`agents/new-role-template.md`): misión, cuándo sí/no, brief mínimo, entregable + evidencia, checklist, límites y prompt de arranque.
+2. Elige 1–3 skills (instaladas o buscadas en las fuentes de descubrimiento) y anota por qué.
+3. Lanza `spawn_teammate` con `context: fresh` y un brief autocontenido.
+4. Revisa el resultado como cualquier entrega y, si el rol se va a reutilizar, guarda la ficha en `agents/custom/` del proyecto.
+
+El límite de 7 teammates vivos sigue aplicando: crear un agente no es excusa para saltarse dependencias ni scopes.
+
 ## Selección de skills
 
 Cada rol tiene skills preferidas (no exclusivas). El especialista elige 1–3 complementarias, las declara en su reporte y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.

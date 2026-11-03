@@ -8,7 +8,7 @@ El usuario manda. El Jefe manda al equipo. Y el Jefe habla conmigo, nunca al rev
 
 ```
 .
-├── agents/                 # Roster: nombre de spawn → rol → ficha → skills
+├── agents/                 # Roster + plantilla para crear agentes nuevos
 ├── preset/
 │   ├── el-jefe.patch.yml   # Override del preset `standard` (persona + herramientas)
 │   ├── mcp-browseros.example.yml
@@ -54,6 +54,7 @@ Detalle completo en [`agents/README.md`](agents/README.md).
 4. **Calidad.** QA crítico, seguridad e infra revisan antes de entregar.
 5. **Memoria.** `docs/estado.md`, `GLOSSARY.md` y ADR en `docs/adr/` para que el proyecto se pueda retomar en otra sesión.
 6. **Permisos.** Los especialistas piden permiso a El Jefe; lo rojo o excepcional te lo pregunta él a ti. Detalle en `skills/el-jefe-team/references/permisos.md`.
+7. **Agentes bajo demanda.** Si falta una especialidad, El Jefe **crea el rol que hace falta**: ficha completa (misión, brief, entregable, checklist, límites), 1–3 skills elegidas o buscadas e instaladas, y brief autocontenido. Si el rol se reutiliza, su ficha vive en `agents/custom/`. Procedimiento y dónde buscar skills: `skills/el-jefe-team/references/agentes-nuevos.md`.
 
 ## Inicio rápido
 

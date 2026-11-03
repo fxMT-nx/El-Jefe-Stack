@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+- **Agentes bajo demanda**: El Jefe puede crear roles nuevos con calidad (ficha completa, skills elegidas/buscadas, brief autocontenido) cuando falta una especialidad; plantilla en `agents/new-role-template.md` y procedimiento en `skills/el-jefe-team/references/agentes-nuevos.md`.
+- CI (`validate.yml` + `scripts/validate_repo.py`): valida YAML del preset, frontmatter y tamaño de la skill, referencias y enlaces relativos.
+- Persona actualizada con la regla de agentes bajo demanda.
+
 ## 1.0.0
 
 - Preset "El Jefe" (override de `standard`) con persona cercana y adaptativa, jerarquía usuario > Jefe > equipo, permisos con escalado y sin vetos absolutos, y "no se mancha las manos".
