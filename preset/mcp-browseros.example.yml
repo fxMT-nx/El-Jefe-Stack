@@ -1,0 +1,23 @@
+# EJEMPLO opcional (específico de esta máquina): MCP de BrowserOS neo como capa
+# global en $DSH_HOME/cordis.patch.yml. Ajusta la URL/puerto a tu instalación.
+## DSH home-level user patch — $DSH_HOME/cordis.patch.yml
+#
+# Applied after every profile's bundle layers and after that profile's own
+# cordis.patch.yml, so it outranks both and applies to every profile booted
+# from this Harness home.
+#
+# BrowserOS neo: the user's dedicated agent browser (real Chrome profile with
+# live logins) served over Streamable HTTP MCP by the BrowserOS app itself.
+- insert:
+    - id: mcp-browseros-neo
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: browseros-neo
+        transport: streamable-http
+        url: http://127.0.0.1:9010/mcp
+        # Browser work (page loads, downloads, PDFs) is slower than a plain
+        # API call; keep headroom over the 60 s default per call.
+        toolCallTimeoutMs: 120000
+        # BrowserOS may still be starting when DSH boots; never fail plugin
+        # activation for it. The default reconnect policy retries instead.
+        failOnStartupError: false
