@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+- **Router de skills** (`scripts/skill_router.py`): ranking explicable de skills instaladas por tarea, inspirado en `skill_retrieval.py` de Skill-3D. Salida humana o JSON y `--build-index`.
+- **Aprendizaje (retro)**: `references/aprendizaje.md` + `templates/retro.md`; éxitos → workflows, fallos → lecciones; promoción solo si se repite (≥2 proyectos) o es grave.
+- **Toolkit 3D opcional**: `references/toolkit-3d.md` (Depth Anything 3, SAM 3, Grounding DINO, Pi3, SwinIR, Orient Anything) y ficha de `disenador-3d` actualizada, con permisos de instalación.
+- Validación local ampliada a los scripts Python.
+
 ## 1.1.0
 
 - **Agentes bajo demanda**: El Jefe puede crear roles nuevos con calidad (ficha completa, skills elegidas/buscadas, brief autocontenido) cuando falta una especialidad; plantilla en `agents/new-role-template.md` y procedimiento en `skills/el-jefe-team/references/agentes-nuevos.md`.

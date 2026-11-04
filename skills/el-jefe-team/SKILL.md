@@ -42,11 +42,11 @@ Si falta una especialidad, crea el agente bajo demanda siguiendo `agentes-nuevos
 
 ## Skills
 
-Cada rol tiene skills preferidas, no exclusivas (matriz en `skills-seleccion.md`). El especialista elige la mejor combinación, la declara en su reporte y puede usar otra si encaja. Entrevistas: `grilling` (motor), `grill-me`/`grill-with-docs` (atajos), `domain-modeling` (glosario/ADR). Si no hay skill instalada que sirva, busca en las fuentes de `skills-seleccion.md` y propón instalarla a El Jefe.
+Cada rol tiene skills preferidas, no exclusivas (matriz en `skills-seleccion.md`). El especialista elige la mejor combinación, la declara en su reporte y puede usar otra si encaja. Entrevistas: `grilling` (motor), `grill-me`/`grill-with-docs` (atajos), `domain-modeling` (glosario/ADR). Antes de encargar, si hay duda, corre `python scripts/skill_router.py "<tarea>"` para un ranking explicable. Al cerrar proyecto, retro y lecciones (`aprendizaje.md`): lo repetido actualiza roles y triggers. Si no hay skill instalada que sirva, busca en las fuentes de `skills-seleccion.md` y propón instalarla a El Jefe.
 
 ## Fase 0: Grilling
 
-Antes de planificar algo no trivial, carga `grilling` e interroga por rondas: árbol de decisiones, preguntas numeradas con tu respuesta recomendada (un "sí" la acepta), hechos por subagentes, sin pasar a plan hasta entendimiento compartido. Deja constancia con `grill-with-docs` + `domain-modeling`: ADR en `docs/adr/` y `GLOSSARY.md`. Solo el Lead interroga al usuario.
+Antes de planificar algo no trivial, carga `grilling` e interroga por rondas: preguntas numeradas con tu respuesta recomendada, hechos por subagentes, hasta entendimiento compartido. Deja constancia con `grill-with-docs` + `domain-modeling` (ADR en `docs/adr/`, `GLOSSARY.md`). Solo el Lead interroga.
 
 ## Protocolo de proyecto
 
@@ -58,7 +58,7 @@ Antes de planificar algo no trivial, carga `grilling` e interroga por rondas: á
 6. **Calidad.** `qa-critico` valida criterios y busca fallos; `seguridad` revisa datos/auth/infra; `infra` despliegue y rollback. Los hallazgos vuelven al dueño.
 7. **Documentación.** Si el proyecto necesita README, guías, docs de API, ADR, changelog o textos de release, `escritor` las escribe antes de la entrega; tú revisas que lo escrito coincida con lo construido.
 8. **Memoria y bitácora.** Al cerrar cada hito, `memoria` actualiza `docs/estado.md` (y ADR si cambió arquitectura, alcance o stack) y `documentador` deja la entrada en `docs/trabajo.md`/CHANGELOG.
-9. **Entrega.** Revisa el diff, ejecuta las comprobaciones, actualiza el tablero y entrega al usuario: qué se hizo, evidencia, riesgos, pendientes y siguiente paso.
+9. **Entrega.** Revisa el diff, ejecuta comprobaciones, actualiza el tablero y entrega: qué se hizo, evidencia, riesgos y siguiente paso.
 
 ## Permisos y escalado
 
@@ -76,7 +76,7 @@ evidencia requerida: <tests ejecutados, comandos, capturas, fuentes>
 formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 ```
 
-`spawn_teammate` con `name` del roster, `description` de una línea, `prompt` = plantilla rellena y `context: fresh` (usa `fork` solo si necesita tu historial). Los nombres son permanentes.
+`spawn_teammate` con `name` del roster, `description` de una línea, `prompt` relleno y `context: fresh` (`fork` solo si necesita tu historial). Nombres permanentes.
 
 ## Coordinación
 

@@ -23,7 +23,8 @@ El usuario manda. El Jefe manda al equipo. Y el Jefe habla conmigo, nunca al rev
 ├── templates/              # estado.md, GLOSSARY.md, ADR, bitácora
 ├── scripts/
 │   ├── install.ps1         # Instala skill + aplica el preset (con backups)
-│   └── verify.ps1          # Comprueba que todo está en su sitio
+│   ├── verify.ps1          # Comprueba que todo está en su sitio
+│   └── skill_router.py     # Ranking explicable de skills para una tarea
 └── LICENSE
 ```
 
@@ -55,6 +56,8 @@ Detalle completo en [`agents/README.md`](agents/README.md).
 5. **Memoria.** `docs/estado.md`, `GLOSSARY.md` y ADR en `docs/adr/` para que el proyecto se pueda retomar en otra sesión.
 6. **Permisos.** Los especialistas piden permiso a El Jefe; lo rojo o excepcional te lo pregunta él a ti. Detalle en `skills/el-jefe-team/references/permisos.md`.
 7. **Agentes bajo demanda.** Si falta una especialidad, El Jefe **crea el rol que hace falta**: ficha completa (misión, brief, entregable, checklist, límites), 1–3 skills elegidas o buscadas e instaladas, y brief autocontenido. Si el rol se reutiliza, su ficha vive en `agents/custom/`. Procedimiento y dónde buscar skills: `skills/el-jefe-team/references/agentes-nuevos.md`.
+8. **Router de skills.** Antes de encargar, el equipo puede rankear las skills instaladas contra la tarea: `python scripts/skill_router.py "<tarea>"` (mecánica de recuperación inspirada en Skill-3D). Declara la combinación elegida.
+9. **Retro y aprendizaje.** Al cerrar un proyecto, `templates/retro.md`: éxitos → workflows a repetir, fallos → lecciones correctivas. Lo repetido en ≥2 proyectos se promueve a la ficha del rol, a la matriz o a una skill nueva. Detalle: `skills/el-jefe-team/references/aprendizaje.md`.
 
 ## Inicio rápido
 

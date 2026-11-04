@@ -72,6 +72,22 @@ El límite de 7 teammates vivos sigue aplicando: crear un agente no es excusa pa
 
 Cada rol tiene skills preferidas (no exclusivas). El especialista elige 1–3 complementarias, las declara en su reporte y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.
 
+Cuando haya duda, el **router** puntúa las skills instaladas contra la tarea:
+
+```bash
+python scripts/skill_router.py "auditar SEO técnico de una landing" --top 5
+```
+
+Inspirado en la recuperación de skills de Skill-3D (`skill_retrieval.py`): skills como unidades con nombre, cuándo, estrategia y herramientas; el ranking es explicable (nombre, descripción, triggers, tamaño) y sustituye a la intuición.
+
+## Aprendizaje (retro)
+
+Tras cada proyecto o hito: `documentador` rellena `templates/retro.md`; el Jefe separa **éxitos** (workflow reutilizable) de **fallos** (lección correctiva). Una lección se **promueve** (a ficha de rol, matriz de skills o skill nueva) solo si se repite en ≥2 proyectos o es un fallo grave; se registra en `docs/aprendizaje.md` y, si cambia una regla, en un ADR. Mecánica inspirada en `skill_learning.py` de Skill-3D.
+
+## Toolkit 3D (opcional)
+
+`disenador-3d` y las tareas de visión 3D pueden apoyarse en el toolkit de Skill-3D (Depth Anything 3, SAM 3, Grounding DINO, Pi3, SwinIR, Orient Anything) como servicios locales con GPU. Detalle, puertos y permisos: `skills/el-jefe-team/references/toolkit-3d.md`.
+
 ## Flujo de un proyecto
 
 1. Grilling (fase 0).

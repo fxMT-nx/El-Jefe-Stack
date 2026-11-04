@@ -125,9 +125,25 @@ def check_relative_links() -> None:
                 fail(f"enlace roto en {md.relative_to(ROOT)}: {target}")
 
 
+def check_scripts() -> None:
+    import py_compile
+
+    scripts = sorted((ROOT / "scripts").glob("*.py"))
+    if not scripts:
+        fail("no hay scripts Python en scripts/")
+    for path in scripts:
+        try:
+            py_compile.compile(str(path), doraise=True)
+        except py_compile.PyCompileError as exc:
+            fail(f"script no compila: {path.relative_to(ROOT)}: {exc.msg}")
+    if not (ROOT / "scripts" / "skill_router.py").exists():
+        fail("falta scripts/skill_router.py")
+
+
 def main() -> int:
     check_preset()
     check_skill()
+    check_scripts()
     check_relative_links()
     if errors:
         print("El Jefe Stack: validación FALLIDA")
