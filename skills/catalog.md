@@ -22,6 +22,12 @@ El repo incluye la skill propia (`el-jefe-team`). Las externas **no se vendoriza
 | `frontend-design`, `algorithmic-art`, `canvas-design` | `anthropics/skills` |
 | `antfu-web-design-guidelines` | `JetBrains/skills` |
 
+## 3D web
+
+| Skill | Repo | Aporta |
+|---|---|---|
+| `threejs` | `CloudAI-X/threejs-skills` (MIT, ~3.9k★, r186) | bundle de 13 docs (fundamentals, geometry, materials, textures, lighting, loaders, asset-pipeline, animation, interaction, shaders, postprocessing, performance, R3F). Aquí se instala como **skill paraguas** con 53 referencias troceadas: `python scripts/install_threejs_skill.py` |
+
 ## SEO/GEO, marketing y contenido
 
 | Skill | Repo | Aporta |

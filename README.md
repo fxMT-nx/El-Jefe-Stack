@@ -15,6 +15,7 @@ El usuario manda. El Jefe manda al equipo. Y el Jefe habla conmigo, nunca al rev
 │   └── README.md
 ├── skills/
 │   ├── el-jefe-team/       # Skill de orquestación (SKILL.md + references/)
+│   ├── threejs/            # Paraguas 3D web (instalable con scripts/install_threejs_skill.py)
 │   └── catalog.md          # Skills externas, de dónde vienen y cómo se instalan
 ├── docs/
 │   ├── INSTALL.md          # Instalación paso a paso y troubleshooting

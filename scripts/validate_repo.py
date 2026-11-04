@@ -140,9 +140,34 @@ def check_scripts() -> None:
         fail("falta scripts/skill_router.py")
 
 
+def check_threejs() -> None:
+    path = ROOT / "skills" / "threejs" / "SKILL.md"
+    text = read(path)
+    if not text:
+        return
+    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if not m:
+        fail("skills/threejs/SKILL.md sin frontmatter")
+    else:
+        try:
+            import yaml
+
+            fm = yaml.safe_load(m.group(1))
+        except Exception as exc:  # noqa: BLE001
+            fail(f"frontmatter de threejs inválido: {exc}")
+            fm = {}
+        if fm.get("name") != "threejs":
+            fail("skills/threejs/SKILL.md debe declarar name: threejs")
+    if len(text) > 8192:
+        fail(f"skills/threejs/SKILL.md supera 8192 caracteres ({len(text)})")
+    if not (ROOT / "scripts" / "install_threejs_skill.py").exists():
+        fail("falta scripts/install_threejs_skill.py")
+
+
 def main() -> int:
     check_preset()
     check_skill()
+    check_threejs()
     check_scripts()
     check_relative_links()
     if errors:

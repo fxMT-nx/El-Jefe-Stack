@@ -69,6 +69,11 @@ INTENT_RULES = [
         ("3d", "modelado", "blender", "gltf", "pbr", "textur", "escena"),
         ("media-use", "motion-design", "canvas-design", "algorithmic-art", "hyperframes-animation"),
     ),
+    (
+        "web3d",
+        ("threejs", "three.js", "webgl", "r3f", "react three fiber", "shader", "gltf viewer", "escena web"),
+        ("threejs",),
+    ),
 ]
 
 

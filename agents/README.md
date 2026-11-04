@@ -6,7 +6,7 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 |---|---|---|---|
 | `movil-ui` | Frontend móvil | `roles-movil.md` | apple-design, ui-animation, motion-design, ui-design, frontend-design, emil-design-eng, design-taste-frontend, modern-web-guidance, find-animation-opportunities, review-animations |
 | `movil-api` | Backend móvil | `roles-movil.md` | supabase-postgres-best-practices, security-best-practices, vitest, playwright |
-| `web-ui` | Frontend web | `roles-web.md` | design-taste-frontend, frontend-design, ui-design, apple-design, emil-design-eng, motion-design, ui-animation, animate, animation-vocabulary, find-animation-opportunities, improve-animations, review-animations, web-design-guidelines / antfu-web-design-guidelines, modern-web-guidance, vercel-react-best-practices, vite, vitest, ui-verification, webapp-testing, code-simplification, algorithmic-art / canvas-design |
+| `web-ui` | Frontend web | `roles-web.md` | design-taste-frontend, frontend-design, ui-design, apple-design, emil-design-eng, motion-design, ui-animation, animate, animation-vocabulary, find-animation-opportunities, improve-animations, review-animations, web-design-guidelines / antfu-web-design-guidelines, modern-web-guidance, vercel-react-best-practices, vite, vitest, ui-verification, webapp-testing, code-simplification, threejs (3D web), algorithmic-art / canvas-design |
 | `web-api` | Backend web | `roles-web.md` | supabase-postgres-best-practices, security-best-practices, vitest, playwright, modern-web-guidance, code-review-and-quality, code-simplification |
 | `investigador` | Research con fuentes | `roles-research.md` | browseros-neo, playwright, webapp-testing, modern-web-guidance + fuentes de descubrimiento |
 | `infra` | Infraestructura | `roles-infra-seguridad.md` | security-best-practices, security-threat-model, playwright, vitest |
@@ -17,7 +17,7 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 | `seo-geo` | SEO técnico y GEO | `roles-seo-marketing.md` | seo, seo-technical, seo-content, seo-schema, seo-geo, ui-verification, webapp-testing, playwright, browseros-neo, modern-web-guidance |
 | `marketing` | Posicionamiento y crecimiento | `roles-seo-marketing.md` | product-marketing, copywriting, cro, emails, launch, brand, design-taste-frontend, product-launch-video, media-use, browseros-neo, office-* |
 | `qa-critico` | QA crítico | `roles-qa-3d.md` | code-review-and-quality, playwright, webapp-testing, ui-verification, vitest, agent-desktop, security-best-practices |
-| `disenador-3d` | Diseño 3D | `roles-qa-3d.md` | media-use, motion-design, hyperframes-animation, canvas-design, algorithmic-art |
+| `disenador-3d` | Diseño 3D | `roles-qa-3d.md` | media-use, motion-design, hyperframes-animation, canvas-design, algorithmic-art, threejs (visor/3D web) |
 | `becario` | Generalista | `roles-becario.md` | agent-desktop, office-*, browseros-neo, playwright (y cualquiera según el encargo) |
 
 ## Reglas

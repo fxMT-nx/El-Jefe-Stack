@@ -35,7 +35,7 @@ if (Test-Path $profilePatch) {
   Check "sin preset nuevo declarado (evita dsh-scope)" (-not ($p -match 'id: preset-jefe'))
 }
 
-foreach ($s in @('grilling','domain-modeling','seo','copywriting','emil-design-eng','ui-animation')) {
+foreach ($s in @('grilling','domain-modeling','seo','copywriting','emil-design-eng','ui-animation','threejs')) {
   Check "skill externa: $s" (Test-Path (Join-Path $AgentsSkillsDir "$s\SKILL.md"))
 }
 

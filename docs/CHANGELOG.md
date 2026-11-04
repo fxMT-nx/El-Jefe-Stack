@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+- **Three.js**: skill paraguas `threejs` (r186) con 53 referencias troceadas (≤7 KB) a partir del bundle `CloudAI-X/threejs-skills` (MIT), más instalador reproducible `scripts/install_threejs_skill.py`.
+- Enganches: `web-ui` y `disenador-3d` en la matriz y el roster; intención `web3d` en el router; catálogo y verificación actualizados.
+
 ## 1.2.0
 
 - **Router de skills** (`scripts/skill_router.py`): ranking explicable de skills instaladas por tarea, inspirado en `skill_retrieval.py` de Skill-3D. Salida humana o JSON y `--build-index`.

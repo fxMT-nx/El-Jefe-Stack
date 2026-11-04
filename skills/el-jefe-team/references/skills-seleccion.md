@@ -15,7 +15,7 @@
 | El Jefe | `grilling`, `grill-with-docs`, `domain-modeling`, `el-jefe-team` (obligatoria al empezar), `writing-plans` (planificar), `brand` (tono de producto) |
 | `movil-ui` | `apple-design` (iOS), `ui-animation`, `motion-design`, `ui-design`, `frontend-design`, `emil-design-eng`, `design-taste-frontend`, `modern-web-guidance`, `find-animation-opportunities`, `review-animations` |
 | `movil-api` | `supabase-postgres-best-practices`, `security-best-practices`, `vitest` (móvil/backend), `playwright` (e2e) |
-| `web-ui` | `design-taste-frontend`, `frontend-design`, `ui-design`, `apple-design`, `emil-design-eng`, `motion-design`, `ui-animation`, `animate`, `animation-vocabulary`, `find-animation-opportunities`, `improve-animations`, `review-animations`, `web-design-guidelines` o `antfu-web-design-guidelines`, `modern-web-guidance`, `vercel-react-best-practices`, `vite`, `vitest`, `ui-verification`, `webapp-testing`, `code-simplification`, `algorithmic-art`/`canvas-design` (assets visuales) |
+| `web-ui` | `design-taste-frontend`, `frontend-design`, `ui-design`, `apple-design`, `emil-design-eng`, `motion-design`, `ui-animation`, `animate`, `animation-vocabulary`, `find-animation-opportunities`, `improve-animations`, `review-animations`, `web-design-guidelines` o `antfu-web-design-guidelines`, `modern-web-guidance`, `vercel-react-best-practices`, `vite`, `vitest`, `ui-verification`, `webapp-testing`, `code-simplification`, `threejs` (3D web), `algorithmic-art`/`canvas-design` (assets visuales) |
 | `web-api` | `supabase-postgres-best-practices`, `security-best-practices`, `vitest`, `playwright`, `modern-web-guidance` (APIs web), `code-review-and-quality`, `code-simplification` |
 | `investigador` | `browseros-neo`, `playwright`, `webapp-testing`, `modern-web-guidance`; fuentes de descubrimiento de abajo |
 | `infra` | `security-best-practices`, `security-threat-model`, `playwright` (smoke e2e), `vitest` |
@@ -26,7 +26,7 @@
 | `seo-geo` | `seo`, `seo-technical`, `seo-content`, `seo-schema`, `seo-geo`, `ui-verification` (CWV), `webapp-testing`/`playwright` (render), `browseros-neo` (SERP y visibilidad IA), `modern-web-guidance` |
 | `marketing` | `product-marketing`, `copywriting`, `cro`, `emails`, `launch`, `brand`, `design-taste-frontend` (landing), `product-launch-video`, `media-use`, `browseros-neo` (competencia), `office-*` |
 | `qa-critico` | `code-review-and-quality`, `playwright`, `webapp-testing`, `ui-verification`, `vitest`, `agent-desktop` (apps de escritorio), `security-best-practices` (casos de abuso) |
-| `disenador-3d` | `media-use`, `motion-design`, `hyperframes-animation` (cámara/motion), `canvas-design`, `algorithmic-art` |
+| `disenador-3d` | `media-use`, `motion-design`, `hyperframes-animation` (cámara/motion), `canvas-design`, `algorithmic-art`, `threejs` (visor/3D web) |
 | `becario` | `agent-desktop`, `office-*`, `browseros-neo`, `playwright`; cualquier otra según el encargo |
 
 > Nota: `web-design-guidelines`, `antfu-web-design-guidelines` y `vercel-labs-web-design-guidelines` se solapan (las dos primeras comparten `name:` y el catálogo solo registra una). Usa la que esté disponible y, si hace falta la otra, léela del directorio `~/.agents/skills/...` directamente.
