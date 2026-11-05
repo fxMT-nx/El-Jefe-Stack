@@ -21,12 +21,13 @@ El usuario manda. El Jefe manda al equipo. Y el Jefe habla conmigo, nunca al rev
 │   ├── INSTALL.md          # Instalación paso a paso y troubleshooting
 │   ├── ARQUITECTURA.md     # Cómo funciona el equipo por dentro
 │   └── CHANGELOG.md
-├── templates/              # estado.md (snapshot), memoria/, skills-plan, retro, GLOSSARY, ADR, bitácora
+├── templates/              # estado.md (snapshot), memoria/, skills-plan, retro, GLOSSARY, ADR, bitácora, revisión de acabados
 ├── scripts/
 │   ├── install.ps1         # Instala skill + aplica el preset (con backups)
 │   ├── verify.ps1          # Comprueba que todo está en su sitio
 │   ├── skill_router.py     # Ranking explicable de skills para una tarea
 │   ├── skills_check.py     # Valida/inicializa el triaje de skills (40-skills) e inventaría el catálogo
+│   ├── skill_pack.py       # Trocea las skills largas (>8192) para que no se trunquen al cargarlas
 │   └── memory_check.py     # Valida/inicializa la memoria viva de un proyecto
 └── LICENSE
 ```
@@ -62,6 +63,28 @@ Detalle completo en [`agents/README.md`](agents/README.md).
 8. **Agentes bajo demanda.** Si falta una especialidad, El Jefe **crea el rol que hace falta**: ficha completa (misión, brief, entregable, checklist, límites), 1–3 skills elegidas o buscadas e instaladas, y brief autocontenido. Si el rol se reutiliza, su ficha vive en `agents/custom/`. Procedimiento y dónde buscar skills: `skills/el-jefe-team/references/agentes-nuevos.md`.
 9. **Router de skills.** Antes de encargar, el equipo puede rankear las skills instaladas contra la tarea: `python scripts/skill_router.py "<tarea>"` (mecánica de recuperación inspirada en Skill-3D). Declara la combinación elegida.
 10. **Retro y aprendizaje.** Al cerrar un proyecto, `templates/retro.md`: éxitos → workflows a repetir, fallos → lecciones correctivas. Lo repetido en ≥2 proyectos se promueve a la ficha del rol, a la matriz o a una skill nueva. Detalle: `skills/el-jefe-team/references/aprendizaje.md`.
+
+## Criterio y acabados
+
+El equipo no solo ejecuta: **decide y rechaza**. Dos referencias nuevas sostienen esa capa y se aplican a cualquier entrega, sin gastar cupo de triaje:
+
+- `skills/el-jefe-team/references/criterio.md` — **cómo se decide**: jerarquía cuando hay conflicto (**confianza → accesibilidad → corrección técnica → psicología**), negocio (SBA, ICP con disqualifying, unit economics LTV/CAC ≥ 3 y payback ≤ 12 meses), psicología ética frente a dark patterns, producto (JTBD, time-to-value, retención por cohorte), decisiones (rúbrica 0–10, muestra precomprometida, una sola fuente de verdad) y un interrogatorio de 10 preguntas antes de aprobar.
+- `skills/el-jefe-team/references/acabados.md` — **lo que el usuario juzga**: lo que se nota sin poder nombrarlo. Review en 8 segundos, capturas a 1440/768/390 con estados forzados, severidad **P0–P3**, checklist por capas y rúbrica. Se publica con **media ≥ 8**, **ninguna capa < 7** y **cero P0/P1**; «se ve bien» no es una revisión.
+- Plantilla para no improvisar el veredicto: `templates/revision-acabados.md`.
+- Puerta por entregable y anti-patrones: `skills/el-jefe-team/references/puertas-calidad.md`.
+
+## Skills sin truncar (`skill_pack.py`)
+
+El pruner de sesión recorta los resultados de herramienta a **8.192 caracteres**: una skill más larga llegaba al agente a medias y el agente no veía las reglas del medio. `scripts/skill_pack.py` lo arregla troceando la skill, no recortándola:
+
+```bash
+python scripts/skill_pack.py --audit                      # tamaño y estado de cada skill
+python scripts/skill_pack.py --split <skill> [--inline "Encabezado"]
+python scripts/skill_pack.py --verify                     # límites, partes e índice
+python scripts/skill_pack.py --restore <skill>            # deshace el troceo
+```
+
+Deja en `SKILL.md` frontmatter, intro, las reglas clave y un índice con enlaces relativos; el cuerpo va a `references/parte-NN-<slug>.md` (≤7.000 caracteres) y el original se conserva en `references/00-original.md`. No duplica ni pierde texto: cada sección acaba en un solo sitio y el script lo comprueba antes de escribir. En la v1.6.0 pasaron de 43 skills por encima del límite a **0 de 84**.
 
 ## Memoria viva
 

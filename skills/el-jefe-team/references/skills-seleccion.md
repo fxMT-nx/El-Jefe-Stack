@@ -17,10 +17,11 @@ Ninguna fase, tarea ni entregable sin **triaje explícito** de skills y herramie
 | Fase | Mínimo |
 |---|---|
 | Fase 0 / plan | `grilling` (+ `writing-plans` al planificar) y mapa de skills en `docs/memoria/40-skills.md` |
-| Diseño / UI | 1 skill de diseño + 1 de verificación (`ui-verification`/`webapp-testing`/`web-design-guidelines`) |
+| Diseño / UI | 1 skill de diseño + 1 de verificación (`ui-verification`/`webapp-testing`/`web-design-guidelines`) + **revisión de acabados con capturas** (`acabados.md`) |
 | Construcción API/BD | `security-best-practices`/`supabase-postgres-best-practices` + `vitest` |
 | Seguridad | `security-threat-model` + `security-best-practices` |
 | Deploy / publicación | `playwright`/`vitest` (smoke) + `seo-geo`/`marketing` si hay visibilidad |
+| Marketing / copy | claims con evidencia y unit economics (`criterio.md`) + `copy-editing`/`taste-ux-copy` |
 | Entrega / documentación | `office-*`/`changelog-automation`/`brand` según el entregable |
 
 Detalle por tipo de trabajo, ejemplos y waivers: [triaje-skills.md](triaje-skills.md). Validación del registro: `python scripts/skills_check.py <proyecto>`.
@@ -29,10 +30,10 @@ Detalle por tipo de trabajo, ejemplos y waivers: [triaje-skills.md](triaje-skill
 
 | Rol | Skills preferidas (no exclusivas) |
 |---|---|
-| El Jefe | `grilling`, `grill-with-docs`, `domain-modeling`, `el-jefe-team` (obligatoria al empezar), `writing-plans` (planificar), `brand` (tono de producto) |
+| El Jefe | `grilling`, `grill-with-docs`, `domain-modeling`, `el-jefe-team` (obligatoria al empezar), `writing-plans` (planificar), `brand` (tono de producto), `analytics` (qué se mide), `attribution` (una sola fuente de verdad), `customer-research` (voz del cliente) |
 | `movil-ui` | `apple-design` (iOS), `ui-animation`, `motion-design`, `ui-design`, `frontend-design`, `emil-design-eng`, `design-taste-frontend`, `modern-web-guidance`, `find-animation-opportunities`, `review-animations` |
 | `movil-api` | `supabase-postgres-best-practices`, `security-best-practices`, `vitest` (móvil/backend), `playwright` (e2e) |
-| `web-ui` | `design-taste-frontend`, `frontend-design`, `ui-design`, `apple-design`, `emil-design-eng`, `motion-design`, `ui-animation`, `animate`, `animation-vocabulary`, `find-animation-opportunities`, `improve-animations`, `review-animations`, `web-design-guidelines` o `antfu-web-design-guidelines`, `modern-web-guidance`, `vercel-react-best-practices`, `vite`, `vitest`, `ui-verification`, `webapp-testing`, `code-simplification`, `threejs` (3D web), `algorithmic-art`/`canvas-design` (assets visuales) |
+| `web-ui` | `design-taste-frontend`, `frontend-design`, `ui-design`, `apple-design`, `emil-design-eng`, `motion-design`, `ui-animation`, `animate`, `animation-vocabulary`, `find-animation-opportunities`, `improve-animations`, `review-animations`, `web-design-guidelines` o `antfu-web-design-guidelines`, `modern-web-guidance`, `vercel-react-best-practices`, `vite`, `vitest`, `ui-verification`, `webapp-testing`, `code-simplification`, `threejs` (3D web), `algorithmic-art`/`canvas-design` (assets visuales), `ux-heuristics` (usabilidad), `taste-design-review` (revisión visual), `taste-ux-copy` (microcopy), `taste-accessibility` (a11y) |
 | `web-api` | `supabase-postgres-best-practices`, `security-best-practices`, `vitest`, `playwright`, `modern-web-guidance` (APIs web), `code-review-and-quality`, `code-simplification` |
 | `investigador` | `browseros-neo`, `playwright`, `webapp-testing`, `modern-web-guidance`; fuentes de descubrimiento de abajo |
 | `infra` | `security-best-practices`, `security-threat-model`, `playwright` (smoke e2e), `vitest` |
@@ -41,12 +42,14 @@ Detalle por tipo de trabajo, ejemplos y waivers: [triaje-skills.md](triaje-skill
 | `documentador` | `changelog-automation`, `domain-modeling` (términos), `architecture-decision-records`, `office-*` (informes), `writing-plans` |
 | `memoria` | `domain-modeling` (glosario + ADR), `architecture-decision-records`, `writing-plans`, `office-*` (resúmenes) |
 | `seo-geo` | `seo`, `seo-technical`, `seo-content`, `seo-schema`, `seo-geo`, `ui-verification` (CWV), `webapp-testing`/`playwright` (render), `browseros-neo` (SERP y visibilidad IA), `modern-web-guidance` |
-| `marketing` | `product-marketing`, `copywriting`, `cro`, `emails`, `launch`, `brand`, `design-taste-frontend` (landing), `product-launch-video`, `media-use`, `browseros-neo` (competencia), `office-*` |
-| `qa-critico` | `code-review-and-quality`, `playwright`, `webapp-testing`, `ui-verification`, `vitest`, `agent-desktop` (apps de escritorio), `security-best-practices` (casos de abuso) |
+| `marketing` | `product-marketing`, `copywriting`, `cro`, `emails`, `launch`, `brand`, `design-taste-frontend` (landing), `product-launch-video`, `media-use`, `browseros-neo` (competencia), `office-*`, `obviously-awesome` (posicionamiento), `influence-psychology` (persuasión ética), `marketing-psychology` (sesgos), `founder-pricing`/`monetizing-innovation` (precio), `founder-offer` (oferta), `founder-cfo` (unit economics), `jobs-to-be-done` (trabajo del cliente), `improve-retention` (retención), `copy-editing` (limpiar copy), `customer-research` (voz del cliente), `analytics` + `attribution` (medir y reconciliar) |
+| `qa-critico` | `code-review-and-quality`, `playwright`, `webapp-testing`, `ui-verification`, `vitest`, `agent-desktop` (apps de escritorio), `security-best-practices` (casos de abuso), `taste-design-review` (review visual P0–P3), `ux-heuristics` (usabilidad) |
 | `disenador-3d` | `media-use`, `motion-design`, `hyperframes-animation` (cámara/motion), `canvas-design`, `algorithmic-art`, `threejs` (visor/3D web) |
 | `becario` | `agent-desktop`, `office-*`, `browseros-neo`, `playwright`; cualquier otra según el encargo |
 
 > Nota: `web-design-guidelines`, `antfu-web-design-guidelines` y `vercel-labs-web-design-guidelines` se solapan (las dos primeras comparten `name:` y el catálogo solo registra una). Usa la que esté disponible y, si hace falta la otra, léela del directorio `~/.agents/skills/...` directamente.
+
+> **Capa de criterio (v1.6.0).** [`criterio.md`](criterio.md) y [`acabados.md`](acabados.md) **no son skills**: son el criterio que se aplica a cualquier entrega y no consumen cupo de triaje. `memoria` y `documentador` no reciben skills nuevas a propósito: su trabajo es registrar y verificar, no decidir producto.
 
 ## Grilling (fase 0 del proyecto)
 
@@ -72,6 +75,6 @@ Fuentes donde buscar antes de inventar:
 
 **Cómo instalar:** preferible `npx skills add owner/repo --skill nombre`; si no, clon shallow y copia el directorio de skill a `~/.agents/skills/<nombre>/` verificando frontmatter (`name:` y `description:`).
 
-**Procedencia de lo instalado:** las skills SEO/GEO, marketing, documentación y calidad vienen de `AgriciDaniel/claude-seo` (MIT), `coreyhaines31/marketingskills` (MIT), `wshobson/agents` (MIT), `addyosmani/agent-skills` (MIT) y `dmmulroy/anti-slop`. `grilling`, `grill-me`, `grill-with-docs` y `domain-modeling` vienen de `mattpocock/skills` (MIT). El repo `kraayenjon/agent-skills-es` resultó ser un **índice**, no un pack de skills: se usa como fuente de descubrimiento, no como origen.
+**Procedencia de lo instalado:** las skills SEO/GEO, marketing, documentación y calidad vienen de `AgriciDaniel/claude-seo` (MIT), `coreyhaines31/marketingskills` (MIT), `wshobson/agents` (MIT), `addyosmani/agent-skills` (MIT) y `dmmulroy/anti-slop`. `grilling`, `grill-me`, `grill-with-docs` y `domain-modeling` vienen de `mattpocock/skills` (MIT). El repo `kraayenjon/agent-skills-es` resultó ser un **índice**, no un pack de skills: se usa como fuente de descubrimiento, no como origen. Las 17 skills de criterio de la v1.6.0 vienen de `coreyhaines31/marketingskills`, `wondelai/skills`, `Jakeschincariol/founder-skill` y `madebymustafa/design-taste` (MIT las cuatro): cada una lleva su `SOURCE.md` con repo, commit y licencia.
 
 **Permisos:** instalar una skill local es zona 🟡 para el especialista que la propone (la aprueba El Jefe). Si implica instalar software global, tocar el sistema o una licencia dudosa, El Jefe te lo consulta antes (🔴).

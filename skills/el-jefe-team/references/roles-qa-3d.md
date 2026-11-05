@@ -19,6 +19,8 @@
 - Rendimiento percibido y errores de consola/red.
 - Intentar el "camino raro": doble clic, refresh a mitad, atrás, red lenta, sesión expirada.
 
+**Criterio y acabado.** Aplica la puerta P0–P3 de [`acabados.md`](acabados.md) con [`criterio.md`](criterio.md) detrás: nota por capa con hueco declarado, media ≥ 8 y cero P0/P1 para aprobar; «se ve bien» no es una revisión.
+
 **Límites.** No reescribe la feature para "arreglarla" salvo encargo explícito; reporta. No marca como pasado nada que no ejecutó. No acepta "es que el entorno" sin reproducirlo en el entorno indicado.
 
 **Prompt de arranque.**
@@ -43,6 +45,8 @@
 - Texturas optimizadas (potencia de 2 si el destino lo requiere, compresión adecuada).
 - LODs o versión low-poly si el destino lo pide; sin exceder el presupuesto.
 - Export probado en el destino real, no solo en el modelador.
+
+**Criterio y acabado.** [`acabados.md`](acabados.md): el render se juzga en el destino (el export abierto y mirado, no el visor); escala, materiales PBR y presupuesto de triángulos con evidencia, no con impresión.
 
 **Límites.** No compra assets ni usa licencias dudosas: propone alternativas libres. No cambia la dirección artística sin aprobación. No entrega solo el .blend: entrega export listo y validado.
 

@@ -73,6 +73,7 @@ alcance: <archivos/carpetas que posee> — no toques fuera de esto
 restricciones: <versiones, estilo, sin dependencias nuevas salvo justificar>
 skills esperadas: <1–3 y mínimos de triaje-skills.md; o waiver aprobado>
 herramientas esperadas: <MCP, CLI u office; o waiver aprobado>
+criterio aplicable: <usuario y trabajo que resuelve, número de negocio, acabado esperado>
 criterio de aceptación: <comprobable: tests, comando, comportamiento>
 evidencia requerida: <tests ejecutados, comandos, capturas, fuentes>
 formato de salida: <diff/resumen, archivos, riesgos, pendientes>
@@ -87,18 +88,9 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 - Espera: `wait_agent` cuando dependas de un miembro; al despertar, re-lista (`list_agents`, `team_task_list`).
 - Conflictos de archivos: secuencia con `blocked_by` o asigna un único dueño.
 
-## Puertas de calidad
+## Criterio y acabados
 
-- Código nuevo: compila + tests relevantes en verde + sin secretos en el diff.
-- UI: estados vacío/carga/error, a11y básica (foco, teclado, contraste), responsive.
-- API: validación de entrada, errores tipados, authz probada, migración reversible.
-- Seguridad: permisos mínimos, dependencias auditadas, hallazgos con severidad y fix.
-- Datos/infra: despliegue, rollback y backup.
-- Documentación: hechos verificados, comandos probados, audiencia declarada.
-- Memoria: `docs/estado.md` al día con decisiones, pendientes y siguiente paso.
-- SEO/GEO: metadatos, schema y CWV verificados; contenido citable.
-- Marketing: claims comprobables y métricas definidas antes de publicar.
-- 3D: escala/unidades, orientación, presupuesto de triángulos, materiales PBR y export probado en el destino.
+Se juzga por el usuario final: *funciona* si hace lo que dice; está *acabado* si alguien que no lo escribió lo usa sin que le expliquen nada. En conflicto manda: **confianza → accesibilidad → corrección técnica → psicología**; si para subir una métrica hay que engañar a alguien, ya respondió la primera. Toda entrega con UI, copy o marketing: **revisión P0–P3** con nota por capa (**media ≥ 8**, **ninguna capa < 7**, **cero P0/P1**) o vuelve con los huecos escritos. Detalle: `criterio.md`, `acabados.md` y `puertas-calidad.md` (por entregable); plantilla: `templates/revision-acabados.md`.
 
 ## Anti-patrones
 
@@ -109,3 +101,4 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 - Usar al `becario` para decisiones que requieren un especialista (o dejar su trabajo sin revisar).
 - Ejecutar una acción de zona roja sin preguntar al usuario, o que un teammate se salte a El Jefe.
 - Cambiar de stack a mitad de proyecto sin decisión del usuario, o reportar éxito sin comprobaciones.
+- Entregar genérico o de plantilla sin criterio: si no puedes decir qué decidiste y por qué, no está acabado.

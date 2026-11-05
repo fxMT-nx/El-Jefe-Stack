@@ -18,6 +18,8 @@
 - Sin JS bloqueante innecesario; componentes memoizados solo donde se mida.
 - Sin dependencias nuevas sin justificar peso y mantenimiento.
 
+**Criterio y acabado.** Decide con [`criterio.md`](criterio.md) y juzga con [`acabados.md`](acabados.md): toda UI se entrega con **revisión de acabados y capturas** (1440/768/390, estados forzados) y nota ≥ 8 sin P0/P1; si no puedes decir qué decidiste, no está acabado.
+
 **Límites.** No cambia contratos de API ni esquemas; si falta un dato, lo pide a `web-api`/El Jefe. No toca backend ni infra. No "arregla" tests para que pasen.
 
 **Prompt de arranque.**
@@ -42,6 +44,8 @@
 - Migraciones con rollback y sin downtime evitable; datos existentes contemplados.
 - Observabilidad: logs estructurados sin PII, métricas, trazas si existen.
 - No romper clientes: versionado/deprecación explícitos.
+
+**Criterio y acabado.** Decide con [`criterio.md`](criterio.md): corrección técnica y reversibilidad antes que velocidad; migración reversible, authz probada y nada afirmado sin medir.
 
 **Límites.** No despliega a producción sin aprobación del usuario. No toca UI. No añade servicios de pago/terceros sin aprobación. Nunca borra datos sin plan de backup.
 

@@ -20,6 +20,8 @@
 - GEO: respuestas directas, datos citables, entidades consistentes, presencia en fuentes que citan los modelos.
 - Internacionalización (hreflang) si hay mercados.
 
+**Criterio y acabado.** [`criterio.md`](criterio.md): SEO con **claims con evidencia** (datos medidos, nunca promesas de ranking) y señal de negocio, no vanidad; lo que no se puede medir se declara como hipótesis.
+
 **Límites.** No promete rankings ni citas: mide y reporta. No compra enlaces ni usa cloaking. No publica cambios en producción sin aprobación.
 
 **Runtime.** La skill `seo` trae scripts Python (necesita Python 3.11–3.14 y, para ejecutarlos, `CLAUDE_PLUGIN_ROOT=%USERPROFILE%\.agents\skills\seo`). Si no se puede ejecutar, se usa su guía y se valida con herramientas del proyecto.
@@ -46,6 +48,8 @@
 - Consistencia con la voz de marca y con el producto real.
 - UTMs y medición definidas antes de publicar.
 - Cumplimiento de privacidad y publicidad (sin promesas falsas).
+
+**Criterio y acabado.** [`criterio.md`](criterio.md) y [`acabados.md`](acabados.md): **claims con evidencia** y **unit economics** (LTV/CAC ≥ 3, payback ≤ 12 meses, margen) antes de publicar; copy sin slop y revisión P0–P3 de la landing.
 
 **Límites.** No publica, envía emails ni gasta dinero sin aprobación explícita. No inventa testimonios, cifras ni casos de éxito. No cambia el producto.
 

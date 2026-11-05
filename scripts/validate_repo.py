@@ -3,6 +3,12 @@
 
 Sin dependencias más allá de PyYAML. Pensado para correr en CI y en local:
     python scripts/validate_repo.py
+
+Desde la 1.6.0 comprueba además el empaquetador de skills (`scripts/skill_pack.py`)
+con un troceo de verdad en un directorio temporal: límite de 8.192 caracteres,
+índice con partes existentes, idempotencia y restauración exacta del original.
+Los documentos de `docs/research/` son material de trabajo que no se publica:
+sus enlaces no forman parte del entregable y no se validan.
 """
 from __future__ import annotations
 
@@ -11,6 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRATCH_DIRS = ("docs/research",)  # material de trabajo, no entregable
 errors: list[str] = []
 
 
@@ -77,6 +84,10 @@ def check_preset() -> None:
         fail("la persona no contiene 'Eres El Jefe'")
     if "Fase 0" not in prefix:
         fail("la persona no menciona la fase 0")
+    if "Juzga con criterio de negocio, psicología y acabados" not in prefix:
+        fail("a la persona le falta la viñeta de criterio y acabados (v1.6.0)")
+    if "revisión P0–P3" not in prefix:
+        fail("la persona no menciona la revisión P0–P3")
 
     # el ejemplo MCP debe ser YAML válido también
     mcp = ROOT / "preset" / "mcp-browseros.example.yml"
@@ -112,11 +123,22 @@ def check_skill() -> None:
         fail(f"SKILL.md supera 8192 caracteres ({len(text)}); DSH lo podará al cargarlo")
 
     refs = sorted((skill_dir / "references").glob("*.md"))
-    if len(refs) < 10:
-        fail(f"pocas fichas de referencia: {len(refs)}")
+    if len(refs) < 20:
+        fail(f"pocas fichas de referencia: {len(refs)} (v1.6.0 exige 20)")
+    for nombre in ("criterio.md", "acabados.md", "puertas-calidad.md", "triaje-skills.md", "skills-seleccion.md"):
+        if not (skill_dir / "references" / nombre).exists():
+            fail(f"falta la referencia obligatoria references/{nombre}")
     for ref in refs:
         if not read(ref).strip():
             fail(f"referencia vacía: {ref.relative_to(ROOT)}")
+
+    for nombre in ("criterio.md", "acabados.md", "puertas-calidad.md", "revision-acabados.md"):
+        if nombre not in text:
+            fail(f"SKILL.md no menciona {nombre}")
+    if "Criterio y acabados" not in text:
+        fail("SKILL.md no tiene la sección «Criterio y acabados»")
+    if "Entregar genérico o de plantilla sin criterio" not in text:
+        fail("SKILL.md no tiene el anti-patrón de entregar genérico sin criterio")
 
     for link in sorted(set(re.findall(r"`(references/[a-z0-9\-]+\.md)`", text))):
         if not (skill_dir / link).exists():
@@ -126,6 +148,9 @@ def check_skill() -> None:
 def check_relative_links() -> None:
     for md in ROOT.rglob("*.md"):
         if ".git" in md.parts:
+            continue
+        relative = md.relative_to(ROOT).as_posix()
+        if any(relative.startswith(skip) for skip in SCRATCH_DIRS):
             continue
         text = read(md)
         for target in re.findall(r"\]\(([^)#][^)]+)\)", text):
@@ -322,6 +347,89 @@ def check_skills_protocol() -> None:
         fail(f"smoke test de skills_check falló: {exc}")
 
 
+def check_skill_pack() -> None:
+    """Empaquetador: ficheros, límite en el repo y troceo real de una skill de prueba."""
+    script = ROOT / "scripts" / "skill_pack.py"
+    if not script.exists():
+        fail("falta scripts/skill_pack.py")
+        return
+    if not (ROOT / "templates" / "revision-acabados.md").exists():
+        fail("falta templates/revision-acabados.md (plantilla de revisión de acabados)")
+    for skill_md in sorted((ROOT / "skills").glob("*/SKILL.md")):
+        text = read(skill_md)
+        if len(text) > 8192:
+            fail(f"{rel(skill_md)} supera 8192 caracteres ({len(text)}); el pruner lo recortaría")
+
+    import subprocess
+    import tempfile
+
+    def run(*args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            [sys.executable, str(script), *args],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+        )
+
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "skills"
+            skill = root / "demo"
+            (skill / "references").mkdir(parents=True)
+            relleno = "Frase de relleno con su punto. " * 90
+            original = (
+                "---\nname: demo\ndescription: skill de prueba del empaquetador\n---\n\n"
+                "# Demo\n\nIntro corta de la skill de prueba.\n\n"
+                + "".join(f"## Sección {i}\n\n{relleno}\n\n" for i in range(1, 8))
+            )
+            skill_md = skill / "SKILL.md"
+            skill_md.write_text(original, encoding="utf-8")
+
+            if len(original) <= 8192:
+                fail("el smoke del empaquetador usa una skill que no supera el límite")
+                return
+            if run("--verify", "--root", str(root)).returncode == 0:
+                fail("skill_pack --verify no detecta una SKILL.md por encima del límite")
+
+            split = run("--split", "demo", "--root", str(root))
+            if split.returncode != 0:
+                fail(f"skill_pack --split falla: {(split.stderr or split.stdout).strip()[:300]}")
+                return
+            final = skill_md.read_text(encoding="utf-8")
+            partes = sorted((skill / "references").glob("parte-*.md"))
+            if len(final) > 8192:
+                fail(f"tras trocear, SKILL.md sigue en {len(final)} caracteres")
+            if len(partes) < 2:
+                fail(f"el troceo generó {len(partes)} parte(s); se esperaban 2 o más")
+            if "## Índice de referencias" not in final:
+                fail("el SKILL.md troceado no tiene «## Índice de referencias»")
+            for parte in partes:
+                if f"references/{parte.name}" not in final:
+                    fail(f"el índice no apunta a {parte.name}")
+                contenido = parte.read_text(encoding="utf-8")
+                if len(contenido) > 7000:
+                    fail(f"{parte.name} supera 7000 caracteres ({len(contenido)})")
+            if "Intro corta de la skill de prueba." not in final:
+                fail("el troceo perdió la intro")
+
+            if run("--verify", "--root", str(root)).returncode != 0:
+                fail("skill_pack --verify rechaza un troceo correcto")
+            if run("--split", "demo", "--root", str(root)).returncode != 0:
+                fail("skill_pack --split no es idempotente (debería avisar y salir 0)")
+
+            restore = run("--restore", "demo", "--root", str(root))
+            if restore.returncode != 0:
+                fail(f"skill_pack --restore falla: {(restore.stderr or restore.stdout).strip()[:300]}")
+            elif skill_md.read_text(encoding="utf-8") != original:
+                fail("skill_pack --restore no devuelve el SKILL.md original exacto")
+            elif (skill / "references" / "parte-01-x.md").exists() or list((skill / "references").glob("parte-*.md")):
+                fail("skill_pack --restore deja partes atrás")
+    except (OSError, subprocess.SubprocessError) as exc:
+        fail(f"smoke test de skill_pack falló: {exc}")
+
+
 def check_skills_reference_links() -> None:
     skill_dir = ROOT / "skills" / "el-jefe-team"
     text = read(skill_dir / "SKILL.md")
@@ -340,6 +448,7 @@ def main() -> int:
     check_skill()
     check_threejs()
     check_scripts()
+    check_skill_pack()
     check_skills_protocol()
     check_skills_reference_links()
     check_relative_links()

@@ -18,6 +18,8 @@
 - Sin lógica de negocio duplicada: consume el contrato acordado, no inventa endpoints.
 - Sin dependencias nuevas sin justificarlo (tamaño, licencia, mantenimiento).
 
+**Criterio y acabado.** [`criterio.md`](criterio.md) y [`acabados.md`](acabados.md): capturas en iOS y Android (modo oscuro y estados forzados incluidos), **revisión P0–P3** y nota ≥ 8 sin P0/P1 antes de dar una pantalla por terminada.
+
 **Límites.** No cambia el contrato de API ni el esquema de datos: si falta un campo, lo pide a `movil-api`/El Jefe. No toca el backend. No introduce librerías de UI pesadas sin aprobación.
 
 **Prompt de arranque.**

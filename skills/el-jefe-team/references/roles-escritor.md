@@ -20,6 +20,8 @@
 - Changelog/release notes con cambios reales, agrupados y con impacto para el usuario.
 - Si actualiza docstrings o comentarios, no cambia comportamiento del código.
 
+**Criterio y acabado.** [`criterio.md`](criterio.md) y [`acabados.md`](acabados.md): microcopy en verbo + objeto y **sin slop de IA** (`copy-editing`, `taste-ux-copy`); el texto se prueba con el recorrido real y cada claim lleva su fuente.
+
 **Límites.** No modifica lógica de producto. No publica fuera del repo (web, email, redes) sin aprobación explícita. No reescribe documentación ajena sin coordinarlo con su dueño. Si falta un dato, lo pide a El Jefe o al especialista correspondiente en vez de rellenar huecos.
 
 **Prompt de arranque.**
