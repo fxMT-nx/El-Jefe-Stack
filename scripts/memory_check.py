@@ -24,7 +24,6 @@ CORE = [
 ]
 OPTIONAL = [
     "docs/memoria/30-decisiones.md",
-    "docs/memoria/40-skills.md",
     "docs/memoria/50-tecnico.md",
     "docs/memoria/70-riesgos.md",
     "docs/adr",
@@ -32,6 +31,7 @@ OPTIONAL = [
     "docs/ideas.md",
     "GLOSSARY.md",
 ]
+SKILLS_REGISTRY = "docs/memoria/40-skills.md"
 SECRET_RE = re.compile(
     r"(?i)\b(api[_-]?key|secret|password|passwd|token|bearer)\b\s*[:=]\s*[\"']?[A-Za-z0-9_\-\.]{12,}"
 )
@@ -198,6 +198,33 @@ def init_skills_registry(root: Path) -> None:
     print("creado docs/memoria/40-skills.md (esqueleto mínimo)")
 
 
+def check_skills_registry(root: Path, errors: list[str], warnings: list[str]) -> None:
+    """40-skills.md: obligatorio si hay estado.md; sus filas se validan con skills_check."""
+    registry = root / SKILLS_REGISTRY
+    if not registry.exists():
+        if (root / "docs/estado.md").exists():
+            warnings.append(
+                f"{SKILLS_REGISTRY} ausente: el triaje de skills es obligatorio "
+                "(créalo con `python scripts/skills_check.py --init .`)"
+            )
+        return
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import skills_check  # noqa: PLC0415 - script hermano del mismo repo
+    except ImportError:
+        warnings.append(f"no se pudo validar {SKILLS_REGISTRY}: falta scripts/skills_check.py")
+        return
+    try:
+        report = skills_check.collect(root)
+    except skills_check.ReadError as exc:
+        errors.append(f"{SKILLS_REGISTRY}: {exc}")
+        return
+    for error in report["errors"]:
+        errors.append(f"{SKILLS_REGISTRY}: {error}")
+    for warning in report["warnings"]:
+        warnings.append(f"{SKILLS_REGISTRY}: {warning}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("path", help="raíz del proyecto")
@@ -239,6 +266,8 @@ def main() -> int:
         snapshot = text.split("## Hecho", 1)[0]
         if len(snapshot) > SNAPSHOT_LIMIT:
             warnings.append(f"snapshot inicial > {SNAPSHOT_LIMIT} chars ({len(snapshot)})")
+
+    check_skills_registry(root, errors, warnings)
 
     for md in root.glob("docs/**/*.md") if (root / "docs").exists() else []:
         text = read(md)

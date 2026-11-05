@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.1
+
+- **Validador sin falsos OK** (`scripts/skills_check.py`): errores duros (exit 1) para skills y herramientas vacías, `no aplica`/`ninguna` sin waiver, evidencia vacía o en `TBD`/`pendiente`, y waiver citado con `Aprueba` o `Fecha` vacías; un waiver definido y no usado solo avisa, igual que un registro recién creado sin filas. Un registro con UTF-8 inválido se informa con un mensaje claro y sin traceback (validación, `--init` e `--inventory`). Se conservan `--init`, `--inventory`, `--json`, `--project`/posicional y `--force`.
+- **Smoke interno ampliado** (`scripts/validate_repo.py`): dos positivos (fase con skills, herramientas y evidencia; waiver válido cubriendo una fase sin skills), los cuatro negativos B1–B4 (skills `no aplica`, herramientas `no aplica`, evidencia vacía/`TBD`, waiver citado sin aprobador) y un registro con UTF-8 inválido (exit 1 sin traceback).
+- **`memory_check.py`**: si existe `docs/estado.md` y falta `docs/memoria/40-skills.md` avisa con el comando que lo crea; si existe, valida sus filas con las reglas de `skills_check` y reporta error si están mal.
+- **Doctrina** (`triaje-skills.md`): antídoto anti-fake (cada skill declarada cita 1 regla concreta y el cambio que provocó; sin efecto comprobable es incumplimiento), búsqueda obligatoria cuando no hay candidata (router → catálogo por descripción → al menos 2 fuentes externas, dejando consultas y enlaces en el reporte) y tope **1–3 skills por fase** (4–5 exige justificación escrita). `skills-seleccion.md` queda alineado: el ejemplo de landing baja a 3.
+- **`SKILL.md`** (8.132 caracteres, límite 8.192): el paso 2 del protocolo indica que cada tarea declara skills y herramientas, la plantilla de encargo añade `herramientas esperadas:` y la ley exige **citar 1 regla concreta aplicada**. Recortes de prosa para no superar el límite.
+- **Preset versionado**: se añaden a `preset/el-jefe.patch.yml` las dos viñetas de persona que solo existían en el perfil vivo (memoria del proyecto y agentes bajo demanda); ambos YAML quedan con 15 viñetas y `id: standard` intacto, con el mismo texto de persona.
+
 ## 1.5.0
 
 - **Triaje obligatorio de skills y herramientas**: nueva referencia `references/triaje-skills.md` con la ley, el protocolo T-R-I-A-J-E (Tarea, Revisar catálogo, Identificar, Aplicar 1–3, Justificar, Evidencia), mínimos por tipo de trabajo, waivers, puerta de El Jefe, auditoría de cierre y anti-patrones. "No aplica" pasa a ser una decisión explícita, nunca un olvido.

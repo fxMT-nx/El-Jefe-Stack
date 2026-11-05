@@ -6,6 +6,10 @@
 
 Usar una skill es **cargarla/leerla y aplicar sus reglas** al trabajo real; nombrarla sin leerla no cuenta y es incumplimiento. Usar una herramienta es elegir la correcta, ejecutarla y aportar su salida como evidencia. Declarar no es usar.
 
+### Antídoto anti-fake
+
+Cada skill declarada **cita 1 regla concreta** de su propio texto y **el cambio que provocó** en el entregable (una comprobación, una estructura, un valor, un párrafo reescrito). Sin efecto comprobable sobre el trabajo, la skill no se usó: es **incumplimiento**, no un despiste. Vale más una skill con una regla citada y su efecto que seis nombres en una tabla.
+
 ## Protocolo T-R-I-A-J-E
 
 | Paso | Qué se hace |
@@ -13,7 +17,7 @@ Usar una skill es **cargarla/leerla y aplicar sus reglas** al trabajo real; nomb
 | **T** — Tarea | Descompón el encargo en fases y entregables concretos (F1, F2…). |
 | **R** — Revisar catálogo | Mira lo que **existe de verdad**: skills instaladas y herramientas/MCP disponibles en la sesión. |
 | **I** — Identificar | Lee `description` y disparadores de las candidatas; no adivines por el nombre. Apóyate en `scripts/skill_router.py` y en la matriz de `skills-seleccion.md`. |
-| **A** — Aplicar | Carga y sigue **1–3** skills complementarias por fase (más solo si el trabajo abarca más disciplinas). |
+| **A** — Aplicar | Carga y sigue **1–3 por fase**; **4–5 exige justificación escrita** y más de 5 no se admite. |
 | **J** — Justificar | Escribe por qué esas y por qué no las descartadas; si una fase no lleva skill, declara el waiver. |
 | **E** — Evidencia | Deja el bloque `## Skills y herramientas` en el reporte y la fila en `docs/memoria/40-skills.md`. |
 
@@ -43,7 +47,17 @@ Apoyo: `python scripts/skills_check.py --inventory` (catálogo real) y `python s
 | 3D | `threejs` (web) o `media-use`/`canvas-design` (assets) + verificación del export | threejs, visor |
 | QA | `code-review-and-quality` + `playwright`/`vitest`/`ui-verification` | navegador, tests |
 
-La tabla fija el **mínimo**, no el máximo. Si ninguna encaja, se busca (fuentes en `skills-seleccion.md`) y se propone instalar; improvisar sin declararlo es incumplimiento.
+La tabla fija el **mínimo**. El **máximo operativo es 1–3 por fase**; **4–5 exige justificación escrita** en el reporte (qué disciplina extra lo pide y qué se descarta) y más de 5 no se admite. Si ninguna encaja, se busca (siguiente sección) y se propone instalar; improvisar sin declararlo es incumplimiento.
+
+## Si no hay candidata, se busca (obligatorio)
+
+No existe el "no hay ninguna skill que valga" sin pruebas. Antes de cerrar una fase sin skill (o con una elegida a ojo):
+
+1. **Router:** `python scripts/skill_router.py "<tarea>"` — candidatas puntuadas del catálogo real.
+2. **Catálogo por descripción:** `python scripts/skills_check.py --inventory` y leer `description` de las que suenen, no solo el nombre; el router ordena, no conoce los mínimos de la matriz.
+3. **Al menos 2 fuentes externas** de las listadas en `skills-seleccion.md` (p. ej. skillsagents.com y un `awesome-*` de GitHub), con 2–3 candidatos comparados por licencia y mantenimiento.
+
+El reporte deja las **consultas y enlaces** usados: sin ellos la búsqueda no consta y el "no aplica" no es válido.
 
 ## Herramientas: la misma ley
 
@@ -61,7 +75,7 @@ Solo cubren trabajo **trivial o mecánico**: renombrar, copiar texto, formatear,
 
 ## Evidencia en el reporte
 
-Todo entregable termina con este bloque; sin él, El Jefe lo devuelve:
+Todo entregable termina con este bloque; sin él, El Jefe lo devuelve. `Resultado` incluye la regla concreta aplicada y el cambio que provocó:
 
 ```markdown
 ## Skills y herramientas
@@ -76,11 +90,11 @@ Waivers: ninguno. Herramientas: browseros-neo (capturas), vitest (12 tests).
 
 ## Puerta de El Jefe
 
-Por hito: revisa el registro y la evidencia, **muestrea un entregable** contra lo que la skill declarada exige y devuelve lo que no lo cumpla. Una fase sin skill y sin waiver es **fallo de proceso**, no un detalle: se repite el trabajo o se documenta la excepción aprobada. No vale "lo hice de memoria" ni una lista de skills sin efecto en el entregable.
+Por hito: revisa el registro y la evidencia, **muestrea un entregable** contra lo que la skill declarada exige, y exige la **regla citada con su efecto**; devuelve lo que no lo cumpla. Una fase sin skill y sin waiver es **fallo de proceso**, no un detalle: se repite el trabajo o se documenta la excepción aprobada. No vale "lo hice de memoria" ni una lista de skills sin efecto en el entregable.
 
 ## Registro persistente
 
-`docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers y los huecos. Se crea con `python scripts/skills_check.py --init <proyecto>`, se actualiza con la memoria y **sobrevive a compactaciones y sesiones nuevas**. `python scripts/skills_check.py <proyecto>` falla (exit 1) si falta el fichero, si una fila no declara skills y herramientas y no tiene waiver, o si quedan `TBD`/`pendiente`/celdas vacías.
+`docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers y los huecos. Se crea con `python scripts/skills_check.py --init <proyecto>`, se actualiza con la memoria y **sobrevive a compactaciones y sesiones nuevas**. `python scripts/skills_check.py <proyecto>` falla (exit 1) si falta el fichero, si una fila no declara skills o herramientas y no tiene waiver, si declara `no aplica`/`ninguna` sin waiver, si la evidencia está vacía o en `TBD`/`pendiente`, o si un waiver citado no tiene `Aprueba` y `Fecha`; un waiver definido y no usado solo avisa.
 
 ## Descubrimiento e instalación
 
@@ -97,5 +111,6 @@ Fuentes: las de `skills-seleccion.md`. Flujo: **propuesta** (skill, fase, fuente
 - **"Yo ya sé hacerlo"**: no cargar la skill y trabajar de memoria.
 - **Cargar 6 skills y no aplicar ninguna**: coleccionismo, no triaje.
 - **Declarar sin leer**: listar skills en el reporte sin haberlas abierto.
+- **Declarar sin regla ni efecto**: no poder citar qué regla concreta cambió el entregable; si no hay efecto, no se usó.
 - **Saltarse el triaje por prisa**: el atajo de hoy es la deuda de mañana.
 - **Usar solo la skill de costumbre**: elegir por hábito, no por tarea.

@@ -164,8 +164,72 @@ def check_threejs() -> None:
         fail("falta scripts/install_threejs_skill.py")
 
 
+SMOKE_HEADER = """# Triaje de skills y herramientas — smoke
+
+## Mapa fase → skills y herramientas
+
+| Fase | Tarea / entregable | Skills | Herramientas | Evidencia | Estado |
+|---|---|---|---|---|---|
+"""
+SMOKE_WAIVERS = """
+## Waivers
+
+| ID | Tarea | Motivo | Alternativa aplicada | Aprueba | Fecha |
+|---|---|---|---|---|---|
+"""
+# (etiqueta, filas de fase, filas de waiver, exit esperado)
+SMOKE_CASES: tuple[tuple[str, list[str], list[str], int], ...] = (
+    (
+        "positivo: skills + herramientas + evidencia",
+        ["| F1 | UI | `ui-design` | browseros-neo | capturas | hecho |"],
+        [],
+        0,
+    ),
+    (
+        "positivo: waiver válido cubre una fase sin skills",
+        ["| F1 | Copiar textos (W-01) | no aplica | no aplica | diff revisado | hecho |"],
+        ["| W-01 | Copiar textos | mecánico | revisión manual | El Jefe | 2026-11-05 |"],
+        0,
+    ),
+    (
+        "B1: skills «no aplica» sin waiver",
+        ["| F1 | UI | no aplica | browseros-neo | capturas | hecho |"],
+        [],
+        1,
+    ),
+    (
+        "B2: herramientas «no aplica» sin waiver",
+        ["| F1 | UI | `ui-design` | no aplica | capturas | hecho |"],
+        [],
+        1,
+    ),
+    (
+        "B3: evidencia vacía",
+        ["| F1 | UI | `ui-design` | browseros-neo |  | hecho |"],
+        [],
+        1,
+    ),
+    (
+        "B3: evidencia «TBD»",
+        ["| F1 | UI | `ui-design` | browseros-neo | TBD | hecho |"],
+        [],
+        1,
+    ),
+    (
+        "B4: waiver citado sin aprobador",
+        ["| F1 | Copiar textos (W-01) | no aplica | no aplica | diff revisado | hecho |"],
+        ["| W-01 | Copiar textos | mecánico | revisión manual |  | 2026-11-05 |"],
+        1,
+    ),
+)
+
+
+def smoke_registry(phases: list[str], waivers: list[str]) -> str:
+    return SMOKE_HEADER + "\n".join(phases) + "\n" + SMOKE_WAIVERS + "\n".join(waivers) + "\n"
+
+
 def check_skills_protocol() -> None:
-    """Ficheros del triaje obligatorio + smoke test de skills_check.py."""
+    """Ficheros del triaje obligatorio + smoke test de skills_check.py (positivos y B1–B4)."""
     skill_dir = ROOT / "skills" / "el-jefe-team"
     reference = skill_dir / "references" / "triaje-skills.md"
     script = ROOT / "scripts" / "skills_check.py"
@@ -193,50 +257,36 @@ def check_skills_protocol() -> None:
 
     try:
         with tempfile.TemporaryDirectory() as tmp:
-            init = run("--init", tmp)
+            base = Path(tmp)
+            init = run("--init", str(base))
             if init.returncode != 0:
                 fail(f"skills_check --init falla: {(init.stderr or init.stdout).strip()[:400]}")
                 return
-            seed = run(tmp)
+            if not (base / "docs" / "memoria" / "40-skills.md").exists():
+                fail("skills_check --init no creó docs/memoria/40-skills.md")
+                return
+            seed = run(str(base))
             if seed.returncode != 0:
                 fail(f"skills_check no valida un registro recién creado: {(seed.stdout or seed.stderr).strip()[:400]}")
                 return
 
-            registry = Path(tmp) / "docs" / "memoria" / "40-skills.md"
-            lines = registry.read_text(encoding="utf-8").splitlines()
-            separator = next(
-                (
-                    index
-                    for index, line in enumerate(lines)
-                    if "|" in line and "-" in line and set(line.strip()) <= set("|-: \t")
-                ),
-                None,
-            )
-            if separator is None:
-                fail("la plantilla del registro no tiene tabla de fases")
-                return
-
-            good = "| F1 | Prueba | `ui-design` | browseros-neo | captura | hecho |"
-            bad = "| F1 | Prueba |  | browseros-neo | captura | hecho |"
-
-            registry.write_text(
-                "\n".join(lines[: separator + 1] + [good] + lines[separator + 1 :]) + "\n",
-                encoding="utf-8",
-            )
-            positive = run(tmp)
-            if positive.returncode != 0:
-                fail(
-                    "skills_check rechaza una fase con skills y herramientas: "
-                    + (positive.stdout or positive.stderr).strip()[:400]
+            for index, (label, phases, waivers, expected) in enumerate(SMOKE_CASES, 1):
+                case = base / f"caso{index}"
+                (case / "docs" / "memoria").mkdir(parents=True, exist_ok=True)
+                (case / "docs" / "memoria" / "40-skills.md").write_text(
+                    smoke_registry(phases, waivers), encoding="utf-8"
                 )
+                result = run(str(case))
+                if result.returncode != expected:
+                    detail = " | ".join((result.stdout or result.stderr).strip().splitlines())[:300]
+                    fail(f"smoke «{label}»: esperaba exit {expected}, dio {result.returncode} ({detail})")
 
-            registry.write_text(
-                "\n".join(lines[: separator + 1] + [bad] + lines[separator + 1 :]) + "\n",
-                encoding="utf-8",
-            )
-            negative = run(tmp)
-            if negative.returncode == 0:
-                fail("skills_check no detecta una fase sin skills y sin waiver (prueba negativa)")
+            broken = base / "utf8"
+            (broken / "docs" / "memoria").mkdir(parents=True, exist_ok=True)
+            (broken / "docs" / "memoria" / "40-skills.md").write_bytes(b"# Triaje " + bytes([0xFF, 0xFE]))
+            result = run(str(broken))
+            if result.returncode != 1 or "Traceback" in (result.stderr or ""):
+                fail("skills_check no informa limpio (exit 1, sin traceback) un registro con UTF-8 inválido")
     except (OSError, subprocess.SubprocessError) as exc:
         fail(f"smoke test de skills_check falló: {exc}")
 

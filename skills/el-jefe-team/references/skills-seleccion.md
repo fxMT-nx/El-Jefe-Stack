@@ -7,10 +7,10 @@ Ninguna fase, tarea ni entregable sin **triaje explícito** de skills y herramie
 ## Principios
 
 - **La matriz orienta; el mínimo obliga.** Cualquier especialista puede usar otra skill si encaja mejor, pero los mínimos de `triaje-skills.md` por tipo de trabajo no son opcionales: UI nueva exige diseño **y** verificación; datos y auth exigen seguridad **y** pruebas.
-- **Elegir por tarea, no por costumbre.** Antes de actuar: entiende el encargo, revisa el catálogo **real** instalado (`python scripts/skills_check.py --inventory`) y elige **1–3 complementarias**. No cargues cinco skills redundantes.
-- **Declarar con evidencia.** El reporte lleva el bloque `## Skills y herramientas` con tabla `skill | por qué | dónde se aplicó | resultado`, las descartadas y los waivers. Sin bloque, El Jefe devuelve el entregable.
-- **Combinar.** Una tarea real suele abarcar varias: p. ej. una landing = `frontend-design` + `design-taste-frontend` + `motion-design` + `ui-verification` + (si toca publicar) `seo-geo`/`marketing`.
-- **Cuando no haya skill que encaje:** búscala en las fuentes de descubrimiento de abajo y propón su instalación a El Jefe antes de improvisar.
+- **Elegir por tarea, no por costumbre.** Antes de actuar: entiende el encargo, revisa el catálogo **real** instalado (`python scripts/skills_check.py --inventory`) y elige **1–3 por fase**; 4–5 exige justificación escrita y más de 5 no se admite.
+- **Declarar con evidencia.** El reporte lleva el bloque `## Skills y herramientas` con tabla `skill | por qué | dónde se aplicó | resultado`, las descartadas y los waivers; cada skill declarada cita **1 regla concreta** de su texto y **el cambio que provocó**. Sin bloque o sin efecto comprobable, El Jefe devuelve el entregable.
+- **Combinar.** Una tarea real suele abarcar varias, pero el techo es 1–3 por fase: una landing = `design-taste-frontend` (o `frontend-design`) + `ui-verification`; si además se publica, `seo-geo` como tercera. Cuatro o cinco exigen justificación escrita en el reporte.
+- **Cuando no haya skill que encaje:** router → catálogo por descripción → al menos 2 fuentes de descubrimiento de abajo, dejando consultas y enlaces en el reporte; propón la instalación a El Jefe antes de improvisar.
 
 ## Mínimos por fase (resumen)
 
