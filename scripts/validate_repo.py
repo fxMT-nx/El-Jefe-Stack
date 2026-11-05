@@ -18,11 +18,24 @@ def fail(msg: str) -> None:
     errors.append(msg)
 
 
+def rel(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def read(path: Path) -> str:
     try:
         return path.read_text(encoding="utf-8")
     except FileNotFoundError:
-        fail(f"falta el fichero: {path.relative_to(ROOT)}")
+        fail(f"falta el fichero: {rel(path)}")
+        return ""
+    except UnicodeDecodeError:
+        fail(f"{rel(path)} no está en UTF-8 válido")
+        return ""
+    except OSError as exc:
+        fail(f"no se pudo leer {rel(path)}: {exc.strerror or exc}")
         return ""
 
 
@@ -221,6 +234,24 @@ SMOKE_CASES: tuple[tuple[str, list[str], list[str], int], ...] = (
         ["| W-01 | Copiar textos | mecánico | revisión manual |  | 2026-11-05 |"],
         1,
     ),
+    (
+        "B4: waiver citado con Fecha vacía",
+        ["| F1 | Copiar textos (W-01) | no aplica | no aplica | diff revisado | hecho |"],
+        ["| W-01 | Copiar textos | mecánico | revisión manual | El Jefe |  |"],
+        1,
+    ),
+    (
+        "B6: evidencia «no aplica»",
+        ["| F1 | UI | `ui-design` | browseros-neo | no aplica | hecho |"],
+        [],
+        1,
+    ),
+    (
+        "B7: waiver citado sin motivo",
+        ["| F1 | Copiar textos (W-01) | no aplica | no aplica | diff revisado | hecho |"],
+        ["| W-01 | Copiar textos |  | revisión manual | El Jefe | 2026-11-05 |"],
+        1,
+    ),
 )
 
 
@@ -229,7 +260,7 @@ def smoke_registry(phases: list[str], waivers: list[str]) -> str:
 
 
 def check_skills_protocol() -> None:
-    """Ficheros del triaje obligatorio + smoke test de skills_check.py (positivos y B1–B4)."""
+    """Ficheros del triaje obligatorio + smoke test de skills_check.py (positivos y B1–B7)."""
     skill_dir = ROOT / "skills" / "el-jefe-team"
     reference = skill_dir / "references" / "triaje-skills.md"
     script = ROOT / "scripts" / "skills_check.py"
@@ -300,6 +331,11 @@ def check_skills_reference_links() -> None:
 
 
 def main() -> int:
+    try:  # misma convención de salida que skills_check y memory_check: UTF-8
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):  # consolas muy antiguas
+        pass
     check_preset()
     check_skill()
     check_threejs()

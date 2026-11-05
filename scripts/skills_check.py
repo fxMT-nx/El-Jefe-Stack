@@ -133,8 +133,18 @@ def is_waiver_table(header: list[str]) -> bool:
     return any("motivo" in c or "alternativa" in c or "aprueba" in c for c in low)
 
 
+WAIVER_FIELDS = (
+    ("tarea", "'Tarea'", "vacía"),
+    ("motivo", "'Motivo'", "vacío"),
+    ("alternativa", "'Alternativa aplicada'", "vacía"),
+    ("aprueba", "'Aprueba'", "vacío"),
+    ("fecha", "'Fecha'", "vacía"),
+)
+
+
 def parse_waivers(header: list[str], rows: list[list[str]]) -> tuple[dict[str, dict[str, str]], list[str]]:
     cols = {
+        "tarea": find_column(header, ("tarea", "task")),
         "motivo": find_column(header, ("motivo", "razón", "razon")),
         "alternativa": find_column(header, ("alternativa",)),
         "aprueba": find_column(header, ("aprueba", "aprob")),
@@ -150,12 +160,7 @@ def parse_waivers(header: list[str], rows: list[list[str]]) -> tuple[dict[str, d
         if wid in waivers:
             duplicates.append(wid)
             continue
-        waivers[wid] = {
-            "motivo": cell_at(row, cols["motivo"]),
-            "alternativa": cell_at(row, cols["alternativa"]),
-            "aprueba": cell_at(row, cols["aprueba"]),
-            "fecha": cell_at(row, cols["fecha"]),
-        }
+        waivers[wid] = {key: cell_at(row, cols[key]) for key, _, _ in WAIVER_FIELDS}
     return waivers, duplicates
 
 
@@ -227,6 +232,11 @@ def collect(root: Path) -> dict:
                     col = clean(table["header"][index]) if index is not None and index < len(table["header"]) else label
                     errors.append(f"{fase}: '{col}' sigue con marcador «{value}»")
 
+            if norm(evidence) in NO_APLICA:
+                errors.append(
+                    f"{fase}: evidencia «{evidence}» no cuenta: se exige evidencia real "
+                    "(no se hereda del waiver)"
+                )
             if not evidence and evidence_idx is not None:
                 errors.append(f"{fase}: sin evidencia (la ley exige evidencia real por fase)")
             if not covered:
@@ -243,10 +253,15 @@ def collect(root: Path) -> dict:
         if wid not in cited_any:
             warnings.append(f"waiver {wid} definido y no usado por ninguna fase")
             continue
-        if not data["aprueba"] or norm(data["aprueba"]) in PLACEHOLDERS:
-            errors.append(f"waiver {wid}: 'Aprueba' vacío; la ley exige aprobación de El Jefe")
-        if not data["fecha"] or norm(data["fecha"]) in PLACEHOLDERS:
-            errors.append(f"waiver {wid}: 'Fecha' vacía")
+        for key, label, gender in WAIVER_FIELDS:
+            value = data.get(key, "")
+            if value and norm(value) not in PLACEHOLDERS:
+                continue
+            hint = " — la ley exige aprobación de El Jefe" if key == "aprueba" else ""
+            errors.append(
+                f"waiver {wid}: {label} {gender}; un waiver citado necesita tarea, motivo, "
+                f"alternativa, aprobador y fecha{hint}"
+            )
 
     if total_rows == 0:
         warnings.append("sin fases registradas todavía; añade una fila por fase antes de empezar")

@@ -149,11 +149,19 @@ Aquí va **lo del usuario**, no las decisiones técnicas: preferencias, requisit
 }
 
 
+class ReadError(Exception):
+    """Un fichero ilegible se informa con una línea, nunca con un traceback."""
+
+
 def read(path: Path) -> str:
     try:
         return path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        raise ReadError("no está en UTF-8 válido") from None
     except FileNotFoundError:
-        return ""
+        raise ReadError("no existe") from None
+    except OSError as exc:
+        raise ReadError(f"no se pudo leer: {exc.strerror or exc}") from None
 
 
 def init_memory(root: Path) -> None:
@@ -226,6 +234,12 @@ def check_skills_registry(root: Path, errors: list[str], warnings: list[str]) ->
 
 
 def main() -> int:
+    try:  # misma convención de salida que skills_check: UTF-8, nunca un encode que reviente
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):  # consolas muy antiguas
+        pass
+
     ap = argparse.ArgumentParser()
     ap.add_argument("path", help="raíz del proyecto")
     ap.add_argument("--init", action="store_true", help="crea el esqueleto si falta")
@@ -250,27 +264,35 @@ def main() -> int:
 
     estado_path = root / "docs/estado.md"
     if estado_path.exists():
-        text = read(estado_path)
-        if len(text) > ESTADO_LIMIT:
-            errors.append(f"docs/estado.md demasiado largo ({len(text)} > {ESTADO_LIMIT}): mueve detalle a memoria/")
-        if not re.search(r"(?im)^>\s*Actualizado:", text):
-            errors.append("docs/estado.md sin línea '> Actualizado:'")
-        m = re.search(r"(?im)^>\s*Actualizado:\s*(\d{4}-\d{2}-\d{2})", text)
-        if m:
-            try:
-                age = (date.today() - date.fromisoformat(m.group(1))).days
-                if age > STALE_DAYS:
-                    warnings.append(f"estado.md actualizado hace {age} días")
-            except ValueError:
-                warnings.append("fecha de actualización inválida")
-        snapshot = text.split("## Hecho", 1)[0]
-        if len(snapshot) > SNAPSHOT_LIMIT:
-            warnings.append(f"snapshot inicial > {SNAPSHOT_LIMIT} chars ({len(snapshot)})")
+        try:
+            text = read(estado_path)
+        except ReadError as exc:
+            errors.append(f"docs/estado.md {exc}")
+        else:
+            if len(text) > ESTADO_LIMIT:
+                errors.append(f"docs/estado.md demasiado largo ({len(text)} > {ESTADO_LIMIT}): mueve detalle a memoria/")
+            if not re.search(r"(?im)^>\s*Actualizado:", text):
+                errors.append("docs/estado.md sin línea '> Actualizado:'")
+            m = re.search(r"(?im)^>\s*Actualizado:\s*(\d{4}-\d{2}-\d{2})", text)
+            if m:
+                try:
+                    age = (date.today() - date.fromisoformat(m.group(1))).days
+                    if age > STALE_DAYS:
+                        warnings.append(f"estado.md actualizado hace {age} días")
+                except ValueError:
+                    warnings.append("fecha de actualización inválida")
+            snapshot = text.split("## Hecho", 1)[0]
+            if len(snapshot) > SNAPSHOT_LIMIT:
+                warnings.append(f"snapshot inicial > {SNAPSHOT_LIMIT} chars ({len(snapshot)})")
 
     check_skills_registry(root, errors, warnings)
 
     for md in root.glob("docs/**/*.md") if (root / "docs").exists() else []:
-        text = read(md)
+        try:
+            text = read(md)
+        except ReadError as exc:
+            errors.append(f"{md.relative_to(root).as_posix()} {exc}")
+            continue
         if SECRET_RE.search(text):
             errors.append(f"posible secreto en {md.relative_to(root)}")
         for target in LINK_RE.findall(text):
@@ -281,10 +303,10 @@ def main() -> int:
                 warnings.append(f"enlace roto en {md.relative_to(root)}: {target}")
 
     print(f"Memoria de {root.name}")
-    for w in warnings:
+    for w in dict.fromkeys(warnings):
         print(f"  aviso: {w}")
     if errors:
-        for e in errors:
+        for e in dict.fromkeys(errors):  # el mismo fichero puede detectarse en dos pasadas
             print(f"  ERROR: {e}")
         return 1
     print("  OK")
@@ -292,4 +314,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except ReadError as exc:  # red de seguridad: nunca un traceback por un fichero ilegible
+        print(f"error: {exc}", file=sys.stderr)
+        sys.exit(1)

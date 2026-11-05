@@ -1,8 +1,17 @@
 # Changelog
 
+## 1.5.2
+
+- **`memory_check.py` sin traceback (B5)**: `read()` captura `UnicodeDecodeError` y `OSError` y devuelve una línea («docs/… no está en UTF-8 válido»), exit 1 y sigue revisando el resto de `docs/`; red de seguridad en el arranque. Cubre `40-skills.md`, `estado.md` y cualquier `.md` de `docs/`.
+- **Evidencia real (B6)**: `Evidencia: no aplica`/`ninguna`/`n/a` es error duro en `skills_check.py`, igual que vacío o `TBD`/`pendiente`; la evidencia **no se hereda** del waiver. `memory_check.py` aplica el mismo criterio al validar las filas del registro.
+- **Waiver completo (B7)**: un waiver citado exige `Tarea`, `Motivo`, `Alternativa aplicada`, `Aprueba` y `Fecha` no vacíos (ni marcadores); si falta cualquiera, error. Un waiver definido y no usado sigue siendo aviso.
+- **Smoke del repo**: `validate_repo.py` prueba además B6, B7 y `Fecha` vacía, y su `read()` informa de un `.md` con UTF-8 inválido sin traceback (I2 de la reauditoría).
+- **`SKILL.md`** (8.173 caracteres, límite 8.192): la ley exige «1 regla concreta **y el cambio que provocó**», admite 4–5 con justificación y concreta el cierre («sin bloque, waiver o efecto comprobable, se devuelve»).
+- **`triaje-skills.md`**: waiver con sus cinco campos, evidencia `no aplica` = incumplimiento y `memory_check` en el registro; anti-patrón de evidencia de relleno. `templates/skills-plan.md` refleja ambas reglas.
+
 ## 1.5.1
 
-- **Validador sin falsos OK** (`scripts/skills_check.py`): errores duros (exit 1) para skills y herramientas vacías, `no aplica`/`ninguna` sin waiver, evidencia vacía o en `TBD`/`pendiente`, y waiver citado con `Aprueba` o `Fecha` vacías; un waiver definido y no usado solo avisa, igual que un registro recién creado sin filas. Un registro con UTF-8 inválido se informa con un mensaje claro y sin traceback (validación, `--init` e `--inventory`). Se conservan `--init`, `--inventory`, `--json`, `--project`/posicional y `--force`.
+- **Validador sin los falsos OK conocidos (B1–B4)** (`scripts/skills_check.py`): errores duros (exit 1) para skills y herramientas vacías, `no aplica`/`ninguna` sin waiver, evidencia vacía o en `TBD`/`pendiente`, y waiver citado con `Aprueba` o `Fecha` vacías; un waiver definido y no usado solo avisa, igual que un registro recién creado sin filas. Un registro con UTF-8 inválido se informa con un mensaje claro y sin traceback (validación, `--init` e `--inventory`). Se conservan `--init`, `--inventory`, `--json`, `--project`/posicional y `--force`.
 - **Smoke interno ampliado** (`scripts/validate_repo.py`): dos positivos (fase con skills, herramientas y evidencia; waiver válido cubriendo una fase sin skills), los cuatro negativos B1–B4 (skills `no aplica`, herramientas `no aplica`, evidencia vacía/`TBD`, waiver citado sin aprobador) y un registro con UTF-8 inválido (exit 1 sin traceback).
 - **`memory_check.py`**: si existe `docs/estado.md` y falta `docs/memoria/40-skills.md` avisa con el comando que lo crea; si existe, valida sus filas con las reglas de `skills_check` y reporta error si están mal.
 - **Doctrina** (`triaje-skills.md`): antídoto anti-fake (cada skill declarada cita 1 regla concreta y el cambio que provocó; sin efecto comprobable es incumplimiento), búsqueda obligatoria cuando no hay candidata (router → catálogo por descripción → al menos 2 fuentes externas, dejando consultas y enlaces en el reporte) y tope **1–3 skills por fase** (4–5 exige justificación escrita). `skills-seleccion.md` queda alineado: el ejemplo de landing baja a 3.

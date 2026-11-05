@@ -73,9 +73,11 @@ Solo cubren trabajo **trivial o mecánico**: renombrar, copiar texto, formatear,
 | W-01 | Renombrar campos del JSON de ejemplo | mecánico, sin lógica | revisión manual del diff | El Jefe | 2025-01-31 |
 ```
 
+Un waiver citado por una fase **necesita los cinco campos** —`Tarea`, `Motivo`, `Alternativa aplicada`, `Aprueba` y `Fecha`— sin vacíos ni marcadores; si falta cualquiera, el waiver no está aprobado y la fase no queda cubierta (error, no aviso). El waiver **no exime de la evidencia**: una fase con waiver sigue necesitando evidencia real.
+
 ## Evidencia en el reporte
 
-Todo entregable termina con este bloque; sin él, El Jefe lo devuelve. `Resultado` incluye la regla concreta aplicada y el cambio que provocó:
+Todo entregable termina con este bloque; sin él, El Jefe lo devuelve. `Resultado` incluye la regla concreta aplicada y el cambio que provocó. La evidencia es **real**: `no aplica`, `ninguna`, `n/a`, vacío, `TBD` o `pendiente` no cuentan y son incumplimiento; el waiver no la sustituye.
 
 ```markdown
 ## Skills y herramientas
@@ -94,7 +96,7 @@ Por hito: revisa el registro y la evidencia, **muestrea un entregable** contra l
 
 ## Registro persistente
 
-`docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers y los huecos. Se crea con `python scripts/skills_check.py --init <proyecto>`, se actualiza con la memoria y **sobrevive a compactaciones y sesiones nuevas**. `python scripts/skills_check.py <proyecto>` falla (exit 1) si falta el fichero, si una fila no declara skills o herramientas y no tiene waiver, si declara `no aplica`/`ninguna` sin waiver, si la evidencia está vacía o en `TBD`/`pendiente`, o si un waiver citado no tiene `Aprueba` y `Fecha`; un waiver definido y no usado solo avisa.
+`docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers y los huecos. Se crea con `python scripts/skills_check.py --init <proyecto>`, se actualiza con la memoria y **sobrevive a compactaciones y sesiones nuevas**. `python scripts/skills_check.py <proyecto>` falla (exit 1) si falta el fichero, si una fila no declara skills o herramientas y no tiene waiver, si declara `no aplica`/`ninguna` sin waiver, si la evidencia está vacía, en `TBD`/`pendiente` o es `no aplica`/`ninguna`, o si un waiver citado no tiene sus cinco campos (`Tarea`, `Motivo`, `Alternativa aplicada`, `Aprueba`, `Fecha`); un waiver definido y no usado solo avisa. `python scripts/memory_check.py <proyecto>` aplica las mismas reglas al validar la memoria, avisa si hay `estado.md` y falta el registro, e informa de un `.md` ilegible en una línea, sin traceback.
 
 ## Descubrimiento e instalación
 
@@ -112,5 +114,6 @@ Fuentes: las de `skills-seleccion.md`. Flujo: **propuesta** (skill, fase, fuente
 - **Cargar 6 skills y no aplicar ninguna**: coleccionismo, no triaje.
 - **Declarar sin leer**: listar skills en el reporte sin haberlas abierto.
 - **Declarar sin regla ni efecto**: no poder citar qué regla concreta cambió el entregable; si no hay efecto, no se usó.
+- **Evidencia de relleno**: `no aplica`/`TBD` en la columna Evidencia o un waiver sin motivo; el waiver no exime de evidencia.
 - **Saltarse el triaje por prisa**: el atajo de hoy es la deuda de mañana.
 - **Usar solo la skill de costumbre**: elegir por hábito, no por tarea.

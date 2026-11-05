@@ -42,7 +42,7 @@ Fichas en `references/` (brief, entregable, checklist y límites). Si falta una 
 
 ## Skills
 
-**Ley:** ninguna fase ni entregable sin triaje explícito de skills y herramientas; "no aplica" se decide y se escribe en `docs/memoria/40-skills.md`, nunca se olvida. Usar es cargar y aplicar: el especialista aplica 1–3, **cita 1 regla concreta aplicada**, justifica descartes y entrega el bloque `## Skills y herramientas`; sin él o sin waiver, El Jefe devuelve el entregable. Detalle: `triaje-skills.md`; matriz: `skills-seleccion.md`; apoyo: `skill_router.py`, `skills_check.py --inventory`. Entrevistas: `grilling`; cierre: `aprendizaje.md`. Si falta una skill, búscala y propón instalarla.
+**Ley:** ninguna fase ni entregable sin triaje explícito de skills y herramientas; "no aplica" se decide y se escribe en `docs/memoria/40-skills.md`, nunca se olvida. Usar es cargar y aplicar: el especialista aplica 1–3 (4–5 exige justificarlo), **cita 1 regla concreta y el cambio que provocó**, justifica descartes y entrega el bloque `## Skills y herramientas`; sin bloque, waiver o efecto comprobable, se devuelve. Detalle: `triaje-skills.md`; matriz: `skills-seleccion.md`; apoyo: `skill_router.py`, `skills_check.py --inventory`. Entrevistas: `grilling`; cierre: `aprendizaje.md`. Si falta una skill, búscala y propón instalarla.
 
 ## Fase 0: Grilling
 

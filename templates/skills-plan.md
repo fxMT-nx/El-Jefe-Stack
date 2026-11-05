@@ -11,8 +11,10 @@ mecánico). Sin waiver, la fase no empieza. Validación: `python scripts/skills_
 | Fase | Tarea / entregable | Skills | Herramientas | Evidencia | Estado |
 |---|---|---|---|---|---|
 
-Añade una fila por fase **antes** de empezar. Skills en backticks (1–3 complementarias); herramientas
-reales de la sesión (MCP, navegador, CAD, office…). "No aplica" es una decisión explícita, no un hueco.
+Añade una fila por fase **antes** de empezar. Skills en backticks (1–3 por fase; 4–5 exige
+justificarlo); herramientas reales de la sesión (MCP, navegador, CAD, office…). "No aplica" es una
+decisión explícita, no un hueco. La evidencia es **real**: vacío, `no aplica`, `ninguna`, `TBD` o
+`pendiente` no cuentan, y el waiver no la sustituye.
 
 ## Waivers
 
@@ -20,7 +22,8 @@ reales de la sesión (MCP, navegador, CAD, office…). "No aplica" es una decisi
 |---|---|---|---|---|---|
 
 Solo para trabajo trivial o mecánico; nunca diseño, seguridad, datos reales, publicación, QA ni
-documentación de entrega. IDs con formato `W-NN` y aprobación de El Jefe.
+documentación de entrega. IDs con formato `W-NN` y **los cinco campos completos** (`Tarea`, `Motivo`,
+`Alternativa aplicada`, `Aprueba`, `Fecha`): si falta uno, el waiver no cubre la fase.
 
 ## Huecos y propuestas
 
