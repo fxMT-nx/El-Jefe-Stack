@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- **Memoria viva**: protocolo completo en `references/memoria-viva.md` (estructura `docs/estado.md` + `docs/memoria/`, snapshot ≤1.5 KB, qué guardar y qué no, actualización antes de compactar y al cerrar, sesiones nuevas).
+- **`scripts/memory_check.py`**: valida estructura, snapshot, tamaño, enlaces, secretos y frescura; `--init` crea el esqueleto.
+- El Jefe es el dueño último de la memoria (persona) y `memoria`/`documentador` se alinean con el nuevo formato; README y arquitectura actualizados.
+
 ## 1.3.0
 
 - **Three.js**: skill paraguas `threejs` (r186) con 53 referencias troceadas (≤7 KB) a partir del bundle `CloudAI-X/threejs-skills` (MIT), más instalador reproducible `scripts/install_threejs_skill.py`.

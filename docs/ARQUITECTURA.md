@@ -39,9 +39,13 @@ Límites: `maxMembers: 8` (Lead + 7 teammates), `maxTasks: 256`. Los nombres son
 
 ### Memoria
 
-- Roster y tareas se persisten en el log de la sesión de El Jefe.
-- Cada teammate tiene su propia Session con su historial; un teammate inactivo se reanuda al recibir un mensaje.
-- Entre sesiones nuevas no hay recuerdo: el equipo es de la sesión. Para continuidad real, `docs/estado.md`, `GLOSSARY.md`, ADR y el trabajo en disco.
+- **Dentro de la sesión**: roster y tareas se persisten en el log de la sesión de El Jefe; cada teammate tiene su propia Session con historial y se reanuda al recibir un mensaje.
+- **Entre sesiones nuevas** no hay recuerdo automático: la continuidad la da la **memoria en disco**.
+- **Estructura**: `docs/estado.md` (snapshot ≤1.5 KB) + `docs/memoria/` (`00-indice`, `10-proyecto`, `20-usuario`, `30-decisiones`, `50-tecnico`, `60-tareas`, `70-riesgos`, `80-preguntas`, `90-historial`), más `GLOSSARY.md`, `docs/adr/`, `docs/trabajo.md` y `CHANGELOG.md`.
+- **Responsable**: El Jefe (verifica antes de cerrar); `memoria` escribe y valida; `documentador` deja la bitácora.
+- **Cuándo**: leer al arrancar; actualizar tras cada decisión o requisito, **antes de compactar** y al cerrar sesión.
+- **Compactación**: borra contexto, no disco. El snapshot debe bastar para reconstruir el estado; si no, se mejora.
+- **Validación**: `python scripts/memory_check.py <proyecto>` (`--init` crea el esqueleto). Detalle: `skills/el-jefe-team/references/memoria-viva.md`.
 
 ### Permisos
 

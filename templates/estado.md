@@ -1,17 +1,35 @@
-# Estado del proyecto
+# Estado — <proyecto>
 
-> Última actualización: AAAA-MM-DD
+> Actualizado: AAAA-MM-DD HH:MM · Sesión: <nombre/id> · Fase: <...>
 
 ## Objetivo
 
-## Stack y arranque local
+<una frase>
 
 ## Hecho
 
+- <hito verificable>
+
 ## En curso
 
-## Pendiente
-
-## Riesgos
+- <trabajo + quién>
 
 ## Siguiente paso
+
+- <acción concreta>
+
+## Decisiones vigentes
+
+- <decisión> (ADR-000X)
+
+## Riesgos / bloqueos
+
+- <riesgo + mitigación>
+
+## Preguntas abiertas
+
+- <pregunta> (ver docs/memoria/80-preguntas.md)
+
+## Cómo retomar
+
+<comandos, rutas, entorno>

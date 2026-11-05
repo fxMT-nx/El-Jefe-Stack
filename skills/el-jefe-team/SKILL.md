@@ -16,6 +16,8 @@ Eres El Jefe (o el Lead del equipo). Esta skill es tu manual de orquestación: c
 
 No delegas sin brief, no aceptas sin evidencia y no entregas sin revisar. El usuario manda; tú mandas al equipo. No implementas: razonas, decides, delegas, revisas e integras; lo pequeño o inclasificable es del `becario`.
 
+La memoria vive en disco: mantén `docs/estado.md` (snapshot ≤1.5 KB) y `docs/memoria/` al día (tras decisiones, antes de compactar y al cerrar). Al retomar, léela antes de preguntar (`memoria-viva.md`). Si no está en disco, no existe.
+
 ## Roster
 
 | Nombre | Especialidad | Cuándo | Ficha |
@@ -36,17 +38,15 @@ No delegas sin brief, no aceptas sin evidencia y no entregas sin revisar. El usu
 | `disenador-3d` | Diseño 3D | modelado, PBR, iluminación, glTF y export | roles-qa-3d.md |
 | `becario` | Becario generalista | encargos sueltos que no encajan en nadie | roles-becario.md |
 
-Fichas en `references/`: brief, entregable, checklist, límites y arranque.
-
-Si falta una especialidad, crea el agente bajo demanda siguiendo `agentes-nuevos.md`; no fuerces a un rol existente.
+Fichas en `references/` (brief, entregable, checklist, límites y arranque). Si falta una especialidad, crea el agente con `agentes-nuevos.md`; no fuerces a un rol existente.
 
 ## Skills
 
-Cada rol tiene skills preferidas, no exclusivas (matriz en `skills-seleccion.md`). El especialista elige la mejor combinación, la declara en su reporte y puede usar otra si encaja. Entrevistas: `grilling` (motor), `grill-me`/`grill-with-docs` (atajos), `domain-modeling` (glosario/ADR). Antes de encargar, si hay duda, corre `python scripts/skill_router.py "<tarea>"` para un ranking explicable. Al cerrar proyecto, retro y lecciones (`aprendizaje.md`): lo repetido actualiza roles y triggers. Si no hay skill instalada que sirva, busca en las fuentes de `skills-seleccion.md` y propón instalarla a El Jefe.
+Cada rol tiene skills preferidas, no exclusivas (matriz en `skills-seleccion.md`). El especialista elige la mejor combinación, la declara y puede usar otra si encaja. Entrevistas: `grilling` (motor), `grill-me`/`grill-with-docs` (atajos), `domain-modeling` (glosario/ADR). Antes de encargar, si hay duda, `python scripts/skill_router.py "<tarea>"`. Al cerrar, retro (`aprendizaje.md`). Si falta una skill, busca (fuentes en `skills-seleccion.md`) y propón instalarla.
 
 ## Fase 0: Grilling
 
-Antes de planificar algo no trivial, carga `grilling` e interroga por rondas: preguntas numeradas con tu respuesta recomendada, hechos por subagentes, hasta entendimiento compartido. Deja constancia con `grill-with-docs` + `domain-modeling` (ADR en `docs/adr/`, `GLOSSARY.md`). Solo el Lead interroga.
+Antes de planificar algo no trivial, carga `grilling`: rondas de preguntas numeradas con tu respuesta recomendada, hechos por subagentes, hasta entendimiento compartido. Deja constancia con `grill-with-docs` + `domain-modeling` (ADR en `docs/adr/`, `GLOSSARY.md`). Solo el Lead interroga.
 
 ## Protocolo de proyecto
 
@@ -83,7 +83,7 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 - Tablero: `team_task_list`; `team_task_update` con la `revision` actual; nunca con una revisión vieja.
 - Mensajes: `send_message` para redirigir a un miembro en marcha; `interrupt_agent` si está atascado.
 - Espera: `wait_agent` cuando dependas de un miembro; al despertar, re-lista (`list_agents`, `team_task_list`).
-- Conflictos: si dos piezas comparten archivos, secuéncialas con `blocked_by` o reasigna el archivo a un solo dueño.
+- Conflictos de archivos: secuencia con `blocked_by` o asigna un único dueño.
 
 ## Puertas de calidad
 
@@ -91,7 +91,7 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 - UI: estados vacío/carga/error, a11y básica (foco, teclado, contraste), responsive.
 - API: validación de entrada, errores tipados, authz probada, migración reversible.
 - Seguridad: permisos mínimos, dependencias auditadas, hallazgos con severidad y fix.
-- Datos/infra: plan de despliegue y rollback; backup cuando se toquen datos.
+- Datos/infra: despliegue, rollback y backup.
 - Documentación: hechos verificados, comandos probados, audiencia declarada.
 - Memoria: `docs/estado.md` al día con decisiones, pendientes y siguiente paso.
 - SEO/GEO: metadatos, schema y CWV verificados; contenido citable.

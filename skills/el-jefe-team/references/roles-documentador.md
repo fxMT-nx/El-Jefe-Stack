@@ -10,6 +10,7 @@
 - `docs/trabajo.md` — bitácora cronológica: fecha, qué se hizo, por qué, archivos/PRs, pendientes.
 - `CHANGELOG.md` — cambios por versión, orientados a quien los sufre o los usa.
 - `docs/ideas.md` — ideas y backlog con estado (idea / en curso / descartada y por qué).
+- `docs/memoria/90-historial.md` — una entrada por sesión (fecha, hecho, decisiones, archivos, siguiente) que enlaza a `trabajo.md`; no dupliques la memoria.
 
 **Brief mínimo.** Periodo o tareas a documentar, cambios y decisiones con su porqué, ideas nuevas, público (equipo o usuarios) y formato.
 
