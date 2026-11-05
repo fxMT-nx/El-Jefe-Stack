@@ -164,11 +164,98 @@ def check_threejs() -> None:
         fail("falta scripts/install_threejs_skill.py")
 
 
+def check_skills_protocol() -> None:
+    """Ficheros del triaje obligatorio + smoke test de skills_check.py."""
+    skill_dir = ROOT / "skills" / "el-jefe-team"
+    reference = skill_dir / "references" / "triaje-skills.md"
+    script = ROOT / "scripts" / "skills_check.py"
+    template = ROOT / "templates" / "skills-plan.md"
+    for required in (reference, script, template):
+        if not required.exists():
+            fail(f"falta el fichero del triaje: {required.relative_to(ROOT)}")
+    if reference.exists() and "T-R-I-A-J-E" not in read(reference):
+        fail("triaje-skills.md no contiene el protocolo T-R-I-A-J-E")
+    if not script.exists() or not template.exists():
+        return
+
+    import subprocess
+    import tempfile
+
+    def run(*args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            [sys.executable, str(script), *args],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+        )
+
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            init = run("--init", tmp)
+            if init.returncode != 0:
+                fail(f"skills_check --init falla: {(init.stderr or init.stdout).strip()[:400]}")
+                return
+            seed = run(tmp)
+            if seed.returncode != 0:
+                fail(f"skills_check no valida un registro recién creado: {(seed.stdout or seed.stderr).strip()[:400]}")
+                return
+
+            registry = Path(tmp) / "docs" / "memoria" / "40-skills.md"
+            lines = registry.read_text(encoding="utf-8").splitlines()
+            separator = next(
+                (
+                    index
+                    for index, line in enumerate(lines)
+                    if "|" in line and "-" in line and set(line.strip()) <= set("|-: \t")
+                ),
+                None,
+            )
+            if separator is None:
+                fail("la plantilla del registro no tiene tabla de fases")
+                return
+
+            good = "| F1 | Prueba | `ui-design` | browseros-neo | captura | hecho |"
+            bad = "| F1 | Prueba |  | browseros-neo | captura | hecho |"
+
+            registry.write_text(
+                "\n".join(lines[: separator + 1] + [good] + lines[separator + 1 :]) + "\n",
+                encoding="utf-8",
+            )
+            positive = run(tmp)
+            if positive.returncode != 0:
+                fail(
+                    "skills_check rechaza una fase con skills y herramientas: "
+                    + (positive.stdout or positive.stderr).strip()[:400]
+                )
+
+            registry.write_text(
+                "\n".join(lines[: separator + 1] + [bad] + lines[separator + 1 :]) + "\n",
+                encoding="utf-8",
+            )
+            negative = run(tmp)
+            if negative.returncode == 0:
+                fail("skills_check no detecta una fase sin skills y sin waiver (prueba negativa)")
+    except (OSError, subprocess.SubprocessError) as exc:
+        fail(f"smoke test de skills_check falló: {exc}")
+
+
+def check_skills_reference_links() -> None:
+    skill_dir = ROOT / "skills" / "el-jefe-team"
+    text = read(skill_dir / "SKILL.md")
+    for name in ("triaje-skills.md", "skills-seleccion.md", "40-skills.md"):
+        if name not in text:
+            fail(f"SKILL.md no menciona {name}")
+
+
 def main() -> int:
     check_preset()
     check_skill()
     check_threejs()
     check_scripts()
+    check_skills_protocol()
+    check_skills_reference_links()
     check_relative_links()
     if errors:
         print("El Jefe Stack: validación FALLIDA")

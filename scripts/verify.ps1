@@ -20,11 +20,16 @@ $skill = Join-Path $AgentsSkillsDir 'el-jefe-team\SKILL.md'
 Check "skill el-jefe-team instalada" (Test-Path $skill)
 if (Test-Path $skill) {
   $refs = (Get-ChildItem (Join-Path $AgentsSkillsDir 'el-jefe-team\references') -File -ErrorAction SilentlyContinue | Measure-Object).Count
-  Check "fichas de roles presentes ($refs ficheros)" ($refs -ge 10)
+  Check "fichas de referencia ($refs/17)" ($refs -eq 17)
+  Check "triaje obligatorio presente" (Test-Path (Join-Path $AgentsSkillsDir 'el-jefe-team\references\triaje-skills.md'))
   $txt = [System.IO.File]::ReadAllText($skill)
   Check "roster completo (becario, seo-geo, documentador)" ($txt -match 'becario' -and $txt -match 'seo-geo' -and $txt -match 'documentador')
   Check "fase 0 grilling en el manual" ($txt -match 'Fase 0: Grilling')
+  Check "ley de triaje en el manual" ($txt -match 'triaje' -and $txt -match '40-skills.md')
 }
+
+Check "script skills_check.py" (Test-Path (Join-Path $repoRoot 'scripts\skills_check.py'))
+Check "plantilla skills-plan.md" (Test-Path (Join-Path $repoRoot 'templates\skills-plan.md'))
 
 Check "patch de perfil existe" (Test-Path $profilePatch)
 if (Test-Path $profilePatch) {
@@ -32,6 +37,7 @@ if (Test-Path $profilePatch) {
   Check "override de preset aplicado (marcador presente)" ($p -match 'Preset standard redefinido')
   Check "persona El Jefe presente" ($p -match 'Eres El Jefe')
   Check "fase 0 grilling en la persona" ($p -match 'Fase 0: antes de planificar')
+  Check "triaje obligatorio en la persona" ($p -match 'Ninguna fase sin triaje')
   Check "sin preset nuevo declarado (evita dsh-scope)" (-not ($p -match 'id: preset-jefe'))
 }
 

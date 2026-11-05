@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0
+
+- **Triaje obligatorio de skills y herramientas**: nueva referencia `references/triaje-skills.md` con la ley, el protocolo T-R-I-A-J-E (Tarea, Revisar catálogo, Identificar, Aplicar 1–3, Justificar, Evidencia), mínimos por tipo de trabajo, waivers, puerta de El Jefe, auditoría de cierre y anti-patrones. "No aplica" pasa a ser una decisión explícita, nunca un olvido.
+- **Evidencia**: todo reporte termina con el bloque `## Skills y herramientas` (skill, por qué, dónde se aplicó, resultado) más descartadas, waivers y herramientas; sin él, El Jefe devuelve el entregable.
+- **Registro persistente** `docs/memoria/40-skills.md` (mapa fase → skills/herramientas/evidencia, waivers y huecos) con plantilla `templates/skills-plan.md`; `memory_check.py --init` lo crea y su ausencia solo avisa.
+- **`scripts/skills_check.py`**: `--init` crea el registro, la validación detecta fases sin skills/herramientas y sin waiver, marcadores `TBD`/`pendiente` y celdas vacías, y `--inventory` lista el catálogo real instalado (texto o `--json`).
+- **SKILL.md** (≤8192 caracteres): sección `## Skills` reescrita con la ley, la evidencia y la puerta; `skills esperadas:` en la plantilla de encargo; anti-patrones nuevos.
+- `skills-seleccion.md` pasa a "Skills: triaje obligatorio y selección" (ley, mínimos por fase, evidencia); `memoria-viva.md` y `roles-memoria.md` incorporan `40-skills.md`.
+- Persona del preset (repo y perfil vivo): "Ninguna fase sin triaje de skills y herramientas…". `validate_repo.py` y `verify.ps1` comprueban los ficheros, el tamaño, el registro (smoke positivo y negativo) y la viñeta.
+
 ## 1.4.0
 
 - **Memoria viva**: protocolo completo en `references/memoria-viva.md` (estructura `docs/estado.md` + `docs/memoria/`, snapshot ≤1.5 KB, qué guardar y qué no, actualización antes de compactar y al cerrar, sesiones nuevas).

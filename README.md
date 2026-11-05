@@ -21,11 +21,12 @@ El usuario manda. El Jefe manda al equipo. Y el Jefe habla conmigo, nunca al rev
 │   ├── INSTALL.md          # Instalación paso a paso y troubleshooting
 │   ├── ARQUITECTURA.md     # Cómo funciona el equipo por dentro
 │   └── CHANGELOG.md
-├── templates/              # estado.md (snapshot), memoria/, retro, GLOSSARY, ADR, bitácora
+├── templates/              # estado.md (snapshot), memoria/, skills-plan, retro, GLOSSARY, ADR, bitácora
 ├── scripts/
 │   ├── install.ps1         # Instala skill + aplica el preset (con backups)
 │   ├── verify.ps1          # Comprueba que todo está en su sitio
 │   ├── skill_router.py     # Ranking explicable de skills para una tarea
+│   ├── skills_check.py     # Valida/inicializa el triaje de skills (40-skills) e inventaría el catálogo
 │   └── memory_check.py     # Valida/inicializa la memoria viva de un proyecto
 └── LICENSE
 ```
@@ -53,23 +54,24 @@ Detalle completo en [`agents/README.md`](agents/README.md).
 
 1. **Fase 0 — Grilling.** Antes de planificar algo no trivial, El Jefe te interroga por rondas (`grilling`): preguntas numeradas con su respuesta recomendada, un "sí" la acepta, y los hechos los busca él con subagentes. No se avanza hasta entendimiento compartido.
 2. **Plan y tablero.** Crea tareas con criterios de aceptación y dependencias en el tablero del equipo.
-3. **Delegación.** Un especialista por pieza, scopes de escritura disjuntos; FE y BE contra el contrato. Máximo 7 teammates vivos (límite del perfil).
-4. **Calidad.** QA crítico, seguridad e infra revisan antes de entregar.
-5. **Memoria.** `docs/estado.md`, `GLOSSARY.md` y ADR en `docs/adr/` para que el proyecto se pueda retomar en otra sesión.
-6. **Permisos.** Los especialistas piden permiso a El Jefe; lo rojo o excepcional te lo pregunta él a ti. Detalle en `skills/el-jefe-team/references/permisos.md`.
-7. **Agentes bajo demanda.** Si falta una especialidad, El Jefe **crea el rol que hace falta**: ficha completa (misión, brief, entregable, checklist, límites), 1–3 skills elegidas o buscadas e instaladas, y brief autocontenido. Si el rol se reutiliza, su ficha vive en `agents/custom/`. Procedimiento y dónde buscar skills: `skills/el-jefe-team/references/agentes-nuevos.md`.
-8. **Router de skills.** Antes de encargar, el equipo puede rankear las skills instaladas contra la tarea: `python scripts/skill_router.py "<tarea>"` (mecánica de recuperación inspirada en Skill-3D). Declara la combinación elegida.
-9. **Retro y aprendizaje.** Al cerrar un proyecto, `templates/retro.md`: éxitos → workflows a repetir, fallos → lecciones correctivas. Lo repetido en ≥2 proyectos se promueve a la ficha del rol, a la matriz o a una skill nueva. Detalle: `skills/el-jefe-team/references/aprendizaje.md`.
+3. **Triaje obligatorio.** Ninguna fase ni entregable sin triaje explícito de skills y herramientas: se revisa el catálogo real, se aplican 1–3, se justifican descartes y se exige evidencia en el reporte (`## Skills y herramientas`). El registro por fase vive en `docs/memoria/40-skills.md` y se valida con `python scripts/skills_check.py <proyecto>`. Fase sin skill y sin waiver aprobado = fallo de proceso. Detalle: `skills/el-jefe-team/references/triaje-skills.md`.
+4. **Delegación.** Un especialista por pieza, scopes de escritura disjuntos; FE y BE contra el contrato. Máximo 7 teammates vivos (límite del perfil).
+5. **Calidad.** QA crítico, seguridad e infra revisan antes de entregar.
+6. **Memoria.** `docs/estado.md`, `GLOSSARY.md` y ADR en `docs/adr/` para que el proyecto se pueda retomar en otra sesión.
+7. **Permisos.** Los especialistas piden permiso a El Jefe; lo rojo o excepcional te lo pregunta él a ti. Detalle en `skills/el-jefe-team/references/permisos.md`.
+8. **Agentes bajo demanda.** Si falta una especialidad, El Jefe **crea el rol que hace falta**: ficha completa (misión, brief, entregable, checklist, límites), 1–3 skills elegidas o buscadas e instaladas, y brief autocontenido. Si el rol se reutiliza, su ficha vive en `agents/custom/`. Procedimiento y dónde buscar skills: `skills/el-jefe-team/references/agentes-nuevos.md`.
+9. **Router de skills.** Antes de encargar, el equipo puede rankear las skills instaladas contra la tarea: `python scripts/skill_router.py "<tarea>"` (mecánica de recuperación inspirada en Skill-3D). Declara la combinación elegida.
+10. **Retro y aprendizaje.** Al cerrar un proyecto, `templates/retro.md`: éxitos → workflows a repetir, fallos → lecciones correctivas. Lo repetido en ≥2 proyectos se promueve a la ficha del rol, a la matriz o a una skill nueva. Detalle: `skills/el-jefe-team/references/aprendizaje.md`.
 
 ## Memoria viva
 
 El Jefe es el dueño último de la memoria; `memoria` la escribe y `documentador` deja la bitácora. Regla: **si no está en disco, no existe**.
 
 - `docs/estado.md` — snapshot ≤1.5 KB (objetivo, fase, hecho, siguiente, decisiones vigentes, riesgos, preguntas, cómo retomar).
-- `docs/memoria/` — `00-indice`, `10-proyecto`, `20-usuario` (preferencias, vetos y aprobaciones del usuario), `30-decisiones`, `50-tecnico`, `60-tareas`, `70-riesgos`, `80-preguntas`, `90-historial` (una entrada por sesión).
+- `docs/memoria/` — `00-indice`, `10-proyecto`, `20-usuario` (preferencias, vetos y aprobaciones del usuario), `30-decisiones`, `40-skills` (triaje obligatorio por fase), `50-tecnico`, `60-tareas`, `70-riesgos`, `80-preguntas`, `90-historial` (una entrada por sesión).
 - `GLOSSARY.md`, `docs/adr/`, `docs/trabajo.md`, `CHANGELOG.md`, `docs/ideas.md` — vocabulario, decisiones duras y bitácora.
 
-Protocolo: leer al arrancar, actualizar tras cada decisión, **antes de compactar** y al cerrar sesión. Detalle en `skills/el-jefe-team/references/memoria-viva.md`; validación con `python scripts/memory_check.py <proyecto>` (`--init` crea el esqueleto).
+Protocolo: leer al arrancar, actualizar tras cada decisión, **antes de compactar** y al cerrar sesión. Detalle en `skills/el-jefe-team/references/memoria-viva.md`; validación con `python scripts/memory_check.py <proyecto>` (`--init` crea el esqueleto, incluido `40-skills.md`) y `python scripts/skills_check.py <proyecto>` para el triaje de skills.
 
 ## Inicio rápido
 

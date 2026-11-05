@@ -1,12 +1,29 @@
-# Selección de skills por rol
+# Skills: triaje obligatorio y selección
+
+## Ley de triaje
+
+Ninguna fase, tarea ni entregable sin **triaje explícito** de skills y herramientas: "no aplica" se decide y se escribe, nunca se olvida. Nombrar una skill sin leerla no cuenta; usarla es cargarla y aplicar sus reglas. El protocolo completo —T-R-I-A-J-E, mínimos por tipo de trabajo, waivers, evidencia y puerta de El Jefe— está en [triaje-skills.md](triaje-skills.md). Esta página aporta la matriz de afinidad, el catálogo y las fuentes de descubrimiento.
 
 ## Principios
 
-- **Preferidas ≠ exclusivas.** La matriz de abajo es el punto de partida, no una jaula: cualquier especialista puede y debe usar otra skill si encaja mejor para la tarea.
-- **Elegir por tarea, no por costumbre.** Antes de actuar: entiende el encargo, revisa el catálogo de skills instaladas y elige **1–3 complementarias** (a veces cero, a veces cuatro si la tarea abarca diseño + motion + QA). No cargues cinco skills redundantes.
-- **Declarar.** En el reporte final di qué skills usaste y por qué; si descartaste una que parecía obvia, di por qué.
+- **La matriz orienta; el mínimo obliga.** Cualquier especialista puede usar otra skill si encaja mejor, pero los mínimos de `triaje-skills.md` por tipo de trabajo no son opcionales: UI nueva exige diseño **y** verificación; datos y auth exigen seguridad **y** pruebas.
+- **Elegir por tarea, no por costumbre.** Antes de actuar: entiende el encargo, revisa el catálogo **real** instalado (`python scripts/skills_check.py --inventory`) y elige **1–3 complementarias**. No cargues cinco skills redundantes.
+- **Declarar con evidencia.** El reporte lleva el bloque `## Skills y herramientas` con tabla `skill | por qué | dónde se aplicó | resultado`, las descartadas y los waivers. Sin bloque, El Jefe devuelve el entregable.
 - **Combinar.** Una tarea real suele abarcar varias: p. ej. una landing = `frontend-design` + `design-taste-frontend` + `motion-design` + `ui-verification` + (si toca publicar) `seo-geo`/`marketing`.
 - **Cuando no haya skill que encaje:** búscala en las fuentes de descubrimiento de abajo y propón su instalación a El Jefe antes de improvisar.
+
+## Mínimos por fase (resumen)
+
+| Fase | Mínimo |
+|---|---|
+| Fase 0 / plan | `grilling` (+ `writing-plans` al planificar) y mapa de skills en `docs/memoria/40-skills.md` |
+| Diseño / UI | 1 skill de diseño + 1 de verificación (`ui-verification`/`webapp-testing`/`web-design-guidelines`) |
+| Construcción API/BD | `security-best-practices`/`supabase-postgres-best-practices` + `vitest` |
+| Seguridad | `security-threat-model` + `security-best-practices` |
+| Deploy / publicación | `playwright`/`vitest` (smoke) + `seo-geo`/`marketing` si hay visibilidad |
+| Entrega / documentación | `office-*`/`changelog-automation`/`brand` según el entregable |
+
+Detalle por tipo de trabajo, ejemplos y waivers: [triaje-skills.md](triaje-skills.md). Validación del registro: `python scripts/skills_check.py <proyecto>`.
 
 ## Matriz de afinidad
 

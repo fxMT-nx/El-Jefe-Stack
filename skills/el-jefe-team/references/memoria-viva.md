@@ -27,6 +27,7 @@ docs/
 │   ├── 10-proyecto.md     # objetivo, alcance, no-objetivos, usuarios
 │   ├── 20-usuario.md      # lo que el usuario quiere y decide (ver abajo)
 │   ├── 30-decisiones.md   # registro de decisiones; enlaces a ADR
+│   ├── 40-skills.md       # triaje por fase: skills, herramientas, evidencia, waivers y huecos
 │   ├── 50-tecnico.md      # stack, mapa del repo, comandos, entornos, trampas
 │   ├── 60-tareas.md       # hecho / en curso / siguiente; enlace al tablero
 │   ├── 70-riesgos.md      # riesgos, dependencias, supuestos, bloqueos
@@ -38,7 +39,7 @@ docs/
 GLOSSARY.md                # vocabulario del dominio (raíz)
 ```
 
-Crea solo los ficheros que hagan falta; el núcleo mínimo es `estado.md`, `00-indice.md`, `10-proyecto.md`, `20-usuario.md`, `60-tareas.md`, `80-preguntas.md` y `90-historial.md`.
+Crea solo los ficheros que hagan falta; el núcleo mínimo es `estado.md`, `00-indice.md`, `10-proyecto.md`, `20-usuario.md`, `60-tareas.md`, `80-preguntas.md` y `90-historial.md`. `40-skills.md` es el registro del triaje obligatorio (`triaje-skills.md`); `--init` lo crea y `skills_check.py` lo valida.
 
 ## Snapshot de `docs/estado.md` (obligatorio, ≤1.5 KB)
 
@@ -94,7 +95,7 @@ Es lo primero que lee una sesión nueva tras una compactación. Sin esto, la mem
 1. **Arranque.** Lee `docs/estado.md`, `docs/memoria/00-indice.md`, `GLOSSARY.md`, `80-preguntas.md` y la última entrada de `90-historial.md`. Saluda con un resumen de 5 líneas y el siguiente paso. No preguntes lo que ya está escrito.
 2. **Durante.** Cada decisión, requisito o preferencia se escribe **en el momento** (o se encarga y se verifica). Las tareas van al tablero.
 3. **Antes de compactar.** Actualiza el snapshot y `60/70/80`. Nada importante debe quedar solo en el chat.
-4. **Cierre.** Actualiza `90-historial.md` (fecha, objetivo, hecho, decisiones, archivos tocados, siguiente paso, preguntas abiertas) y el snapshot. Si el proyecto usa git y el usuario lo permite, commit con mensaje claro.
+4. **Cierre.** Actualiza `90-historial.md` (fecha, objetivo, hecho, decisiones, archivos tocados, siguiente paso, preguntas abiertas), la **auditoría de skills** en `40-skills.md` (cada fase con skills/herramientas/evidencia o waiver) y el snapshot. Si el proyecto usa git y el usuario lo permite, commit con mensaje claro.
 5. **Sesión nueva.** Repite el paso 1; continúa desde el siguiente paso. No re-preguntes ni re-decidas lo ya cerrado.
 
 ## Compactación y sesiones nuevas

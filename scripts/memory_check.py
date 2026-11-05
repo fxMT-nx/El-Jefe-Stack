@@ -24,6 +24,7 @@ CORE = [
 ]
 OPTIONAL = [
     "docs/memoria/30-decisiones.md",
+    "docs/memoria/40-skills.md",
     "docs/memoria/50-tecnico.md",
     "docs/memoria/70-riesgos.md",
     "docs/adr",
@@ -71,6 +72,7 @@ Orden de lectura al retomar: `docs/estado.md` → este índice → `10-proyecto.
 | `10-proyecto.md` | objetivo y alcance | {today} |
 | `20-usuario.md` | preferencias, vetos y decisiones del usuario | {today} |
 | `30-decisiones.md` | registro de decisiones | {today} |
+| `40-skills.md` | triaje de skills y herramientas | {today} |
 | `50-tecnico.md` | stack, comandos, trampas | {today} |
 | `60-tareas.md` | hecho / en curso / siguiente | {today} |
 | `70-riesgos.md` | riesgos y bloqueos | {today} |
@@ -162,7 +164,38 @@ def init_memory(root: Path) -> None:
         if not path.exists():
             path.write_text(tpl.format(name=root.name, today=today), encoding="utf-8")
             print(f"creado {rel}")
+    init_skills_registry(root)
     print("memoria inicializada")
+
+
+def init_skills_registry(root: Path) -> None:
+    """Crea docs/memoria/40-skills.md delegando en skills_check (hermano)."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import skills_check  # noqa: PLC0415 - script hermano del mismo repo
+
+        skills_check.init_registry(root)
+        return
+    except ImportError:
+        pass
+    target = root / "docs/memoria/40-skills.md"
+    if target.exists():
+        return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        "# Triaje de skills y herramientas — "
+        + root.name
+        + f"\n\n> Actualizado: {date.today().isoformat()} · Responsable: El Jefe\n\n"
+        "## Mapa fase → skills y herramientas\n\n"
+        "| Fase | Tarea / entregable | Skills | Herramientas | Evidencia | Estado |\n"
+        "|---|---|---|---|---|---|\n\n"
+        "## Waivers\n\n"
+        "| ID | Tarea | Motivo | Alternativa aplicada | Aprueba | Fecha |\n"
+        "|---|---|---|---|---|---|\n\n"
+        "## Huecos y propuestas\n\n- (ninguno)\n",
+        encoding="utf-8",
+    )
+    print("creado docs/memoria/40-skills.md (esqueleto mínimo)")
 
 
 def main() -> int:

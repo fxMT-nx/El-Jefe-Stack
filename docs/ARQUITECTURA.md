@@ -41,7 +41,7 @@ Límites: `maxMembers: 8` (Lead + 7 teammates), `maxTasks: 256`. Los nombres son
 
 - **Dentro de la sesión**: roster y tareas se persisten en el log de la sesión de El Jefe; cada teammate tiene su propia Session con historial y se reanuda al recibir un mensaje.
 - **Entre sesiones nuevas** no hay recuerdo automático: la continuidad la da la **memoria en disco**.
-- **Estructura**: `docs/estado.md` (snapshot ≤1.5 KB) + `docs/memoria/` (`00-indice`, `10-proyecto`, `20-usuario`, `30-decisiones`, `50-tecnico`, `60-tareas`, `70-riesgos`, `80-preguntas`, `90-historial`), más `GLOSSARY.md`, `docs/adr/`, `docs/trabajo.md` y `CHANGELOG.md`.
+- **Estructura**: `docs/estado.md` (snapshot ≤1.5 KB) + `docs/memoria/` (`00-indice`, `10-proyecto`, `20-usuario`, `30-decisiones`, `40-skills`, `50-tecnico`, `60-tareas`, `70-riesgos`, `80-preguntas`, `90-historial`), más `GLOSSARY.md`, `docs/adr/`, `docs/trabajo.md` y `CHANGELOG.md`.
 - **Responsable**: El Jefe (verifica antes de cerrar); `memoria` escribe y valida; `documentador` deja la bitácora.
 - **Cuándo**: leer al arrancar; actualizar tras cada decisión o requisito, **antes de compactar** y al cerrar sesión.
 - **Compactación**: borra contexto, no disco. El snapshot debe bastar para reconstruir el estado; si no, se mejora.
@@ -74,7 +74,7 @@ El límite de 7 teammates vivos sigue aplicando: crear un agente no es excusa pa
 
 ## Selección de skills
 
-Cada rol tiene skills preferidas (no exclusivas). El especialista elige 1–3 complementarias, las declara en su reporte y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.
+La matriz orienta y los mínimos obligan: cada rol tiene skills preferidas, pero **toda fase pasa por triaje** (ver abajo). El especialista aplica 1–3 complementarias, las declara con evidencia y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.
 
 Cuando haya duda, el **router** puntúa las skills instaladas contra la tarea:
 
@@ -83,6 +83,17 @@ python scripts/skill_router.py "auditar SEO técnico de una landing" --top 5
 ```
 
 Inspirado en la recuperación de skills de Skill-3D (`skill_retrieval.py`): skills como unidades con nombre, cuándo, estrategia y herramientas; el ranking es explicable (nombre, descripción, triggers, tamaño) y sustituye a la intuición.
+
+## Triaje obligatorio de skills y herramientas
+
+Ninguna fase, tarea ni entregable sin triaje explícito; "no aplica" se decide y se escribe, nunca se olvida. Usar una skill es cargarla y aplicar sus reglas; nombrarla no cuenta.
+
+- **Protocolo T-R-I-A-J-E**: Tarea, Revisar catálogo real, Identificar candidatas leyendo su `description`, Aplicar 1–3, Justificar descartes y Evidencia. Mínimos por tipo de trabajo (UI, motion, API, BD, seguridad, deploy, documentación, SEO/GEO, marketing, 3D, QA), waivers y anti-patrones: `skills/el-jefe-team/references/triaje-skills.md`.
+- **Registro**: `docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers aprobados y los huecos; se actualiza con la memoria y sobrevive a compactaciones.
+- **Evidencia**: el reporte del especialista termina con `## Skills y herramientas` (skill, por qué, dónde se aplicó, resultado) más descartadas, waivers y herramientas usadas.
+- **Puerta de El Jefe**: por hito revisa el registro, muestrea un entregable contra lo que exige la skill declarada y devuelve lo que no lo cumpla. Fase sin skill y sin waiver = fallo de proceso.
+- **Herramientas**: la misma ley; se comprueba qué MCP/herramienta existe (browseros-neo, playwright, agent-desktop, office-*, pdfcraft, threejs, CAD…) y se declara cuál se usó.
+- **Scripts**: `python scripts/skills_check.py --init <proyecto>` crea el registro desde `templates/skills-plan.md`; `python scripts/skills_check.py <proyecto>` lo valida (falla con fases sin skills/herramientas y sin waiver, o con `TBD`); `--inventory` lista las skills instaladas con su descripción. `memory_check.py --init` crea también el registro.
 
 ## Aprendizaje (retro)
 

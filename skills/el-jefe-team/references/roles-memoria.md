@@ -12,6 +12,7 @@
 - `10-proyecto.md` — objetivo, alcance, no-objetivos, usuarios, criterios de éxito.
 - `20-usuario.md` — **lo del usuario**: preferencias, vetos, aprobaciones, decisiones que solo él puede tomar. No mezclar con decisiones técnicas.
 - `30-decisiones.md` — registro; enlaza a `docs/adr/NNNN-*.md` (criterios y formato de `domain-modeling`).
+- `40-skills.md` — triaje obligatorio por fase: skills, herramientas, evidencia, waivers y huecos (`triaje-skills.md`); se valida con `python scripts/skills_check.py <proyecto>`.
 - `50-tecnico.md` — stack, mapa del repo, comandos, entornos, trampas.
 - `60-tareas.md` — hecho / en curso / siguiente; enlaza al tablero.
 - `70-riesgos.md` — riesgos, dependencias, supuestos, bloqueos.
