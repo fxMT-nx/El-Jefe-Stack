@@ -206,7 +206,9 @@ def init_skills_registry(root: Path) -> None:
     print("creado docs/memoria/40-skills.md (esqueleto mínimo)")
 
 
-def check_skills_registry(root: Path, errors: list[str], warnings: list[str]) -> None:
+def check_skills_registry(
+    root: Path, errors: list[str], warnings: list[str], unreadable: set[Path]
+) -> None:
     """40-skills.md: obligatorio si hay estado.md; sus filas se validan con skills_check."""
     registry = root / SKILLS_REGISTRY
     if not registry.exists():
@@ -215,6 +217,13 @@ def check_skills_registry(root: Path, errors: list[str], warnings: list[str]) ->
                 f"{SKILLS_REGISTRY} ausente: el triaje de skills es obligatorio "
                 "(créalo con `python scripts/skills_check.py --init .`)"
             )
+        return
+    try:
+        read(registry)
+    except ReadError as exc:
+        # Un solo error por fichero: el barrido de docs/ no vuelve a informarlo.
+        errors.append(f"{SKILLS_REGISTRY}: {exc}")
+        unreadable.add(registry.resolve())
         return
     try:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -226,6 +235,7 @@ def check_skills_registry(root: Path, errors: list[str], warnings: list[str]) ->
         report = skills_check.collect(root)
     except skills_check.ReadError as exc:
         errors.append(f"{SKILLS_REGISTRY}: {exc}")
+        unreadable.add(registry.resolve())
         return
     for error in report["errors"]:
         errors.append(f"{SKILLS_REGISTRY}: {error}")
@@ -254,6 +264,7 @@ def main() -> int:
 
     errors: list[str] = []
     warnings: list[str] = []
+    unreadable: set[Path] = set()
 
     for rel in CORE:
         if not (root / rel).exists():
@@ -285,13 +296,14 @@ def main() -> int:
             if len(snapshot) > SNAPSHOT_LIMIT:
                 warnings.append(f"snapshot inicial > {SNAPSHOT_LIMIT} chars ({len(snapshot)})")
 
-    check_skills_registry(root, errors, warnings)
+    check_skills_registry(root, errors, warnings, unreadable)
 
     for md in root.glob("docs/**/*.md") if (root / "docs").exists() else []:
         try:
             text = read(md)
         except ReadError as exc:
-            errors.append(f"{md.relative_to(root).as_posix()} {exc}")
+            if md.resolve() not in unreadable:
+                errors.append(f"{md.relative_to(root).as_posix()} {exc}")
             continue
         if SECRET_RE.search(text):
             errors.append(f"posible secreto en {md.relative_to(root)}")

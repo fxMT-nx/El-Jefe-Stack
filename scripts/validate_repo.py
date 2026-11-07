@@ -38,6 +38,16 @@ def read(path: Path) -> str:
     except FileNotFoundError:
         fail(f"falta el fichero: {rel(path)}")
         return ""
+
+
+def read_real(path: Path) -> str:
+    """Lee sin traducir saltos: el pruner cuenta CRLF como dos code points."""
+    try:
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            return handle.read()
+    except FileNotFoundError:
+        fail(f"falta el fichero: {rel(path)}")
+        return ""
     except UnicodeDecodeError:
         fail(f"{rel(path)} no está en UTF-8 válido")
         return ""
@@ -64,7 +74,11 @@ def check_preset() -> None:
         lambda loader, node: loader.construct_scalar(node),
     )
 
-    docs = list(yaml.safe_load_all(text))
+    try:
+        docs = list(yaml.safe_load_all(text))
+    except yaml.YAMLError as exc:
+        fail(f"YAML inválido en preset/el-jefe.patch.yml: {exc}")
+        return
     entries = [entry for doc in docs if doc for entry in doc]
     target = [e for e in entries if isinstance(e, dict) and e.get("id") == "preset-standard"]
     if not target:
@@ -101,7 +115,7 @@ def check_preset() -> None:
 def check_skill() -> None:
     skill_dir = ROOT / "skills" / "el-jefe-team"
     path = skill_dir / "SKILL.md"
-    text = read(path)
+    text = read_real(path)
     if not text:
         return
     m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
@@ -123,9 +137,9 @@ def check_skill() -> None:
         fail(f"SKILL.md supera 8192 caracteres ({len(text)}); DSH lo podará al cargarlo")
 
     refs = sorted((skill_dir / "references").glob("*.md"))
-    if len(refs) < 20:
-        fail(f"pocas fichas de referencia: {len(refs)} (v1.6.0 exige 20)")
-    for nombre in ("criterio.md", "acabados.md", "puertas-calidad.md", "triaje-skills.md", "skills-seleccion.md"):
+    if len(refs) < 21:
+        fail(f"pocas fichas de referencia: {len(refs)} (v1.6.3 exige 21)")
+    for nombre in ("criterio.md", "acabados.md", "puertas-calidad.md", "triaje-skills.md", "skills-seleccion.md", "coordinacion.md"):
         if not (skill_dir / "references" / nombre).exists():
             fail(f"falta la referencia obligatoria references/{nombre}")
     for ref in refs:
@@ -385,11 +399,25 @@ def check_skill_pack() -> None:
                 + "".join(f"## Sección {i}\n\n{relleno}\n\n" for i in range(1, 8))
             )
             skill_md = skill / "SKILL.md"
-            skill_md.write_text(original, encoding="utf-8")
+            with skill_md.open("w", encoding="utf-8", newline="\n") as handle:
+                handle.write(original)
 
-            if len(original) <= 8192:
+            if len(read_real(skill_md)) <= 8192:
                 fail("el smoke del empaquetador usa una skill que no supera el límite")
                 return
+
+            # El mismo texto con CRLF cuenta más: el pruner cuenta code points.
+            root_crlf = Path(tmp) / "skills-crlf"
+            crlf = root_crlf / "demo-crlf"
+            crlf.mkdir(parents=True)
+            crlf_md = crlf / "SKILL.md"
+            with crlf_md.open("w", encoding="utf-8", newline="") as handle:
+                handle.write(original.replace("\n", "\r\n"))
+            if len(read_real(crlf_md)) <= 8192:
+                fail("el fixture CRLF no supera 8192 caracteres reales")
+            if run("--verify", "--root", str(root_crlf)).returncode == 0:
+                fail("skill_pack --verify no detecta una SKILL.md CRLF por encima del límite real")
+
             if run("--verify", "--root", str(root)).returncode == 0:
                 fail("skill_pack --verify no detecta una SKILL.md por encima del límite")
 
@@ -397,10 +425,10 @@ def check_skill_pack() -> None:
             if split.returncode != 0:
                 fail(f"skill_pack --split falla: {(split.stderr or split.stdout).strip()[:300]}")
                 return
-            final = skill_md.read_text(encoding="utf-8")
+            final = read_real(skill_md)
             partes = sorted((skill / "references").glob("parte-*.md"))
             if len(final) > 8192:
-                fail(f"tras trocear, SKILL.md sigue en {len(final)} caracteres")
+                fail(f"tras trocear, SKILL.md sigue en {len(final)} caracteres reales")
             if len(partes) < 2:
                 fail(f"el troceo generó {len(partes)} parte(s); se esperaban 2 o más")
             if "## Índice de referencias" not in final:
@@ -408,23 +436,37 @@ def check_skill_pack() -> None:
             for parte in partes:
                 if f"references/{parte.name}" not in final:
                     fail(f"el índice no apunta a {parte.name}")
-                contenido = parte.read_text(encoding="utf-8")
-                if len(contenido) > 7000:
-                    fail(f"{parte.name} supera 7000 caracteres ({len(contenido)})")
+                contenido = read_real(parte)
+                if len(contenido) > 6900:
+                    fail(f"{parte.name} supera 6900 caracteres reales ({len(contenido)})")
             if "Intro corta de la skill de prueba." not in final:
                 fail("el troceo perdió la intro")
 
             if run("--verify", "--root", str(root)).returncode != 0:
                 fail("skill_pack --verify rechaza un troceo correcto")
+
+            # Integridad: añadir texto dentro de una parte debe romper --verify.
+            objetivo = partes[0]
+            intacto = read_real(objetivo)
+            with objetivo.open("a", encoding="utf-8", newline="\n") as handle:
+                handle.write("\n## SECCIÓN DUPLICADA DE PRUEBA\n\ntexto intruso\n")
+            if run("--verify", "--root", str(root)).returncode == 0:
+                fail("skill_pack --verify no detecta contenido añadido dentro de una parte")
+            with objetivo.open("w", encoding="utf-8", newline="\n") as handle:
+                handle.write(intacto)
+
+            if run("--verify", "--root", str(root)).returncode != 0:
+                fail("skill_pack --verify no vuelve a aceptar el paquete tras restaurar la parte")
+
             if run("--split", "demo", "--root", str(root)).returncode != 0:
                 fail("skill_pack --split no es idempotente (debería avisar y salir 0)")
 
             restore = run("--restore", "demo", "--root", str(root))
             if restore.returncode != 0:
                 fail(f"skill_pack --restore falla: {(restore.stderr or restore.stdout).strip()[:300]}")
-            elif skill_md.read_text(encoding="utf-8") != original:
+            elif read_real(skill_md) != original:
                 fail("skill_pack --restore no devuelve el SKILL.md original exacto")
-            elif (skill / "references" / "parte-01-x.md").exists() or list((skill / "references").glob("parte-*.md")):
+            elif list((skill / "references").glob("parte-*.md")):
                 fail("skill_pack --restore deja partes atrás")
     except (OSError, subprocess.SubprocessError) as exc:
         fail(f"smoke test de skill_pack falló: {exc}")

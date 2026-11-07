@@ -52,7 +52,7 @@ Manda el de la izquierda: los tres primeros cuestan años; el cuarto se itera. L
 - **Expected / Reads / Writes / Done** en cada encargo: qué se espera, qué se lee, qué se escribe y cuándo termina. Sin contrato no hay veredicto.
 - **Compute, don't eyeball.** Totales, tasas y deltas salen de filas con script; nunca gasto de un periodo completo entre conversiones de uno parcial (`analytics`).
 - **Muestra precomprometida.** Parar cuando «ya gana» es *peeking*: 1% de base × 20% de mejora ≈ 43.000 por variante (`ab-testing`). Cohorte dentro de su ventana = pendiente, no fracasada.
-- **Rúbrica 0–10 con el hueco declarado:** 9–10 publicable · 7–8 retoques · 5–6 otra pasada · 1–4 rehacer; con nota, filas que fallan y arreglo para llegar a 10. Sin nota es opinión (`ux-heuristics`).
+- **Rúbrica 0–10 canónica, con el hueco declarado:** la de [`acabados.md`](acabados.md) §4 (9–10 publicable · 7–8 retoques · 5–6 otra pasada · 3–4 rehacer capas · 0–2 no es un entregable), con nota por capa, filas que fallan y arreglo para llegar a 10. No hay otra escala: la de `ux-heuristics` y cualquier externa se traducen a esa antes de decidir. Sin nota es opinión.
 - **Antes de culpar al cliente, revisa tu proceso.** La explicación por defecto («no entiende») casi nunca es la buena.
 - **Una sola fuente de verdad para contar:** Google 50, Meta 40, GA 60 y el CRM 35 **no suman**. Una cuenta (backend/CRM), las demás explican de dónde vino, y la brecha se declara (`attribution`).
 

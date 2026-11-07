@@ -25,7 +25,7 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 - **Nombres permanentes**: no reutilizar; un nombre fallido queda reservado.
 - **Sin tope de teammates**: el perfil admite hasta 1000 entradas de roster (antes 8). Aun así, cada miembro necesita una pieza disjunta; rota y reutiliza nombres en vez de acumular gente sin trabajo.
 - **Briefs autocontenidos**: un teammate `fresh` no ve la conversación del Jefe; con `fork` hereda sus turnos completados (usar solo cuando haga falta el historial).
-- **Skills esperadas y evidencia**: todo encargo declara en el brief las 1–3 skills esperadas (o el waiver aprobado) y exige el bloque `## Skills y herramientas` en el reporte. Sin ese bloque, el entregable se devuelve. Triaje obligatorio: `../skills/el-jefe-team/references/triaje-skills.md`.
+- **Skills esperadas y evidencia**: todo encargo declara en el brief las 1–3 skills esperadas —4–5 exige justificación escrita de qué disciplina extra lo pide y qué se descarta; más de 5 no se admite— (o el waiver aprobado) y exige el bloque `## Skills y herramientas` en el reporte. Sin ese bloque, el entregable se devuelve. Triaje obligatorio: `../skills/el-jefe-team/references/triaje-skills.md`.
 - **Sin usuario directo**: todas las dudas suben a El Jefe, que escala si toca.
 
 ## Crear un agente nuevo
@@ -33,7 +33,7 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 Si la tarea requiere una especialidad que el roster no cubre, **no se fuerza a un rol existente**: se crea un agente.
 
 1. Copia `new-role-template.md` a `agents/custom/<nombre>.md` y rellena misión, cuándo, brief mínimo, entregable + evidencia, checklist y límites.
-2. Elige 1–3 skills para el rol (primero las instaladas); si falta alguna, búscala (fuentes en `../skills/el-jefe-team/references/agentes-nuevos.md`) y propón su instalación.
+2. Elige 1–3 skills para el rol (4–5 exige justificación escrita; más de 5 no se admite; primero las instaladas); si falta alguna, búscala (fuentes en `../skills/el-jefe-team/references/agentes-nuevos.md`) y propón su instalación.
 3. Redacta el brief autocontenido con la plantilla del manual y lanza `spawn_teammate` con `context: fresh`.
 4. Revisa el resultado como cualquier entrega; si el rol se repite, guarda la ficha y añádelo al roster.
 

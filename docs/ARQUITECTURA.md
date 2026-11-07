@@ -66,7 +66,7 @@ Antes de planificar un trabajo no trivial:
 El roster cubre lo habitual, no todo. Cuando aparece una especialidad que ningún rol cubre (audio/DSP, contratos, bioinformática, i18n, compliance, hardware…), El Jefe **crea el agente**:
 
 1. Escribe una ficha nueva con el formato de las existentes (`agents/new-role-template.md`): misión, cuándo sí/no, brief mínimo, entregable + evidencia, checklist, límites y prompt de arranque.
-2. Elige 1–3 skills (instaladas o buscadas en las fuentes de descubrimiento) y anota por qué.
+2. Elige 1–3 skills (instaladas o buscadas en las fuentes de descubrimiento) y anota por qué; 4–5 exige justificación escrita (qué disciplina extra lo pide y qué se descarta) y más de 5 no se admite.
 3. Lanza `spawn_teammate` con `context: fresh` y un brief autocontenido.
 4. Revisa el resultado como cualquier entrega y, si el rol se va a reutilizar, guarda la ficha en `agents/custom/` del proyecto.
 
@@ -74,7 +74,7 @@ No hay tope de teammates vivos, pero crear un agente no es excusa para saltarse 
 
 ## Selección de skills
 
-La matriz orienta y los mínimos obligan: cada rol tiene skills preferidas, pero **toda fase pasa por triaje** (ver abajo). El especialista aplica 1–3 complementarias, las declara con evidencia y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.
+La matriz orienta y los mínimos obligan: cada rol tiene skills preferidas, pero **toda fase pasa por triaje** (ver abajo). El especialista aplica 1–3 complementarias (4–5 exige justificación escrita; más de 5 no se admite), las declara con evidencia y puede buscar otras en las fuentes de descubrimiento. Matriz completa: `skills/el-jefe-team/references/skills-seleccion.md`.
 
 Cuando haya duda, el **router** puntúa las skills instaladas contra la tarea:
 
@@ -88,7 +88,7 @@ Inspirado en la recuperación de skills de Skill-3D (`skill_retrieval.py`): skil
 
 Ninguna fase, tarea ni entregable sin triaje explícito; "no aplica" se decide y se escribe, nunca se olvida. Usar una skill es cargarla y aplicar sus reglas; nombrarla no cuenta.
 
-- **Protocolo T-R-I-A-J-E**: Tarea, Revisar catálogo real, Identificar candidatas leyendo su `description`, Aplicar 1–3, Justificar descartes y Evidencia. Mínimos por tipo de trabajo (UI, motion, API, BD, seguridad, deploy, documentación, SEO/GEO, marketing, 3D, QA), waivers y anti-patrones: `skills/el-jefe-team/references/triaje-skills.md`.
+- **Protocolo T-R-I-A-J-E**: Tarea, Revisar catálogo real, Identificar candidatas leyendo su `description`, Aplicar 1–3 (4–5 con justificación escrita; más de 5 no), Justificar descartes y Evidencia. Mínimos por tipo de trabajo (UI, motion, API, BD, seguridad, deploy, documentación, SEO/GEO, marketing, 3D, QA), waivers y anti-patrones: `skills/el-jefe-team/references/triaje-skills.md`.
 - **Registro**: `docs/memoria/40-skills.md` guarda el mapa fase → skills/herramientas/evidencia, los waivers aprobados y los huecos; se actualiza con la memoria y sobrevive a compactaciones.
 - **Evidencia**: el reporte del especialista termina con `## Skills y herramientas` (skill, por qué, dónde se aplicó, resultado) más descartadas, waivers y herramientas usadas.
 - **Puerta de El Jefe**: por hito revisa el registro, muestrea un entregable contra lo que exige la skill declarada y devuelve lo que no lo cumpla. Fase sin skill y sin waiver = fallo de proceso.
@@ -99,9 +99,9 @@ Ninguna fase, tarea ni entregable sin triaje explícito; "no aplica" se decide y
 
 El triaje dice **qué skills** se aplican; la capa de criterio dice **cómo se decide y cuándo se rechaza**. No consume cupo de triaje porque no es una skill: se aplica siempre.
 
-- **`references/criterio.md` — decidir.** Jerarquía en conflicto: **confianza → accesibilidad → corrección técnica → psicología**. Negocio (precio entre la SBA y el valor percibido, ICP con *disqualifying*, LTV/CAC ≥ 3, payback ≤ 12 meses, kernel de Rumelt, señal frente a vanidad), psicología (carga cognitiva, fricción con número, confianza como prueba concreta, Fogg, hábitos) con la tabla persuasión / dark pattern, producto (JTBD, time-to-value, retención por cohorte, churn causal), decisiones (rúbrica 0–10 con el hueco declarado, muestra precomprometida, una sola fuente de verdad para contar) y un interrogatorio de 10 preguntas antes de aprobar: **un «no lo sé» no se tapa con entusiasmo, se aprueba la investigación.**
-- **`references/acabados.md` — juzgar.** Un entregable *funciona* cuando hace lo que dice; está *acabado* cuando alguien que no lo escribió lo usa sin que le expliquen nada. Review en 8 segundos sin scroll, capturas a 1440/768/390 con estados forzados, severidad **P0–P3**, checklist por capas (arranque, estados, formularios, microcopy, confianza, rendimiento percibido, a11y, responsive, consistencia, datos extremos, modo oscuro, confirmar/deshacer), rúbrica 0–10 y evidencia exigible.
-- **Puerta**: se publica con **media ≥ 8**, **ninguna capa < 7** y **cero P0/P1**; sin capturas ni huecos declarados no hay veredicto, y **quien construye no firma** su propia revisión. Plantilla: `templates/revision-acabados.md`. Puerta por entregable y anti-patrones: `references/puertas-calidad.md`.
+- **`references/criterio.md` — decidir.** Jerarquía en conflicto: **confianza → accesibilidad → corrección técnica → psicología**. Negocio (precio entre la SBA y el valor percibido, ICP con *disqualifying*, LTV/CAC ≥ 3, payback ≤ 12 meses, kernel de Rumelt, señal frente a vanidad), psicología (carga cognitiva, fricción con número, confianza como prueba concreta, Fogg, hábitos) con la tabla persuasión / dark pattern, producto (JTBD, time-to-value, retención por cohorte, churn causal), decisiones (rúbrica canónica 0–10 con el hueco declarado, muestra precomprometida, una sola fuente de verdad para contar) y un interrogatorio de 10 preguntas antes de aprobar: **un «no lo sé» no se tapa con entusiasmo, se aprueba la investigación.**
+- **`references/acabados.md` — juzgar.** Un entregable *funciona* cuando hace lo que dice; está *acabado* cuando alguien que no lo escribió lo usa sin que le expliquen nada. Review en 8 segundos sin scroll, capturas a 1440/768/390 con estados forzados, severidad **P0–P3**, checklist por capas (arranque, estados, formularios, microcopy, confianza, rendimiento percibido, a11y, responsive, consistencia, datos extremos, modo oscuro, confirmar/deshacer), rúbrica canónica 0–10 y evidencia exigible.
+- **Puerta**: se publica con **media ≥ 8**, **ninguna capa < 7** y **cero P0/P1**; sin capturas ni huecos declarados no hay veredicto, y **quien construye no firma** su propia revisión. Plantilla: `templates/revision-acabados.md` en el repo y en la skill (`skills/el-jefe-team/templates/`). Puerta por entregable y anti-patrones: `references/puertas-calidad.md`.
 - **Dónde aterriza**: cada ficha de rol lleva su línea «Criterio y acabado» con el mínimo exigible (UI: revisión de acabados con capturas; copy: microcopy sin slop; marketing: claims con evidencia y unit economics; QA: P0–P3 con nota) y la plantilla de encargo pide `criterio aplicable:`.
 
 ## Skills sin truncar (`scripts/skill_pack.py`)

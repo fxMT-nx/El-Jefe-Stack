@@ -1,0 +1,9 @@
+# Ficheros de texto en LF: un checkout en Windows no debe convertir los
+# SKILL.md a CRLF (el pruner cuenta CRLF como dos code points y volvería a
+# recortar las skills que ya están cerca de 8.192).
+* text=auto eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.py text eol=lf
+*.ps1 text eol=lf

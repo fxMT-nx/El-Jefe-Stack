@@ -83,14 +83,11 @@ formato de salida: <diff/resumen, archivos, riesgos, pendientes>
 
 ## Coordinación
 
-- Tablero: `team_task_list`; `team_task_update` con la `revision` actual, nunca una vieja.
-- Mensajes: `send_message` para redirigir a un miembro en marcha; `interrupt_agent` si está atascado.
-- Espera: `wait_agent` cuando dependas de un miembro; al despertar, re-lista (`list_agents`, `team_task_list`).
-- Conflictos de archivos: secuencia con `blocked_by` o asigna un único dueño.
+Tablero, mensajes, espera y conflictos: [`coordinacion.md`](references/coordinacion.md). Regla corta: reclama con la `revision` actual, un dueño por archivo y re-lista tras cada espera.
 
 ## Criterio y acabados
 
-Se juzga por el usuario final: *funciona* si hace lo que dice; está *acabado* si alguien que no lo escribió lo usa sin que le expliquen nada. En conflicto manda: **confianza → accesibilidad → corrección técnica → psicología**; si para subir una métrica hay que engañar a alguien, ya respondió la primera. Toda entrega con UI, copy o marketing: **revisión P0–P3** con nota por capa (**media ≥ 8**, **ninguna capa < 7**, **cero P0/P1**) o vuelve con los huecos escritos. Detalle: `criterio.md`, `acabados.md` y `puertas-calidad.md` (por entregable); plantilla: `templates/revision-acabados.md`.
+Se juzga por el usuario final: *funciona* si hace lo que dice; está *acabado* si otro lo usa sin que le expliquen nada. En conflicto manda: **confianza → accesibilidad → corrección técnica → psicología**; si para subir una métrica hay que engañar a alguien, ya respondió la primera. Toda entrega con UI, copy o marketing: **revisión P0–P3** con nota por capa (**media ≥ 8**, **ninguna capa < 7**, **cero P0/P1**) o vuelve con los huecos escritos. Detalle: `criterio.md`, `acabados.md` y `puertas-calidad.md`; plantilla: `templates/revision-acabados.md` (en la skill; también en el repo).
 
 ## Anti-patrones
 

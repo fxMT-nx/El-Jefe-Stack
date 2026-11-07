@@ -51,8 +51,30 @@ INTENT_RULES = [
     ),
     (
         "marketing",
-        ("marketing", "copy", "cro", "conversion", "email", "lanzamiento", "launch", "pricing", "competencia"),
-        ("copywriting", "cro", "emails", "launch", "product-marketing", "brand"),
+        ("marketing", "cro", "conversion", "email", "lanzamiento", "launch", "competencia", "campana"),
+        ("cro", "emails", "launch", "product-marketing", "brand"),
+    ),
+    (
+        # El stack trabaja en español: "precio" no aparece en las descripciones
+        # inglesas de pricing, así que la intención cubre la tarea en ambos idiomas.
+        # founder-pricing manda al fijar un número; monetizing-innovation entra
+        # como segunda lectura de packaging/modelo.
+        "precio",
+        (
+            "precio", "precios", "pricing", "price", "tarifa", "tarifas",
+            "cuanto cobrar", "monetiz", "packaging", "freemium",
+            "willingness to pay", "disposicion a pagar", "plan de precios",
+            "planes de precios", "pagar por", "good-better-best",
+        ),
+        (("founder-pricing", 5.0), ("monetizing-innovation", 4.0)),
+    ),
+    (
+        "copy",
+        (
+            "copy", "copywriting", "microcopy", "texto", "textos", "redactar",
+            "redaccion", "titular", "titulares", "reescribir",
+        ),
+        ("copy-editing", "copywriting"),
     ),
     (
         "documentacion",
@@ -155,6 +177,18 @@ def load_skills(dirs: list[Path]) -> list[dict]:
     return skills
 
 
+def intent_weights(names: tuple) -> dict[str, float]:
+    """Nombre de skill -> refuerzo. Una entrada suelta vale 4; una tupla, su peso."""
+    weights: dict[str, float] = {}
+    for entry in names:
+        if isinstance(entry, str):
+            weights[entry] = 4.0
+        else:
+            name, weight = entry
+            weights[name] = float(weight)
+    return weights
+
+
 def score(query_tokens: set[str], skill: dict) -> tuple[float, list[str]]:
     name_tokens = set(tokenize(skill["name"].replace("-", " ")))
     desc_tokens = set(tokenize(skill["description"]))
@@ -225,16 +259,17 @@ def main() -> int:
     q = set(tokenize(args.query))
     qfold = fold(args.query)
     intents = [
-        (label, set(names))
+        (label, intent_weights(names))
         for label, keywords, names in INTENT_RULES
         if any(k in qfold for k in keywords)
     ]
     ranked = []
     for s in skills:
         sc, hits = score(q, s)
-        intent_hits = [label for label, names in intents if s["name"] in names]
-        if intent_hits:
-            sc += 4.0 * len(intent_hits)
+        boosts = [(label, weights[s["name"]]) for label, weights in intents if s["name"] in weights]
+        intent_hits = [label for label, _ in boosts]
+        if boosts:
+            sc += sum(weight for _, weight in boosts)
         if sc > 0:
             ranked.append((sc, hits, intent_hits, s))
     ranked.sort(key=lambda item: (-item[0], item[3]["name"]))

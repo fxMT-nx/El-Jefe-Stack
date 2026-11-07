@@ -20,8 +20,8 @@ $skill = Join-Path $AgentsSkillsDir 'el-jefe-team\SKILL.md'
 Check "skill el-jefe-team instalada" (Test-Path $skill)
 if (Test-Path $skill) {
   $refs = (Get-ChildItem (Join-Path $AgentsSkillsDir 'el-jefe-team\references') -File -ErrorAction SilentlyContinue | Measure-Object).Count
-  Check "fichas de referencia ($refs/20)" ($refs -eq 20)
-  foreach ($ref in @('triaje-skills.md','skills-seleccion.md','criterio.md','acabados.md','puertas-calidad.md')) {
+  Check "fichas de referencia ($refs/21)" ($refs -eq 21)
+  foreach ($ref in @('triaje-skills.md','skills-seleccion.md','criterio.md','acabados.md','puertas-calidad.md','coordinacion.md')) {
     Check "referencia $ref" (Test-Path (Join-Path $AgentsSkillsDir "el-jefe-team\references\$ref"))
   }
   $txt = [System.IO.File]::ReadAllText($skill)
@@ -32,6 +32,12 @@ if (Test-Path $skill) {
   Check "seccion criterio y acabados" ($txt -match 'Criterio y acabados')
   Check "anti-patron de entregar generico" ($txt -match 'Entregar gen')
   Check "plantilla de revision de acabados" (Test-Path (Join-Path $repoRoot 'templates\revision-acabados.md'))
+  $tplRepo = Join-Path $repoRoot 'templates\revision-acabados.md'
+  $tplLive = Join-Path $AgentsSkillsDir 'el-jefe-team\templates\revision-acabados.md'
+  Check "plantilla de revision en la skill viva" (Test-Path $tplLive)
+  if ((Test-Path $tplRepo) -and (Test-Path $tplLive)) {
+    Check "plantilla repo=vivo (sha256)" ((Get-FileHash $tplRepo -Algorithm SHA256).Hash -eq (Get-FileHash $tplLive -Algorithm SHA256).Hash)
+  }
 }
 
 Check "script skills_check.py" (Test-Path (Join-Path $repoRoot 'scripts\skills_check.py'))
@@ -54,8 +60,7 @@ foreach ($s in $curadas) {
 Check "17 skills curadas instaladas ($instaladas/17)" ($instaladas -eq 17)
 Check "SOURCE.md de las curadas ($conFuente/17)" ($conFuente -eq 17)
 
-Check "patch de perfil existe" (Test-Path $profilePatch)
-if (Test-Path $profilePatch) {
+Check "patch de perfil existe" (Test-Path $profilePatch)if (Test-Path $profilePatch) {
   $p = [System.IO.File]::ReadAllText($profilePatch)
   Check "override de preset aplicado (marcador presente)" ($p -match 'Preset standard redefinido')
   Check "persona El Jefe presente" ($p -match 'Eres El Jefe')
@@ -67,6 +72,14 @@ if (Test-Path $profilePatch) {
 
 foreach ($s in @('grilling','domain-modeling','seo','copywriting','emil-design-eng','ui-animation','threejs')) {
   Check "skill externa: $s" (Test-Path (Join-Path $AgentsSkillsDir "$s\SKILL.md"))
+}
+
+$packer = Join-Path $repoRoot 'scripts\skill_pack.py'
+if (Test-Path $packer) {
+  & python $packer --audit | Out-Null
+  Check "ninguna skill supera 8192 caracteres reales" ($LASTEXITCODE -eq 0)
+  & python $packer --verify | Out-Null
+  Check "paquetes de skills integros (--verify)" ($LASTEXITCODE -eq 0)
 }
 
 Write-Host ""

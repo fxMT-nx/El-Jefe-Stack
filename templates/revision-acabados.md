@@ -23,7 +23,9 @@ Qué es: <...> · Para quién: <...> · Acción principal: <...> · ¿Se entiend
 
 P0 roto/legal/bloqueante · P1 socava la calidad · P2 pulido · P3 preferencia.
 
-## Nota por capa (0–10)
+## Nota por capa (rúbrica canónica de `acabados.md` §4)
+
+> Bandas: **9–10** se publica · **7–8** publicable con retoques · **5–6** otra pasada · **3–4** capas a rehacer · **0–2** no es un entregable. Si la nota viene de una skill con otra escala (`ux-heuristics`, `influence-psychology`, `copy-editing`), tradúcela con la tabla de conversión de `acabados.md` §4 antes de escribirla. Las capas que no apliquen al entregable (p. ej. copy sin formularios) se marcan **N/A** y no entran en la media.
 
 | Capa | Nota | Hueco declarado (qué falta para llegar a 10) |
 |---|:--:|---|
@@ -51,7 +53,8 @@ P0 roto/legal/bloqueante · P1 socava la calidad · P2 pulido · P3 preferencia.
 
 ## Veredicto
 
+- Condición de publicación: **cero P0/P1** · **media ≥ 8** · **ninguna capa < 7** · evidencia adjunta
 - P0 abiertas: <n> · P1 abiertas: <n> · Media: <n> · Capa más baja: <n>
 - **Cambio que más mueve la aguja:** <uno solo>
-- Veredicto: **publicable** / **publicable con retoques** / **otra pasada** / **rehacer**
+- Banda canónica: **9–10 publicable** / **7–8 publicable con retoques** / **5–6 otra pasada** / **3–4 rehacer capas** / **0–2 no entregable**
 - Devuelto a: <dueño> · Siguiente revisión: <fecha>

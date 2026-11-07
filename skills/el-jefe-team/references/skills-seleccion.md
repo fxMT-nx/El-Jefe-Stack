@@ -51,6 +51,15 @@ Detalle por tipo de trabajo, ejemplos y waivers: [triaje-skills.md](triaje-skill
 
 > **Capa de criterio (v1.6.0).** [`criterio.md`](criterio.md) y [`acabados.md`](acabados.md) **no son skills**: son el criterio que se aplica a cualquier entrega y no consumen cupo de triaje. `memoria` y `documentador` no reciben skills nuevas a propósito: su trabajo es registrar y verificar, no decidir producto.
 
+## Solapamientos: qué skill manda
+
+Cuatro pares se pisan; decide la tarea, no la costumbre:
+
+- **`founder-pricing` vs `monetizing-innovation`:** `founder-pricing` manda en el **precio** (cuánto cobrar, con evidencia de disposición a pagar); `monetizing-innovation` manda en el **packaging y el modelo** (qué se empaqueta, bueno/mejor/best, freemium vs prueba). Para fijar un número, primero `founder-pricing`.
+- **`copy-editing` vs `copywriting`:** `copy-editing` **edita y revisa** copy existente (pasadas, rubric, AI tells); `copywriting` **crea** desde cero (página, hero, CTA). Un copy nuevo pasa por `copy-editing` antes de entregarse.
+- **`influence-psychology` vs `marketing-psychology`:** `influence-psychology` aplica persuasión **al producto y su copy** (prueba social, reciprocidad, unidad) con puerta ética; `marketing-psychology` aporta **sesgos y modelos para campañas** (anclaje, aversión a la pérdida, framing). Producto → la primera; campaña → la segunda.
+- **`taste-design-review` vs `ux-heuristics`:** `taste-design-review` juzga **visual y acabados** (jerarquía, tipografía, pulido, capturas antes/después); `ux-heuristics` juzga **usabilidad** (Nielsen, severidad, fricción de tareas). Una revisión de acabados completa usa las dos: usabilidad primero, acabado después.
+
 ## Grilling (fase 0 del proyecto)
 
 `grilling` es el motor de entrevista: árbol de decisiones, rondas de preguntas numeradas con respuesta recomendada (un "sí" la acepta), hechos buscados por subagentes y parada hasta entendimiento compartido. `grill-me` es el atajo manual; `grill-with-docs` = `grilling` + `domain-modeling`, que además deja `GLOSSARY.md` y ADR en `docs/adr/`.

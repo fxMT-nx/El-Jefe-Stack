@@ -1,6 +1,6 @@
 # Acabados: lo que el usuario juzga
 
-Criterio y review de calidad **percibida**. Para decidir qué se construye: [`criterio.md`](criterio.md). Triaje: [`triaje-skills.md`](triaje-skills.md). Plantilla: `revision-acabados.md`, en `templates/` del repo del stack.
+Criterio y review de calidad **percibida**. Para decidir qué se construye: [`criterio.md`](criterio.md). Triaje: [`triaje-skills.md`](triaje-skills.md). Plantilla: [`templates/revision-acabados.md`](../templates/revision-acabados.md), relativa a esta skill; también está en `templates/` del repo del stack.
 
 ## 1. Qué es un acabado
 
@@ -38,7 +38,9 @@ Criterio y review de calidad **percibida**. Para decidir qué se construye: [`cr
 | **Modo oscuro** | no es invertir: se revisan contraste, bordes, sombras e imágenes con fondo blanco | texto gris que desaparece |
 | **Confirmar y deshacer** | destructivo confirmado nombrando el objeto; mejor `undo` que diálogo | borrar todo sin preguntar |
 
-## 4. Rúbrica 0–10
+## 4. Rúbrica 0–10 (canónica del stack)
+
+Esta es la **única rúbrica** del stack: se aplica a cualquier revisión, no solo a UI. **Regla:** si una skill externa trae otra escala, se traduce a esta antes de decidir. No hay dos escalas conviviendo.
 
 | Banda | Significa | Qué se hace |
 |:--:|---|---|
@@ -48,7 +50,21 @@ Criterio y review de calidad **percibida**. Para decidir qué se construye: [`cr
 | 3–4 | capas a rehacer | vuelve al dueño con el hueco escrito |
 | 0–2 | no es un entregable | se replantea |
 
-**Condición de publicación:** ninguna P0/P1 abierta · **media ≥ 8** · **ninguna capa por debajo de 7** · evidencia adjunta. La media sola engaña: un 9 en copy con un 4 en formularios da 6,5 y no dice nada. Toda nota lleva **el hueco declarado** (qué falta exactamente para llegar a 10) o es una opinión.
+**Condición de publicación:** cero P0/P1 abiertas · **media ≥ 8** · **ninguna capa por debajo de 7** · evidencia adjunta. La media sola engaña: un 9 en copy con un 4 en formularios da 6,5 y no dice nada. Toda nota lleva **el hueco declarado** (qué falta exactamente para llegar a 10) o es una opinión.
+
+### Conversión de escalas externas
+
+| Escala externa | Banda canónica | Significa |
+|---|---|---|
+| `ux-heuristics` 9–10 | 9–10 | se publica |
+| `ux-heuristics` 7–8 | 7–8 | publicable con retoques |
+| `ux-heuristics` 5–6 | 5–6 | otra pasada |
+| `ux-heuristics` 3–4 | 3–4 | capas a rehacer |
+| `ux-heuristics` ≤ 2 | 0–2 | no es un entregable |
+| `influence-psychology` ≤ 3 | 3–4 · 0–2 si hay engaño | capas a rehacer · no es un entregable |
+| `copy-editing` (Expert Panel) 1–4 | 3–4 · 0–2 si no hay entregable | capas a rehacer · no es un entregable |
+
+Las bandas 6–8 y 3–5 de `ux-heuristics` se parten por el valor (7–8 y 5–6, más 3–4): **la conversión nunca redondea hacia arriba**, para que un fallo catastrófico no se convierta en «casi publicable». Un 6–8 de `ux-heuristics` no se lee como 9 aunque la media salga alta.
 
 ## 5. Evidencia exigible
 

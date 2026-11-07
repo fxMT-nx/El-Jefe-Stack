@@ -1,6 +1,6 @@
 # Puertas de calidad
 
-Una puerta es una condición **verificable** para aceptar un entregable: sin evidencia no se cruza y «debería funcionar» no abre ninguna. Qué decidir y qué rechazar: [`criterio.md`](criterio.md). Cómo se juzga lo que el usuario percibe: [`acabados.md`](acabados.md). Plantilla de revisión: `templates/revision-acabados.md`.
+Una puerta es una condición **verificable** para aceptar un entregable: sin evidencia no se cruza y «debería funcionar» no abre ninguna. Qué decidir y qué rechazar: [`criterio.md`](criterio.md). Cómo se juzga lo que el usuario percibe: [`acabados.md`](acabados.md). Plantilla de revisión: [`templates/revision-acabados.md`](../templates/revision-acabados.md) (en la skill; también en `templates/` del repo).
 
 ## Regla común
 
@@ -31,7 +31,7 @@ Una puerta es una condición **verificable** para aceptar un entregable: sin evi
 1. **Lectura de 8 segundos** a 1440 px sin scroll: qué es, para quién y qué se hace aquí.
 2. **Capturas** 1440/768/390 del mismo recorrido y de los estados forzados (vacío, error, red lenta).
 3. **Severidad:** P0 roto, legal o bloqueante · P1 socava la calidad · P2 pulido · P3 preferencia.
-4. **Nota por capa** de 0 a 10 con el hueco declarado: qué falta exactamente para llegar a 10.
+4. **Nota por capa** de 0 a 10 en las bandas canónicas de `acabados.md` §4 (9–10 / 7–8 / 5–6 / 3–4 / 0–2), con el hueco declarado: qué falta exactamente para llegar a 10.
 5. **Veredicto:** se publica con media ≥ 8, ninguna capa por debajo de 7 y cero P0/P1; si no, vuelve con los huecos escritos y ordenados por impacto.
 
 La media sola engaña: un 9 en copy con un 4 en formularios es 6,5 y no dice nada. Y quien construye no firma el veredicto.

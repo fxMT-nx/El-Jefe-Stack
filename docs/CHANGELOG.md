@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.3
+
+- **Packer con medición real (B1)**: `skill_pack.py` lee con `newline=""` y cuenta los code points que ve el pruner (CRLF suma 2); escribe en LF con presupuesto 7.800 (SKILL.md) / 6.900 (partes). Re-troceadas 44 skills: **0 de 84 superan 8.192 reales** (antes 17). `--audit` informa también el peor caso CRLF y `--verify` mide el fichero real.
+- **`--verify` con integridad (B2)**: reconstruye el cuerpo (inline + partes) y lo compara con `00-original.md`; detecta secciones perdidas, duplicadas o texto añadido. Prueba de corrupción: añadir texto a una parte ⇒ exit 1 con la diferencia exacta. El smoke de `validate_repo.py` cubre CRLF real y corrupción; `verify.ps1` ejecuta `--audit` y `--verify` y falla si algo supera el límite o pierde integridad.
+- **Rúbrica canónica (B3)**: `acabados.md` §4 es la única escala (9–10 / 7–8 / 5–6 / 3–4 / 0–2); `criterio.md` remite a ella, `puertas-calidad.md` y la plantilla usan las mismas bandas, y hay tabla de conversión para escalas externas (`ux-heuristics`, `influence-psychology`, `copy-editing`).
+- **Plantilla en la skill viva (B4)**: `templates/revision-acabados.md` dentro de `el-jefe-team` (repo y `~/.agents/skills`), referenciada relativa a la skill; `verify.ps1` comprueba existencia y hash repo=vivo.
+- **Persona**: «exige revisión P0–P3 con nota media ≥8, ninguna capa <7 y cero P0/P1». Router con intenciones en español (`precio`, `copy`) que ya encuentra `founder-pricing`/`copy-editing`; precedencia de solapes documentada en `skills-seleccion.md`.
+- **21 referencias**: la coordinación sale del `SKILL.md` a `references/coordinacion.md` (SKILL 7.975 chars, incluso con CRLF 8.077 < 8.192). `.gitattributes` fija `*.md`/`*.yml`/`*.py`/`*.ps1` en LF para que un checkout Windows no vuelva a truncar. `memory_check.py` informa una sola vez por fichero con UTF-8 inválido. README/ARQUITECTURA documentan la excepción 4–5 skills por fase.
+
+## 1.6.2
+
+- **Persona sin tope**: la viñeta «Máximo 6 especialistas vivos» pasa a «Sin tope de especialistas vivos: crea los que el trabajo necesite, con una pieza disjunta cada uno».
+
 ## 1.6.1
 
 - **Agent Team sin tope práctico**: el bundle fija `maxMembers: 8` (Lead + 7). Nuevo `preset/agent-team.patch.yml` con `- id: agent-team` / `maxMembers: 1000` (roster por equipo, incluye fallidos), `maxTasks: 256`, `maxMessageBytes: 65536` y `disposalTimeoutMs: 5000`; el patch va al final del patch de perfil y sustituye el `config` del bundle. Verificado con `dsh --dump-config` sobre una copia del perfil (la fila aparece «patched by …cordis.patch.yml» con 1000); en `desktop` requiere reiniciar y probar con >7 teammates en sesión nueva.
