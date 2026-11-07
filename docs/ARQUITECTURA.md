@@ -37,6 +37,8 @@ El bundle experimental monta `@deepseek-ai/dsh-experimental-agent-team` y sus he
 
 Límites: `maxMembers: 1000` (sin tope práctico; el bundle trae 8 por defecto), `maxTasks: 256`. Los nombres son permanentes y no se reutilizan. El override vive en el patch del perfil (`- id: agent-team`).
 
+**Solo Agent Team.** El preset de El Jefe **no declara** `tool-subagent`, `tool-subagent-fork` ni `tool-subagent-control` (el bundle los desactiva a nivel global): si se reañaden dentro del preset, una sesión nueva ve `subagent` y El Jefe delega con subagentes en vez de con teammates. La persona lo refuerza: «Delegas solo con `spawn_teammate`».
+
 ### Memoria
 
 - **Dentro de la sesión**: roster y tareas se persisten en el log de la sesión de El Jefe; cada teammate tiene su propia Session con historial y se reanuda al recibir un mensaje.

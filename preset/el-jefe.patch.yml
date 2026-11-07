@@ -38,6 +38,7 @@
             - Permisos: ningún especialista ejecuta una acción sensible por su cuenta; te pide permiso a ti y espera respuesta. Tú apruebas lo local y reversible que encaje en el plan, y niegas lo que no encaje. Lo que sea producción, dinero, datos reales o personales, credenciales, publicación externa, instalación global o irreversible no lo decides tú: me lo preguntas a mí, con opciones, impacto, coste y recomendación. No hay acciones vetadas de antemano por el equipo: lo excepcional también me lo consultas y lo decido yo, por acción. Y ningún teammate me pregunta directamente: todas las dudas suben por ti.
             - Sin tope de especialistas vivos: crea los que el trabajo necesite, con una pieza disjunta cada uno; reutiliza nombres y usa el tablero para tareas y dependencias.
             - Exige evidencia (tests, comandos, capturas, fuentes); no aceptes "debería funcionar". Revisa e integra tú el resultado.
+            - Delegas solo con `spawn_teammate` (Agent Team): no uses `subagent` ni `subagent_fork`; cada pieza va a un teammate con brief, tarea y evidencia.
             - Ninguna fase sin triaje de skills y herramientas: revisa el catálogo real, aplica 1–3, exige evidencia y devuelve lo que no la traiga.
             - Juzga con criterio de negocio, psicología y acabados; exige revisión P0–P3 con nota media ≥8, ninguna capa <7 y cero P0/P1; devuelve lo genérico.
             - Cuando el proyecto necesite documentación (README, guías, ADR, changelog, textos de release), encárgasela a "escritor" y a "documentador" para la bitácora; revísala tú antes de entregar.
@@ -119,20 +120,9 @@
         isolate:
           workflowEngine: true
         config:
-          - id: tool-subagent-control
-            name: '@deepseek-ai/dsh-tool-subagent-control'
-          - id: tool-subagent
-            name: '@deepseek-ai/dsh-tool-subagent'
-            config:
-              provider: spawn
-              toolName: subagent
-              modelSelection: true
-              modelDiscovery: true
-          - id: tool-subagent-fork
-            name: '@deepseek-ai/dsh-tool-subagent'
-            config:
-              provider: fork
-              toolName: subagent_fork
+          # Solo Agent Team: spawn_teammate/send_message/team_task_*.
+          # Los controles globales de subagentes quedan fuera para que El Jefe
+          # no delegue con `subagent` en vez de con teammates.
           - id: workflow-ptc
             name: '@deepseek-ai/dsh-workflow-ptc'
             config:

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.1
+
+- **El Jefe ya no delega con subagentes**: el preset `standard` de El Jefe reintroducía `tool-subagent`, `tool-subagent-fork` y `tool-subagent-control` dentro de su lista de plugins, así que una sesión nueva veía `subagent` y lo elegía en vez de `spawn_teammate`. Se eliminan del preset (el bundle de Agent Team ya los desactiva a nivel global); quedan solo `workflow-ptc`/`tool-workflow` y las herramientas de Agent Team. La persona añade: «Delegas solo con `spawn_teammate` (Agent Team): no uses `subagent` ni `subagent_fork`».
+- **Verificado tras DSH 0.2.2-rc.1**: sesión nueva con 12 miembros (1 lead + 11 teammates) —por encima del antiguo tope de 8—, `spawn_teammate` fresh y fork, `send_message`, `team_task_*`, `list_agents` y reanudación de un teammate inactivo; `task-9` reclamada y completada por un teammate. Requiere recargar/crear sesión nueva para que el preset sin subagentes entre en vigor.
+
 ## 1.7.0
 
 - **Compatible con DSH 0.2.2-rc.1**: el preset `standard` ya no declara `tool-subagent-list-agents` (paquete eliminado; `list_agents` vive dentro de `tool-subagent-control`) y `tool-subagent` usa `modelSelection: true` + `modelDiscovery: true` en vez de `modelSelectionSettings`. Sin esto, cualquier sesión nueva falla con `agent-preset/invalid: tool-subagent-list-agents ... never started`. Actualizado el preset vivo y `preset/el-jefe.patch.yml`; requiere **reiniciar DSH** (el preset se compone al arrancar).
