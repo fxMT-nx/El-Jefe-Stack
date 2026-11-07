@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.1
+
+- **Agent Team sin tope práctico**: el bundle fija `maxMembers: 8` (Lead + 7). Nuevo `preset/agent-team.patch.yml` con `- id: agent-team` / `maxMembers: 1000` (roster por equipo, incluye fallidos), `maxTasks: 256`, `maxMessageBytes: 65536` y `disposalTimeoutMs: 5000`; el patch va al final del patch de perfil y sustituye el `config` del bundle. Verificado con `dsh --dump-config` sobre una copia del perfil (la fila aparece «patched by …cordis.patch.yml» con 1000); en `desktop` requiere reiniciar y probar con >7 teammates en sesión nueva.
+- **Doctrina**: `SKILL.md` pasa de «Máximo 6 especialistas vivos» a «Sin tope de especialistas; reutiliza nombres». `README.md`, `docs/ARQUITECTURA.md` y `agents/README.md` reflejan el nuevo límite y mantienen el criterio de una pieza disjunta por miembro. `docs/INSTALL.md` gana el paso 2b.
+
 ## 1.6.0
 
 - **17 skills curadas de criterio instaladas**, cada una con su `SOURCE.md` (repo, commit exacto, licencia MIT y fecha): `copy-editing`, `marketing-psychology`, `analytics`, `attribution`, `customer-research` (`coreyhaines31/marketingskills` @ `88c79f65`); `ux-heuristics`, `obviously-awesome`, `influence-psychology`, `jobs-to-be-done`, `monetizing-innovation`, `improve-retention` (`wondelai/skills` @ `d8d5d75f`); `founder-cfo`, `founder-pricing`, `founder-offer` (`Jakeschincariol/founder-skill` @ `fd9385b0`); `taste-design-review`, `taste-ux-copy`, `taste-accessibility` (`madebymustafa/design-taste` @ `c4a6bff0`). Inventario: **84 skills** (`python scripts/skills_check.py --inventory`).

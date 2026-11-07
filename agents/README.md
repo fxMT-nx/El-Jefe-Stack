@@ -23,7 +23,7 @@ Cada fila es un **nombre permanente** de `spawn_teammate` (el Jefe no puede repe
 ## Reglas
 
 - **Nombres permanentes**: no reutilizar; un nombre fallido queda reservado.
-- **Máximo 7 teammates vivos** (el perfil permite 8 miembros: Lead + 7). Rota y reutiliza miembros inactivos.
+- **Sin tope de teammates**: el perfil admite hasta 1000 entradas de roster (antes 8). Aun así, cada miembro necesita una pieza disjunta; rota y reutiliza nombres en vez de acumular gente sin trabajo.
 - **Briefs autocontenidos**: un teammate `fresh` no ve la conversación del Jefe; con `fork` hereda sus turnos completados (usar solo cuando haga falta el historial).
 - **Skills esperadas y evidencia**: todo encargo declara en el brief las 1–3 skills esperadas (o el waiver aprobado) y exige el bloque `## Skills y herramientas` en el reporte. Sin ese bloque, el entregable se devuelve. Triaje obligatorio: `../skills/el-jefe-team/references/triaje-skills.md`.
 - **Sin usuario directo**: todas las dudas suben a El Jefe, que escala si toca.

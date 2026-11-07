@@ -35,7 +35,7 @@ El bundle experimental monta `@deepseek-ai/dsh-experimental-agent-team` y sus he
 - `spawn_teammate` (solo Lead), `send_message`, `list_agents`, `wait_agent`, `interrupt_agent`.
 - Tablero de tareas: `team_task_create`, `team_task_list`, `team_task_get`, `team_task_update`.
 
-Límites: `maxMembers: 8` (Lead + 7 teammates), `maxTasks: 256`. Los nombres son permanentes y no se reutilizan.
+Límites: `maxMembers: 1000` (sin tope práctico; el bundle trae 8 por defecto), `maxTasks: 256`. Los nombres son permanentes y no se reutilizan. El override vive en el patch del perfil (`- id: agent-team`).
 
 ### Memoria
 
@@ -70,7 +70,7 @@ El roster cubre lo habitual, no todo. Cuando aparece una especialidad que ningú
 3. Lanza `spawn_teammate` con `context: fresh` y un brief autocontenido.
 4. Revisa el resultado como cualquier entrega y, si el rol se va a reutilizar, guarda la ficha en `agents/custom/` del proyecto.
 
-El límite de 7 teammates vivos sigue aplicando: crear un agente no es excusa para saltarse dependencias ni scopes.
+No hay tope de teammates vivos, pero crear un agente no es excusa para saltarse dependencias ni scopes: cada miembro necesita una pieza disjunta y un brief autocontenido.
 
 ## Selección de skills
 

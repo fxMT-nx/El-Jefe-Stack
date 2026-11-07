@@ -56,7 +56,7 @@ Detalle completo en [`agents/README.md`](agents/README.md).
 1. **Fase 0 — Grilling.** Antes de planificar algo no trivial, El Jefe te interroga por rondas (`grilling`): preguntas numeradas con su respuesta recomendada, un "sí" la acepta, y los hechos los busca él con subagentes. No se avanza hasta entendimiento compartido.
 2. **Plan y tablero.** Crea tareas con criterios de aceptación y dependencias en el tablero del equipo.
 3. **Triaje obligatorio.** Ninguna fase ni entregable sin triaje explícito de skills y herramientas: se revisa el catálogo real, se aplican 1–3, se justifican descartes y se exige evidencia en el reporte (`## Skills y herramientas`). El registro por fase vive en `docs/memoria/40-skills.md` y se valida con `python scripts/skills_check.py <proyecto>`. Fase sin skill y sin waiver aprobado = fallo de proceso. Detalle: `skills/el-jefe-team/references/triaje-skills.md`.
-4. **Delegación.** Un especialista por pieza, scopes de escritura disjuntos; FE y BE contra el contrato. Máximo 7 teammates vivos (límite del perfil).
+4. **Delegación.** Un especialista por pieza, scopes de escritura disjuntos; FE y BE contra el contrato. Teammates sin tope práctico: el perfil admite hasta 1000 entradas de roster (antes 8).
 5. **Calidad.** QA crítico, seguridad e infra revisan antes de entregar.
 6. **Memoria.** `docs/estado.md`, `GLOSSARY.md` y ADR en `docs/adr/` para que el proyecto se pueda retomar en otra sesión.
 7. **Permisos.** Los especialistas piden permiso a El Jefe; lo rojo o excepcional te lo pregunta él a ti. Detalle en `skills/el-jefe-team/references/permisos.md`.

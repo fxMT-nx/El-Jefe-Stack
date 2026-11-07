@@ -39,6 +39,10 @@ dsh --profile <perfil> --dump-config | grep -n "El Jefe"
 
 En `desktop` el binario CLI no permite `--dump-config`; la prueba real es crear una sesión nueva y ver el chip **El Jefe**.
 
+## 2b. Quita el tope de teammates
+
+El bundle de Agent Team fija `maxMembers: 8` (Lead + 7). Para que El Jefe no tenga tope práctico, pega `preset/agent-team.patch.yml` **al final** del patch de perfil y reinicia DSH. Queda en 1000 entradas de roster por equipo (incluye fallidos). Sin reinicio no se aplica. Verifícalo en una sesión nueva creando más de 7 teammates.
+
 ## 3. Instala las skills externas
 
 Las del equipo propio ya van en el paso 1. Las de diseño, SEO/GEO, marketing, documentación y calidad se instalan desde sus repos (elige `npx skills add` o copia manual):

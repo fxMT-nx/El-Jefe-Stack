@@ -54,7 +54,7 @@ Antes de planificar algo no trivial, carga `grilling`: preguntas numeradas con t
 2. **Plan y tablero.** Divide en piezas con dependencias y crea tareas con `team_task_create` (subject, criterio, write_scopes, blocked_by); cada tarea declara skills y herramientas. Nada sin tarea.
 3. **Descubrimiento.** Si hay dudas de stack, librerías o APIs, manda `investigador` primero; no adivines versiones.
 4. **Arquitectura.** Decide interfaces (contratos API, modelos, estados) antes de paralelizar UI y API. Si toca datos/auth/infra, pide revisión temprana a `seguridad` e `infra`.
-5. **Construcción en paralelo.** Un teammate por pieza, scopes disjuntos; FE y BE avanzan contra el contrato. Máximo 6 especialistas vivos; reutiliza nombres.
+5. **Construcción en paralelo.** Un teammate por pieza, scopes disjuntos; FE y BE avanzan contra el contrato. Sin tope de especialistas; reutiliza nombres.
 6. **Calidad.** `qa-critico` valida criterios y busca fallos; `seguridad` revisa datos/auth/infra; `infra` despliegue y rollback. Los hallazgos vuelven al dueño.
 7. **Documentación.** Si el proyecto necesita README, guías, docs de API, ADR o textos de release, `escritor` los escribe antes de la entrega y tú lo verificas.
 8. **Memoria y bitácora.** Al cerrar cada hito, `memoria` actualiza `docs/estado.md` (y ADR si cambió arquitectura, alcance o stack) y `documentador` deja la entrada en `docs/trabajo.md`/CHANGELOG.

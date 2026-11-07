@@ -1,0 +1,37 @@
+# Agent Team sin tope práctico de miembros
+
+El bundle `@deepseek-ai/dsh-experimental-agent-team-profile` fija `maxMembers: 8`
+(Lead + 7 teammates) en su propia capa. Este patch lo sube a 1000, que en la
+práctica es "sin límite": el contador es de **entradas de roster por equipo**
+(incluye miembros fallidos), no de miembros simultáneos.
+
+## Cómo aplicarlo
+
+Pega este bloque **al final** de `$DSH_HOME/profiles/desktop/cordis.patch.yml`
+(después del bloque del preset y de cualquier otro insert). No cambia el preset.
+
+```yaml
+# Agent Team: sin tope práctico de miembros.
+- id: agent-team
+  config:
+    maxMembers: 1000
+    maxTasks: 256
+    maxMessageBytes: 65536
+    disposalTimeoutMs: 5000
+```
+
+Los cuatro valores se repiten porque el patch reemplaza el `config` del plugin;
+si omites uno, se pierde el del bundle.
+
+## Verificación y efecto
+
+- **Comprobado** con `dsh --profile <copia> --dump-config`: la capa aparece como
+  `# == ... patched by ...cordis.patch.yml` con `maxMembers: 1000`.
+- En el perfil `desktop` el binario CLI no permite `--dump-config` (lo gestiona
+  Electron). La prueba real: **reiniciar DSH**, abrir sesión nueva y comprobar
+  que El Jefe puede crear más de 7 teammates.
+- El cambio se lee al arrancar el perfil: **no basta con recargar la sesión**.
+
+## Revertir
+
+Borra el bloque y reinicia. Sin él, el bundle vuelve a 8.
