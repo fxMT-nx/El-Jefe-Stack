@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0
+
+- **Compatible con DSH 0.2.2-rc.1**: el preset `standard` ya no declara `tool-subagent-list-agents` (paquete eliminado; `list_agents` vive dentro de `tool-subagent-control`) y `tool-subagent` usa `modelSelection: true` + `modelDiscovery: true` en vez de `modelSelectionSettings`. Sin esto, cualquier sesión nueva falla con `agent-preset/invalid: tool-subagent-list-agents ... never started`. Actualizado el preset vivo y `preset/el-jefe.patch.yml`; requiere **reiniciar DSH** (el preset se compone al arrancar).
+- **Diagnóstico**: si tras actualizar DSH aparece ese error, el fichero de perfil puede estar ya corregido pero el proceso conserva el preset en memoria; un reinicio completo lo resuelve.
+
 ## 1.6.3
 
 - **Packer con medición real (B1)**: `skill_pack.py` lee con `newline=""` y cuenta los code points que ve el pruner (CRLF suma 2); escribe en LF con presupuesto 7.800 (SKILL.md) / 6.900 (partes). Re-troceadas 44 skills: **0 de 84 superan 8.192 reales** (antes 17). `--audit` informa también el peor caso CRLF y `--verify` mide el fichero real.

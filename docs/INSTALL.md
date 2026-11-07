@@ -86,6 +86,7 @@ Y después, en DSH: **New session → chip "El Jefe" → "Hola, Jefe"**. Si el c
 |---|---|
 | `Could not switch to El Jefe: dsh-scope...` | Se declaró un preset nuevo desde patch de usuario. Quita ese bloque: usa solo el override de `standard`. |
 | New session falla tras aplicar el patch | YAML inválido o `config` incompleto: restaura el backup y vuelve a pegar el bloque completo. |
+| `agent-preset/invalid: tool-subagent-list-agents ... never started` | DSH ≥ 0.2.2-rc.1 eliminó ese paquete. Quita la fila `tool-subagent-list-agents` del preset y usa `modelSelection: true` + `modelDiscovery: true` en `tool-subagent`. Si el fichero ya está corregido, **reinicia DSH**: el preset se compone al arrancar. |
 | El chip dice "Standard" | Override no aplicado (perfil equivocado) o DSH sin recarga: reinicia. |
 | El Jefe no encuentra la skill | `~/.agents/skills/el-jefe-team/SKILL.md` no existe o el frontmatter está roto. |
 | No aparecen `grilling`/`domain-modeling` en el catálogo | `grill-me` y `grill-with-docs` llevan `disable-model-invocation: true` (solo invocación manual); `grilling` y `domain-modeling` sí deben aparecer. |
