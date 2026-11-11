@@ -1,6 +1,6 @@
 # Catálogo de skills
 
-El repo incluye la skill propia (`el-jefe-team`). Las externas **no se vendorizan**: se instalan desde sus repos originales con `npx skills add owner/repo --skill nombre` o copiando el directorio a `~/.agents/skills/`. Licencias verificadas de los repos usados: MIT (ver excepciones al final).
+El repo incluye la skill propia (`el-jefe-team`). Las externas **no se vendorizan**: se instalan desde sus repos originales con `npx skills add owner/repo --skill nombre` o copiando el directorio a `~/.agents/skills/`. Licencias: MIT salvo las excepciones de `NOTICE.md` (`anthropics/skills` Apache-2.0 por skill; `JetBrains/skills` y `antfu-web-design-guidelines` sin licencia declarada).
 
 ## Entrevistas y modelo del dominio (fase 0)
 

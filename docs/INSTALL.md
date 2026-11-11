@@ -1,6 +1,8 @@
 # Instalación
 
-Probado en Windows con DSH Desktop y perfil `desktop`. En macOS/Linux los pasos son los mismos cambiando rutas.
+Probado en Windows con DSH Desktop y perfil `desktop`. En macOS/Linux los pasos son los mismos cambiando rutas, pero no se ha probado.
+
+Antes de empezar necesitas **DSH Desktop** con el bundle experimental Agent Team, **Python 3.11+** con PyYAML (`python -m pip install pyyaml`) y **PowerShell**. Las rutas de esta guía usan `%USERPROFILE%` (en PowerShell, `$HOME`); no hay ninguna ruta de una máquina concreta. Si usas otro perfil de DSH, cambia `desktop` por su nombre.
 
 ## 1. Copia la skill del equipo
 
@@ -26,15 +28,15 @@ DSH escanea `~/.agents/skills` y recarga el catálogo en caliente, sin reiniciar
 El archivo `preset/el-jefe.patch.yml` **no declara un preset nuevo**: redefine el preset `standard` sustituyendo su `config.plugins` (vía documentada). Declarar un preset nuevo desde la capa de usuario provoca `dsh-scope: scope key is already bound to a parent` al crear sesiones; no lo hagas.
 
 1. Haz backup del patch de perfil:
-   - Windows: `C:\Users\<usuario>\.dsh\profiles\desktop\cordis.patch.yml`
-   - Si usas otro perfil: `~/.dsh/profiles/<perfil>/cordis.patch.yml`
+   - Windows: `%USERPROFILE%\.dsh\profiles\desktop\cordis.patch.yml`
+   - Si usas otro perfil: `%USERPROFILE%\.dsh\profiles\<perfil>\cordis.patch.yml`
 2. Pega **al final** el contenido de `preset/el-jefe.patch.yml`.
 3. Guarda. El HMR recompone el perfil; si tu build no tiene HMR, reinicia DSH.
 
 Validación opcional (perfil no-`desktop`):
 
-```bash
-dsh --profile <perfil> --dump-config | grep -n "El Jefe"
+```powershell
+dsh --profile <perfil> --dump-config | Select-String -Pattern "El Jefe"
 ```
 
 En `desktop` el binario CLI no permite `--dump-config`; la prueba real es crear una sesión nueva y ver el chip **El Jefe**.
@@ -65,18 +67,24 @@ npx skills add anthropics/skills --skill algorithmic-art
 npx skills add anthropics/skills --skill canvas-design
 npx skills add JetBrains/skills --skill antfu-web-design-guidelines
 
-# SEO/GEO y marketing
+# SEO/GEO
 npx skills add AgriciDaniel/claude-seo
-npx skills add coreyhaines31/marketingskills --skill copywriting ...
+
+# Marketing, criterio y acabados: una a una, con el nombre exacto
+npx skills add coreyhaines31/marketingskills --skill copywriting
+npx skills add coreyhaines31/marketingskills --skill product-marketing
 ```
 
-La lista completa con qué aporta cada una está en [`../skills/catalog.md`](../skills/catalog.md).
+La lista completa con qué aporta cada una, el repo y el commit de las 17 skills curadas está en [`../skills/catalog.md`](../skills/catalog.md).
 
 ## 4. Comprueba
 
 ```powershell
+python scripts/validate_repo.py
 .\scripts\verify.ps1
 ```
+
+El primero valida el contenido del repo y corre en CI. El segundo mira tu instalación viva, incluidas las skills externas: marca con `[FALTA]` lo que aún no hayas instalado.
 
 Y después, en DSH: **New session → chip "El Jefe" → "Hola, Jefe"**. Si el chip sigue diciendo "Standard", el override no se aplicó o no se recargó.
 
@@ -91,8 +99,10 @@ Y después, en DSH: **New session → chip "El Jefe" → "Hola, Jefe"**. Si el c
 | El Jefe no encuentra la skill | `~/.agents/skills/el-jefe-team/SKILL.md` no existe o el frontmatter está roto. |
 | No aparecen `grilling`/`domain-modeling` en el catálogo | `grill-me` y `grill-with-docs` llevan `disable-model-invocation: true` (solo invocación manual); `grilling` y `domain-modeling` sí deben aparecer. |
 
-Restaurar el patch:
+Restaurar el patch (elige el backup más reciente que generó la instalación o tus pasos manuales):
 
 ```powershell
-Copy-Item "$HOME\.dsh\profiles\desktop\cordis.patch.yml.bak-*" "$HOME\.dsh\profiles\desktop\cordis.patch.yml"
+$patch = Join-Path $HOME '.dsh\profiles\desktop\cordis.patch.yml'
+$ultimo = Get-ChildItem "$patch.bak-*" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+Copy-Item $ultimo.FullName $patch -Force
 ```

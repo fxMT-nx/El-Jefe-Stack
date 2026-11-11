@@ -1,9 +1,16 @@
 # Changelog
 
+## 1.7.2 — Public release readiness
+
+- **README público**: reescrito para quien llega de cero, con resumen en inglés, qué es y qué no es, requisitos, inicio rápido en Windows, estructura, cómo funciona el equipo, tabla de scripts, seguridad y créditos. La primera persona pasa a «El Jefe habla con el usuario».
+- **Licencia clara**: `LICENSE` queda en MIT puro y las atribuciones de terceros se mudan a `NOTICE.md` (repos, licencias y commits de las skills externas), con sus excepciones: `anthropics/skills` (Apache-2.0 por skill) y `JetBrains/skills` / `antfu-web-design-guidelines` (sin licencia declarada). `skills/catalog.md` remite a ese fichero.
+- **Contribución y seguridad**: nuevos `CONTRIBUTING.md` (estándar de skills y roles, validación local, estilo de commits, licencia de las aportaciones) y `SECURITY.md` (reporte privado por GitHub Security Advisories, alcance y qué toca el stack en la máquina).
+- **Saneado para publicar**: rutas personales sustituidas por `%USERPROFILE%`, `docs/research/` y `docs/revision-triaje.md` fuera del árbol publicado y sin menciones a servicios de CI que no se publican. Sin cambios en scripts, preset ni contenido funcional de la skill.
+
 ## 1.7.1
 
 - **El Jefe ya no delega con subagentes**: el preset `standard` de El Jefe reintroducía `tool-subagent`, `tool-subagent-fork` y `tool-subagent-control` dentro de su lista de plugins, así que una sesión nueva veía `subagent` y lo elegía en vez de `spawn_teammate`. Se eliminan del preset (el bundle de Agent Team ya los desactiva a nivel global); quedan solo `workflow-ptc`/`tool-workflow` y las herramientas de Agent Team. La persona añade: «Delegas solo con `spawn_teammate` (Agent Team): no uses `subagent` ni `subagent_fork`».
-- **Verificado tras DSH 0.2.2-rc.1**: sesión nueva con 12 miembros (1 lead + 11 teammates) —por encima del antiguo tope de 8—, `spawn_teammate` fresh y fork, `send_message`, `team_task_*`, `list_agents` y reanudación de un teammate inactivo; `task-9` reclamada y completada por un teammate. Requiere recargar/crear sesión nueva para que el preset sin subagentes entre en vigor.
+- **Verificado tras DSH 0.2.2-rc.1**: sesión nueva con 12 miembros (1 lead + 11 teammates) —por encima del antiguo tope de 8—, `spawn_teammate` fresh y fork, `send_message`, `team_task_*`, `list_agents`, reanudación de un teammate inactivo y una tarea del tablero reclamada y completada por un teammate de principio a fin. Requiere recargar/crear sesión nueva para que el preset sin subagentes entre en vigor.
 
 ## 1.7.0
 

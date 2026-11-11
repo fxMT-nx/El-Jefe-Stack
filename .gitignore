@@ -6,3 +6,8 @@ node_modules/
 .vscode/
 __pycache__/
 *.pyc
+
+# Material interno: investigación de apoyo y revisiones de QA.
+# No forma parte del stack distribuible y no debe publicarse.
+docs/research/
+docs/revision-triaje.md
