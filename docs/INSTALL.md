@@ -84,7 +84,7 @@ python scripts/validate_repo.py
 .\scripts\verify.ps1
 ```
 
-El primero valida el contenido del repo y corre en CI. El segundo mira tu instalación viva, incluidas las skills externas: marca con `[FALTA]` lo que aún no hayas instalado.
+El primero valida el contenido del repo en local. El segundo mira tu instalación viva, incluidas las skills externas: marca con `[FALTA]` lo que aún no hayas instalado.
 
 Y después, en DSH: **New session → chip "El Jefe" → "Hola, Jefe"**. Si el chip sigue diciendo "Standard", el override no se aplicó o no se recargó.
 

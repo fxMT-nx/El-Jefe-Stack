@@ -60,7 +60,8 @@ foreach ($s in $curadas) {
 Check "17 skills curadas instaladas ($instaladas/17)" ($instaladas -eq 17)
 Check "SOURCE.md de las curadas ($conFuente/17)" ($conFuente -eq 17)
 
-Check "patch de perfil existe" (Test-Path $profilePatch)if (Test-Path $profilePatch) {
+Check "patch de perfil existe" (Test-Path $profilePatch)
+if (Test-Path $profilePatch) {
   $p = [System.IO.File]::ReadAllText($profilePatch)
   Check "override de preset aplicado (marcador presente)" ($p -match 'Preset standard redefinido')
   Check "persona El Jefe presente" ($p -match 'Eres El Jefe')
