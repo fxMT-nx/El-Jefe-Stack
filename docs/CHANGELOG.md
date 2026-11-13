@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.3
+
+- **Compatible con DSH 0.2.2-rc.3**: Agent Team pasa de paquete experimental a base (`@deepseek-ai/dsh-agent-team`, `dsh-tool-agent-team`, `dsh-client-ui-agent-team`); el perfil ya no lista el bundle experimental. El override `- id: agent-team` / `maxMembers: 1000` sigue aplicándose.
+- **Preset sincronizado con el estándar nuevo**: se añaden `tool-office`, `skill-filesystem.customSkillDirs` (skills empaquetadas con DSH) y `tool-fs.applyPatch: false`. Sin esos ajustes, una sesión nueva perdía las herramientas de Office y las skills del bundle.
+- **Sesiones antiguas**: el catálogo de herramientas se fija al crear la sesión; tras actualizar DSH hay que **reiniciar y abrir una sesión nueva** para ver `spawn_teammate`/`list_agents`. La sesión en curso conserva el catálogo anterior.
+
 ## 1.7.2 — Public release readiness
 
 - **README público**: reescrito para quien llega de cero, con resumen en inglés, qué es y qué no es, requisitos, inicio rápido en Windows, estructura, cómo funciona el equipo, tabla de scripts, seguridad y créditos. La primera persona pasa a «El Jefe habla con el usuario».
